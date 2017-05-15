@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Alegreya');
 
+html, body {
+	height: 100%;
+}
+
 html {
     font-family: 'Alegreya', serif;
-    font-size: 1vw;
+    font-size: 1.125vw;
     background: #151515;
 }
 
@@ -28,8 +32,24 @@ h1 {
 h2 {
 	margin: 0px;
 	font-weight: inherit;
+	font-size: 2.25vw;
+	padding-bottom: 1vw;
+}
+
+h3 {
+	margin: 0px;
+	font-weight: inherit;
 	font-size: 1.5vw;
 	margin-top: -.675vw;
+}
+
+p {
+	text-indent: 4vw;
+}
+
+a {
+	text-decoration: inherit;
+	color: inherit;
 }
 
 /* homepage */
@@ -78,19 +98,40 @@ h2 {
 
 /* article */
 
+#spacer {
+	width: 100%;
+	height: 1vw;
+}
+
+#bg {
+	padding-bottom: 1vw;
+	width: 100%;
+	background: #FFF;
+}
+
 #twocol {
-	width: 60vw;
+	width: 65vw;
 	margin: auto;
 	padding-left: 10vw;
+	padding-top: 1vw;
 }
 
 #leftcol {
-	width: 45vw;
 	float: left;
+	width: 50vw;
 }
+
+#leftcol img {
+	width: 50%;
+	display: block;
+    margin: 1vw auto;
+    image-rendering: pixelated;
+}
+
 #rightcol {
-	margin-left: 45vw;
-	font-size: .5vw;
+	margin-left: 50vw;
+	font-size: .8vw;
+	padding-left: 1vw;
 }
 
 .clear {
