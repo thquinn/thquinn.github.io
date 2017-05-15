@@ -2,15 +2,83 @@
 
 html {
     font-family: 'Alegreya', serif;
+    font-size: 1vw;
+    background: #151515;
 }
+
+body {
+	margin: 0px;
+}
+
+/* common */
 
 #header {
-	font-size: 4vw;
 	text-align: center;
-	padding-bottom: 2vw;
+	padding-bottom: .75vw;
+	background: #FFF;
 }
 
-#container {
+h1 {
+	margin: 0px;
+	font-weight: inherit;
+	font-size: 4vw;
+	letter-spacing: -.05vw;
+}
+
+h2 {
+	margin: 0px;
+	font-weight: inherit;
+	font-size: 1.5vw;
+	margin-top: -.675vw;
+}
+
+/* homepage */
+
+#onecol {
+	width: 50vw;
+	margin: 1vw auto;
+}
+
+#onecol_label {
+	color: #FFF;
+	font-size: 2.5vw;
+	width: 0px;
+	height: 0px;
+	transform-origin: 7.1vw 5vw;
+	transform: rotate(-90deg);
+}
+
+.homethumb {
+	position: relative;
+	margin: 1vw auto auto auto;
+	width: 75%;
+}
+.homethumb img {
+	display: block;
+	width: 100%;
+}
+.homethumb div {
+	position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    padding: .6vw 1vw;
+    justify-content: flex-end;
+    align-items: flex-end;
+    opacity: 0;
+	background: rgba(0, 0, 0, 0.5);
+	transition: all .1s linear;
+	color: #FFF;
+}
+.homethumb:hover div {
+	opacity: 1;
+}
+
+/* article */
+
+#twocol {
 	width: 60vw;
 	margin: auto;
 	padding-left: 10vw;
@@ -19,7 +87,6 @@ html {
 #leftcol {
 	width: 45vw;
 	float: left;
-	font-size: 1vw;
 }
 #rightcol {
 	margin-left: 45vw;
