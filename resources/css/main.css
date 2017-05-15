@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya');
+
+html {
+    font-family: 'Alegreya', serif;
+}
+
+#header {
+	font-size: 4vw;
+	text-align: center;
+	padding-bottom: 2vw;
+}
+
+#container {
+	width: 60vw;
+	margin: auto;
+	padding-left: 10vw;
+}
+
+#leftcol {
+	width: 45vw;
+	float: left;
+	font-size: 1vw;
+}
+#rightcol {
+	margin-left: 45vw;
+	font-size: .5vw;
+}
+
+.clear {
+	clear: both;
+}
