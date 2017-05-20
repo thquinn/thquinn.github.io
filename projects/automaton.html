@@ -1,30 +1,34 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>Quinn Automata</title>
 		<link rel="stylesheet" type="text/css" href="../resources/css/main.css" />
 	</head>
 	<body>
-		<a href="../index.html">
-			<div id="header">
-				<h1>Tom Quinn</h1>
-				<h3>thquinn.github.io</h3>
-			</div>
-		</a>
+		<div id="header">
+			<a href="../index.html"><h1>Tom Quinn</h1></a>
+			<a href="../index.html"><h3>thquinn.github.io</h3></a>
+		</div>
 		<div id="spacer">&nbsp;</div>
 		<div id="bg">
 			<div id="twocol">
 				<div id="leftcol">
-					<h2>Subset Sum Cellular Automaton</h2>
-					<p>Words go in here. Lots of them. Words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words.</p>
-					<p>It's a new paragraph. That's fine.</p>
-					<p>This is fine.</p>
-					<p>But wait -- here comes an inline image!</p>
-					<img src="../resources/images/automaton/mandala.gif" />
-					<p>That was crazy. Let's promise to never do that again.</p>
-					<img src="../resources/images/automaton/whorls.gif" />
-					<p>Whooooooooa, my miiiiiiiiiind~!</p>
-					<img src="../resources/images/automaton/pulsars.gif" />
-					UnnggghhhhhhhhhhHHHHHHHHH!!!!!
+					<h2>Quinn Automata</h2>
+					<p><b>Quinn Automata</b> are a family of cellular automata. They're on a square grid like <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life</a>, but instead of each cell being just on or off, the state is an integer:</p>
+					<img src="../resources/images/automaton/diagram1.png" />
+					<p>An automaton in this family is defined by three integer parameters: a <i>target offset</i>, a <i>reward</i>, and a <i>penalty</i>. At each time step, each cell determines its target number by adding the target offset to its own value and checks its orthogonal and diagonal neighbors to see if any subset of them sum to this number. If such a subset exists, the reward is added to the cell. If not, the penalty is subtracted from the cell. The minimum allowed value of a cell is 0.</p>
+					<p>The example comes from the <b>+3/1/1</b> automaton, meaning the target offset is +3, the reward is 1, and the penalty is 1. Some example iterations:</p>
+					<img src="../resources/images/automaton/diagram2.png" />
+					<p>The target number for this cell is 14 (11+3). There's exactly one subset of its neighbors which sum to 14 — the two 7s — but that's enough for it to earn its reward. This cell's value will increase by the reward (1) to 12 during the next time step.</p>
+					<img src="../resources/images/automaton/diagram3.png" />
+					<p>The target for this cell is 15 (12+3), and there are four subsets of its neighbors that sum to 15: each of the 15s by themselves. This cell's value will go up to 13.</p>
+					<img src="../resources/images/automaton/diagram4.png" />
+					<p>The target for this cell is 16 (13+3) and, although there are subsets of its neighbors that sum to 15 and 17, there's no subset that sums to 16. This cell's value will decrease by the penalty (1) to 12 next tick.</p>
+					<p>Here's what it looks like running from a random seed:</p>
+					<img src="../resources/images/automaton/pulsars.gif" style="width: 50%; image-rendering: pixelated;" />
+					<p>Many Quinn automata have this chaotic, pulsating appearance. Clusters of low values tend to increase, since it's easy to sum them together to whatever target number you're trying to reach, and clusters of high values tend to decrease because they don't have access to smaller neighbors that get them to the exact value they need. In +3/1/1, the penalty is low enough that even when the values of the fan-like structures become too large and they begin to collapse, they stick around until the chaotic low-value medium around them aligns in such a way that they can grow again.</p>
+					<p>+3/1/1 doesn't look Life-like: there are no still lifes, no oscillators, and no spaceships. It's kind of tough to have a still life when cells are being either rewarded or penalized every turn; oscillators, though, we can do. Here's an oscillator of period 4 in <b>+5/4/7</b>:</p>
+					<img src="../resources/images/automaton/diagram5.png" />
 				</div>
 				<div id="rightcol">
 					<a href="/">home</a>

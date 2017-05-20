@@ -16,12 +16,6 @@ body {
 
 /* common */
 
-#header {
-	text-align: center;
-	padding-bottom: .75vw;
-	background: #FFF;
-}
-
 h1 {
 	margin: 0px;
 	font-weight: inherit;
@@ -33,7 +27,7 @@ h2 {
 	margin: 0px;
 	font-weight: inherit;
 	font-size: 2.25vw;
-	padding-bottom: 1vw;
+	padding-bottom: .5vw;
 }
 
 h3 {
@@ -49,6 +43,16 @@ p {
 
 a {
 	text-decoration: inherit;
+	color: #666;
+}
+
+#header {
+	text-align: center;
+	padding-bottom: .75vw;
+	background: #FFF;
+}
+
+#header a {
 	color: inherit;
 }
 
@@ -56,6 +60,7 @@ a {
 
 #onecol {
 	width: 50vw;
+	min-width: 768px;
 	margin: 1vw auto;
 }
 
@@ -111,6 +116,7 @@ a {
 
 #twocol {
 	width: 65vw;
+	min-width: 768px;
 	margin: auto;
 	padding-left: 10vw;
 	padding-top: 1vw;
@@ -118,19 +124,19 @@ a {
 
 #leftcol {
 	float: left;
-	width: 50vw;
+	width: 75%;
 }
 
 #leftcol img {
-	width: 50%;
+	width: 80%;
 	display: block;
     margin: 1vw auto;
-    image-rendering: pixelated;
+    
 }
 
 #rightcol {
-	margin-left: 50vw;
-	font-size: .8vw;
+	margin-left: 75%;
+	font-size: 100%;
 	padding-left: 1vw;
 }
 
