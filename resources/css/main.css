@@ -127,11 +127,27 @@ a {
 	width: 75%;
 }
 
-#leftcol img {
+#leftcol > img {
 	width: 80%;
 	display: block;
     margin: 1vw auto;
-    
+}
+
+.imagegrid {
+	font-size: 0;
+}
+.imagegrid > * {
+	display: inline-block;
+	width: 46%;
+	margin: 2%;
+	vertical-align: top;
+	margin-bottom: 1vw;
+}
+.imagecaption {
+	margin-top: .25vw;
+	font-size: .875vw;
+	text-align: center;
+	color: #888;
 }
 
 #rightcol {
