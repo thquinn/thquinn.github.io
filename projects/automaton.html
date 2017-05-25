@@ -17,7 +17,7 @@
 					<p><b>Quinn Automata</b> are a family of cellular automata. They're on a square grid like <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life</a>, but instead of each cell being just on or off, the state is an integer:</p>
 					<img src="../resources/images/automaton/diagram1.png" />
 					<p>An automaton in this family is defined by three integer parameters: a <i>target offset</i>, a <i>reward</i>, and a <i>penalty</i>. At each time step, each cell determines its target number by adding the target offset to its own value and checks its orthogonal and diagonal neighbors to see if any subset of them sum to this number. If such a subset exists, the reward is added to the cell. If not, the penalty is subtracted from the cell. The minimum allowed value for a cell is 0.</p>
-					<p>The above example comes from the <b>+3/1/1</b> automaton, meaning the target offset is +3, the reward is 1, and the penalty is 1. Some example iterations:</p>
+					<p>The above example comes from the +3/1/1 automaton, meaning the target offset is +3, the reward is 1, and the penalty is 1. Some example iterations:</p>
 					<img src="../resources/images/automaton/diagram2.png" />
 					<p>The target number for this cell is 14 (11+3). There's exactly one subset of its neighbors which sum to 14 — the two 7s — but that's enough for it to earn its reward. This cell's value will increase by the reward (1) to 12 during the next time step.</p>
 					<img src="../resources/images/automaton/diagram3.png" />
@@ -63,7 +63,7 @@
 							<div class="imagecaption">+3/1/∞</div>
 						</div>
 					</div>
-					<p>I tend to see the most interesting results when the reward and penalty are coprime; in this way each cell can potentially reach any value. It's also easy to create rules that tend towards divergent patterns that, while cool looking in their own way, don't often exhibit complex behavior. An example in +1/1/1, where a small seed of alternating 1s and 0s begin a gradient of values that always have a neighbor with the value of their target number:</p>
+					<p>You tend to see the most interesting results when the reward and penalty are coprime; this way any cell can reach any value. It's also easy to create rules that tend towards divergent patterns that, while cool looking in their own way, don't often exhibit complex behavior. An example in +1/1/1, where a small seed of alternating 1s and 0s begin a gradient of values that always have a neighbor with the value of their target number:</p>
 					<img src="../resources/images/automaton/diagram7.png" />
 					<img src="../resources/images/automaton/divergent.gif" style="width: 50%; image-rendering: pixelated;" />
 				</div>
