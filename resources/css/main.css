@@ -43,7 +43,7 @@ p {
 
 a {
 	text-decoration: inherit;
-	color: #666;
+	color: #669;
 }
 
 #header {
@@ -119,7 +119,7 @@ a {
 	min-width: 768px;
 	margin: auto;
 	padding-left: 10vw;
-	padding-top: 1vw;
+	padding-top: 1.5vw;
 }
 
 #leftcol {
@@ -135,6 +135,7 @@ a {
 
 .imagegrid {
 	font-size: 0;
+	margin: -1vw auto;
 }
 .imagegrid > * {
 	display: inline-block;
@@ -144,16 +145,17 @@ a {
 	margin-bottom: 1vw;
 }
 .imagecaption {
-	margin-top: .25vw;
-	font-size: .875vw;
-	text-align: center;
+	padding-top: .5vw;
+	margin: 0% 2.5%;
+	font-size: .75vw;
+	text-align: justify;
 	color: #888;
 }
 
 #rightcol {
 	margin-left: 75%;
-	font-size: 100%;
-	padding-left: 1vw;
+	font-size: 75%;
+	padding-left: 2vw;
 }
 
 .clear {
