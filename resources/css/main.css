@@ -144,10 +144,13 @@ a {
 	vertical-align: top;
 	margin-bottom: 1vw;
 }
+.imagegrid img {
+	width: 100%;
+}
 .imagecaption {
 	padding-top: .5vw;
 	margin: 0% 2.5%;
-	font-size: .75vw;
+	font-size: .625vw;
 	text-align: justify;
 	color: #888;
 }

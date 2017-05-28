@@ -16,8 +16,8 @@
 					<h2>Subset Sum Automata</h2>
 					<p><b>Subset sum automata</b> are a family of cellular automata based on the <a href="https://en.wikipedia.org/wiki/Subset_sum_problem">subset sum problem</a>. They're on a square grid like <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life</a>, but instead of each cell being just on or off, the state is an integer:</p>
 					<img src="../resources/images/automaton/diagram1.png" />
-					<p>An automaton in this family is defined by three integer parameters: a <i>target offset</i>, a <i>reward</i>, and a <i>penalty</i>. At each time step, each cell determines its target number by adding the target offset to its own value and checks its orthogonal and diagonal neighbors to see if any subset of them sum to this number. If such a subset exists, the reward is added to the cell. If not, the penalty is subtracted from the cell. The minimum allowed value for a cell is 0.</p>
-					<p>The above example comes from the +3/1/1 automaton, meaning the target offset is +3, the reward is 1, and the penalty is 1. Some example checks:</p>
+					<p>A subset sum automaton is defined by three integer parameters: a <i>target offset</i>, a <i>reward</i>, and a <i>penalty</i>. At each time step, each cell determines its target number by adding the target offset to its own value and checks its orthogonal and diagonal neighbors to see if any subset of them sum to this number. If such a subset exists, the reward is added to the cell. If not, the penalty is subtracted from the cell. The minimum allowed value for a cell is 0.</p>
+					<p>The above image comes from the +3/1/1 automaton, meaning the target offset is +3, the reward is 1, and the penalty is 1. Some examples:</p>
 					<img src="../resources/images/automaton/diagram2.png" />
 					<p>The target number for this cell is 14 (11+3). There's exactly one subset of its neighbors which sum to 14 — the two 7s — but that's enough for it to earn its reward. This cell's value will increase by the reward (1) to 12 next generation.</p>
 					<img src="../resources/images/automaton/diagram3.png" />
@@ -26,51 +26,101 @@
 					<p>The target for this cell is 16 (13+3) and, although there are subsets of its neighbors that sum to 15 and 17, there's no subset that sums to 16. This cell's value will decrease by the penalty (1) to 12 next generation.</p>
 					<p>Here's what it looks like running from a random seed:</p>
 					<img src="../resources/images/automaton/pulsars.gif" style="width: 50%; image-rendering: pixelated;" />
-					<p>Many members of the subset sum automata have this chaotic, pulsating appearance. Clusters of low values tend to increase, since it's easy to sum them together to whatever target number you're trying to reach, and clusters of high values tend to decrease because they don't have access to smaller neighbors that get them to the exact value they need. In +3/1/1, the penalty is low enough that even when the values of the fan-like structures become too large and they begin to collapse, they stick around until the low-value medium around them aligns in such a way that they can grow again.</p>
-					<p>+3/1/1 doesn't look Life-like: there are no <a href="http://conwaylife.com/wiki/Still_life">still lifes</a>, no <a href="http://conwaylife.com/wiki/Oscillator">oscillators</a>, and no <a href="http://conwaylife.com/wiki/Spaceship">spaceships</a>. It's impossible to have a still life when cells are being either rewarded or penalized every turn; oscillators, though, we can do. Here's a period-4 one in +5/4/7:</p>
+					<p>Many subset sum automata have this chaotic, pulsating appearance. Clusters of low values tend to increase, since it's easy to sum them together to whatever target number you're trying to reach, and clusters of high values tend to decrease because they don't have access to smaller neighbors that get them to the exact value they need. In +3/1/1, the penalty is low enough that even when the values of the fan-like structures become too large and they begin to collapse, they stick around until the low-value medium around them aligns in such a way that they can grow again.</p>
+					<p>+3/1/1 doesn't look Life-like: there are no <a href="http://conwaylife.com/wiki/Still_life">still lifes</a>, no <a href="http://conwaylife.com/wiki/Oscillator">oscillators</a>, and no <a href="http://conwaylife.com/wiki/Spaceship">spaceships</a>. It's impossible to have a still life when cells are being either rewarded or penalized every turn; oscillators, though, we can do. Here's one with period 4 in +5/4/7:</p>
 					<img src="../resources/images/automaton/diagram5.png" />
 					<p>And a c/8 spaceship in +12/5/9:</p>
 					<img src="../resources/images/automaton/diagram6.png" style="width: 100%;" />
-					<p>Despite being one of the simpler spaceships I've found, its cells oscillate between as few as two states (0 and 5 on the outermost shell that appears in only one generation in every eight), and as many as twenty-two (cells in the central column go through the series 0, 5, 10, 15, 20, 25, 30, 21, 12, 17, 22, 27, 32, 37, 28, 19, 10, 1, 6, 11, 2, 7).</p>
+					<p>Despite being one of the simpler spaceships I've found, its cells oscillate between as few as two states (0 and 5 on the outermost shell that appears in only one generation in every eight), and as many as twenty-two in the central column.</p>
 					<p>Between the Life-like and the un-Life-like, plenty of variety can be found just by fiddling with the target offset, penalty, and reward:</p>
-					<div class="imagegrid">
+					<div class="imagegrid" style="image-rendering: pixelated;">
 						<div>
-							<img src="../resources/images/automaton/chunks.gif" style="width: 100%; image-rendering: pixelated;" />
+							<img src="../resources/images/automaton/chunks.gif" />
 							<div class="imagecaption"><b>+9/5/4:</b> blocky gradients that become less and less diverse until they ultimately die.</div>
 						</div>
 						<div>
-							<img src="../resources/images/automaton/sparkles.gif" style="width: 100%; image-rendering: pixelated;" />
+							<img src="../resources/images/automaton/sparkles.gif" />
 							<div class="imagecaption"><b>+1/7/6:</b> a dense system of long-tailed gliders.</div>
 						</div>
 						<div>
-							<img src="../resources/images/automaton/maze.gif" style="width: 100%; image-rendering: pixelated;" />
+							<img src="../resources/images/automaton/maze.gif" />
 							<div class="imagecaption"><b>+2/5/8:</b> striated spacefilling regions surrounded by higher values that consume them.</div>
 						</div>
 						<div>
-							<img src="../resources/images/automaton/whorls.gif" style="width: 100%; image-rendering: pixelated;" />
+							<img src="../resources/images/automaton/whorls.gif" />
 							<div class="imagecaption"><b>+3/1/∞:</b> a system of octagonal whorls that eventually stabilizes. A large-ish number can stand in for infinity.</div>
 						</div>
 						<div>
-							<img src="../resources/images/automaton/mandala.gif" style="width: 100%; image-rendering: pixelated;" />
+							<img src="../resources/images/automaton/mandala.gif" />
 							<div class="imagecaption"><b>+4/3/4:</b> seeded with a 2x2 square of 2s, creates an expanding mandala-like pattern. Values stay within [0,8] with the occasional 11 for the first 226 generations, when finally two 11s have each other and a 4 as neighbors, beginning a cascade of higher numbers.</div>
 						</div>
 						<div>
-							<img src="../resources/images/automaton/puffers.gif" style="width: 100%; image-rendering: pixelated;" />
+							<img src="../resources/images/automaton/puffers.gif" />
 							<div class="imagecaption"><b>+3/5/7:</b> a mixture of elementary replicators, gliders, and divergent "still lifes."</div>
 						</div>
 					</div>
-					<p>You tend to see the most interesting results when the reward and penalty are coprime; this way any cell can reach any value. For example, a rule with a reward of 2 and a penalty of 4 could never see odd values become even or odd values become even. On the subject of undesirable parameters, it's also easy to create rules that tend towards divergent patterns that, while cool looking in their own way, are really just numbers getting larger in larger in a predictable way. A rule with a higher reward than penalty will tend to diverge (but not always, as a couple rules above show). In addition, a low target offset increases the odds of divergence. An example is +1/1/1, where a small seed of alternating 1s and 0s can grow adjacent cells to arbitrarily large values:</p>
+					<p>You tend to see the most interesting results when the reward and penalty are coprime; this way any cell can reach any value. For example, a rule with a reward of 2 and a penalty of 4 could never see odd values become even or odd values become even. On the subject of undesirable parameters, it's dangerously easy to create rules that tend towards divergent patterns that, while cool looking in their own right, are really just numbers getting larger in larger in a predictable way. A rule with a higher reward than penalty will tend to diverge (but not always, as some of the rules above show). A low target offset also increases the odds of divergence. An example is +1/1/1, where a small seed of alternating 1s and 0s can grow adjacent cells to arbitrarily large values:</p>
 					<img src="../resources/images/automaton/diagram7.png" />
 					<p>Which can "crystallize" a gradient of values that always have a neighbor with the value of their target number just one higher than themselves:</p>
 					<img src="../resources/images/automaton/divergent.gif" style="width: 50%; image-rendering: pixelated;" />
 					<p>Another type of divergent pattern never grows in population but nevertheless reaches arbitrarily large values, like this small square in +3/5/7:</p>
 					<img src="../resources/images/automaton/diagram8.png" />
-					<p>Unlike their plane-devouring brethren, these bounded divergent clusters can be extremely useful for pattern construction. They're nearly impossible to disrupt and their values are only ever useful for summing to their own target numbers, meaning that as far as their neighbors are concerned, they might as well be locked at 0. This ability to "shut off" cells makes for readily controllable machinery, as in this +3/5/7 glider gun derived from naturally occurring patterns:</p>
+					<p>Unlike their plane-devouring brethren, these bounded divergent clusters can be useful for pattern construction. They're nearly impossible to disrupt and their values are only ever fit for summing to their own target numbers, meaning that as far as their neighbors are concerned, they're worthless for summing to moderate values and might as well be locked at 0. This ability to "shut off" cells makes for readily controllable machinery, as in this +3/5/7 glider gun derived from naturally occurring patterns:</p>
 					<img src="../resources/images/automaton/gun.gif" style="width: 50%; image-rendering: pixelated;" />
 					<p>By far the strangest thing I've found is this, a <a href="http://conwaylife.com/wiki/Replicator">replicator</a> spaceship:</p>
 					<img src="../resources/images/automaton/replicator.gif" style="width: 50%; image-rendering: pixelated;" />
 					<p>This self-duplicating spaceship runs in a variant of +10/3/11 that allows each cell to use its own value as well as the values of its neighbors to sum to the target number. It occurs naturally and with high frequency in random <a href="http://conwaylife.com/wiki/Soup">soups</a> using this rule, along with several similar spaceships that don't replicate.</p>
-					<!-- Aaaaaand we need some kind of conclusion...? -->
+					<p>I haven't yet found a variant of the subset sum automata that matches the simultaneous unpredictability and intuitiveness of beloved and better studied CA like Life. Obviously. There are, though, plenty of avenues still to be explored. A <a href="https://catagolue.appspot.com/statistics">programmatic search for interesting patterns in the ash of random soups</a> would find plenty of cool stuff I didn't have the patience to look for in my hand-tuned experiments. I've been surprised by how different a rule's behavior can be when you only use orthogonal neighbors, or throw in a cell's own value as in my replicator example. There are a couple of interesting rules that use a constant target number instead a target offset, and the new sums you can find by permitting negative numbers are probably worth checking into... but ultimately, the only thing I know about subset sum automata is that they make some pretty cool GIFs.</p>
+					<div class="imagegrid" style="image-rendering: pixelated;">
+						<div>
+							<img src="../resources/images/automaton/diamond.gif" />
+							<div class="imagecaption"><b>+4/9/5, orthogonal neighbors only:</b> checkered medium (unsurprising given the orthogonal restriction) chased by solid edges, gives way after thousands of generations to overlapping diamond whorls.</div>
+						</div>
+						<div>
+							<img src="../resources/images/automaton/rectangles.gif" />
+							<div class="imagecaption"><b>+6/3/5, orthogonal neighbors only:</b> checkered regions that are strangely particular about where they spread. Sometimes there are cool little sparks that flit around.</div>
+						</div>
+						<div>
+							<img src="../resources/images/automaton/fill.gif" />
+							<div class="imagecaption"><b>+4/3/5, orthogonal neighbors only:</b> spacefilling patterns that are quickly overtaken by ones that freeze them from the inside out.</div>
+						</div>
+						<div>
+							<img src="../resources/images/automaton/puddles.gif" />
+							<div class="imagecaption"><b>+6/3/8, orthogonal neighbors and self:</b> rainbow whorls reminiscent of continuous CAs, despite ignoring even diagonal neighbors.</div>
+						</div>
+						<div>
+							<img src="../resources/images/automaton/seethe.gif" />
+							<div class="imagecaption"><b>=7/1/1, all neighbors and self:</b> as opposed to +7/1/1, cells are only looking for subsets that add up to 7 exactly. Intersecting divergent veins spread across the plane.</div>
+						</div>
+						<div>
+							<img src="../resources/images/automaton/bloom.gif" />
+							<div class="imagecaption"><b>+1/1/2, orthogonal neighbors only:</b> seeded with a 2x2 square of 1s, creates a short-lived bloom with higher-value wake.</div>
+						</div>
+						<div>
+							<img src="../resources/images/automaton/waves.gif" />
+							<div class="imagecaption"><b>+10/7/4, orthogonal neighbors only:</b> diagonal waves and systems of oscillators running on the same base reaction.</div>
+						</div>
+						<div>
+							<img src="../resources/images/automaton/lifelike.gif" />
+							<div class="imagecaption"><b>+9/4/7:</b> reactions both symmetrical and asymmetrical, plenty of the "simple" gliders found in lots of subset sum automata. Quite Life-like but with not much tendency to settle.</div>
+						</div>
+						<div>
+							<img src="../resources/images/automaton/wide.gif" />
+							<div class="imagecaption"><b>+9/5/6:</b> tons of fun glider types, including some waves.</div>
+						</div>
+						<div>
+							<img src="../resources/images/automaton/oscillators.gif" />
+							<div class="imagecaption"><b>+9/8/4:</b> a wide variety of period-3 oscillators. Might have something to do with the shared factor between the reward and penalty? We may never know.</div>
+						</div>
+						<div>
+							<img src="../resources/images/automaton/tangles.gif" />
+							<div class="imagecaption"><b>+13/11/15:</b> tangled-up concentric shapes with shared gradients rippling throughout. Similarly to +9/5/4, eventually dies to a lack of numerical diversity.</div>
+						</div>
+						<div>
+							<img src="../resources/images/automaton/interference.gif" />
+							<div class="imagecaption"><b>=2/1/∞, orthogonal neighbors and self:</b> collisions between geometric waves, leading to right-angled interference zones.</div>
+						</div>
+					</div>
 				</div>
 				<div id="rightcol">
 					<div><a href="/">home</a></div>
