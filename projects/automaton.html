@@ -15,6 +15,7 @@
 			<div id="twocol">
 				<div id="leftcol">
 					<h2>Subset Sum Automata</h2>
+					<p class="disclaimer">WARNING: Contains brightly colored, rapidly flashing patterns. Best viewed in Chrome.</p>
 					<p><b>Subset sum automata</b> are a family of cellular automata based on the <a href="https://en.wikipedia.org/wiki/Subset_sum_problem">subset sum problem</a>. They're on a square grid like <a href="https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life">Conway's Game of Life</a>, but instead of each cell being just on or off, the state is a nonnegative integer:</p>
 					<img src="../resources/images/automaton/diagram1.png" />
 					<p>A subset sum automaton is defined by three integer parameters: a <i>target offset</i>, a <i>reward</i>, and a <i>penalty</i>. At each time step, each cell determines its target number by adding the target offset to its own value and checks its orthogonal and diagonal neighbors to see if any subset of them sum to this number. If such a subset exists, the reward is added to the cell. If not, the penalty is subtracted from the cell.</p>
@@ -60,7 +61,7 @@
 							<div class="imagecaption"><b>+3/5/7:</b> a mixture of elementary replicators, spaceships, and divergent "still lifes."</div>
 						</div>
 					</div>
-					<p>You tend to see the most interesting results when the reward and penalty are coprime; this way any cell can reach any value. For example, a rule with a reward of 2 and a penalty of 4 could never see odd values become even or odd values become even. On the subject of undesirable parameters, it's easy to create rules that tend towards divergent patterns that, while cool looking in their own right, are really just numbers getting larger in larger in a predictable way. A rule with a higher reward than penalty will tend to diverge (but not always, as some of the rules above show). A low target offset also increases the odds of divergence. An example is +1/1/1, where a small seed of alternating 1s and 0s can grow adjacent cells to arbitrarily large values:</p>
+					<p>You tend to see the most interesting results when the reward and penalty are coprime; this way any cell can reach any value. For example, a rule with a reward of 2 and a penalty of 4 could never see odd values become even or odd values become even. On the subject of undesirable parameters, it's easy to create rules that tend towards divergent patterns that, while nifty in their own right, are really just numbers getting larger in larger in a predictable way. A rule with a higher reward than penalty will tend to diverge (but not always, as some of the rules above show). A low target offset also increases the odds of divergence. An example is +1/1/1, where a small seed of alternating 1s and 0s can grow adjacent cells to arbitrarily large values:</p>
 					<img src="../resources/images/automaton/diagram7.png" />
 					<p>Which can "crystallize" a gradient of values that always have a neighbor with the value of their target number just one higher than themselves:</p>
 					<img src="../resources/images/automaton/divergent.gif" style="width: 50%; image-rendering: pixelated;" />
@@ -75,7 +76,7 @@
 					<img src="../resources/images/automaton/replicator.gif" style="width: 50%; image-rendering: pixelated;" />
 					<p>This self-duplicating spaceship runs in a variant of +10/3/11 that allows each cell to use its own value as well as the values of its neighbors to sum to the target number. It occurs naturally and with high frequency in random <a href="http://conwaylife.com/wiki/Soup">soups</a> using this rule. It begins life with a population of just 8 (which can be trivially reduced to 6) and 48 generations later emits a copy of its earlier self. What makes this replicator somewhat unusual, I think, is that the "mature" version of it — once it has emitted a copy — can no longer replicate. It's like an actual organism, except that it doesn't die. But since that makes it a linear-growth pattern, I guess that's okay with me.</p>
 					<img src="../resources/images/automaton/diagram10.png" style="width: 100%;" />
-					<p>I haven't yet found a variant of the subset sum automata that matches the simultaneous unpredictability and intuitiveness of beloved and better studied CA like Life. Obviously. There are, though, plenty of avenues still to be explored. A <a href="https://catagolue.appspot.com/statistics">programmatic search for interesting patterns in the ash of random soups</a> would find plenty of cool stuff I didn't have the patience to look for in my hand-tuned experiments. I've been surprised by how different a rule's behavior can be when you only use orthogonal neighbors, or throw in a cell's own value as in my replicator example. There are a couple of interesting rules that use a constant target number instead a target offset, and the new sums you can find by permitting negative numbers are probably worth checking into... but ultimately, the only thing I know about subset sum automata is that they make some pretty cool GIFs.</p>
+					<p>I haven't yet found a variant of the subset sum automata that matches the simultaneous unpredictability and intuitiveness of beloved and better studied CA like Life. Obviously. There are, though, plenty of avenues still to be explored. A <a href="https://catagolue.appspot.com/statistics">programmatic search for patterns in the ash of random soups</a> would find plenty of stuff I didn't have the patience to look for in my hand-tuned experiments. I've been surprised by how different a rule's behavior can be when you only use orthogonal neighbors, or throw in a cell's own value as in my replicator example. There are a couple of non-divergent rules that use a constant target number instead a target offset, and the new sums you can find by permitting negative numbers are probably worth checking into... but ultimately, the only thing I know about subset sum automata is that they make some pretty cool GIFs.</p>
 					<div class="imagegrid" style="image-rendering: pixelated;">
 						<div>
 							<img src="../resources/images/automaton/diamond.gif" />
@@ -83,7 +84,7 @@
 						</div>
 						<div>
 							<img src="../resources/images/automaton/rectangles.gif" />
-							<div class="imagecaption"><b>+6/3/5, orthogonal neighbors only:</b> checkered regions that are strangely particular about where they spread. Sometimes there are cool little sparks that flit around.</div>
+							<div class="imagecaption"><b>+6/3/5, orthogonal neighbors only:</b> checkered regions that are strangely particular about where they spread. Sometimes there are little sparks that flit around.</div>
 						</div>
 						<div>
 							<img src="../resources/images/automaton/fill.gif" />
