@@ -67,11 +67,14 @@
 					<p>Another type of divergent pattern never grows in population but nevertheless reaches arbitrarily large values, like this small square in +3/5/7:</p>
 					<img src="../resources/images/automaton/diagram8.png" />
 					<p>Unlike their plane-devouring brethren, these bounded divergent clusters can be useful for pattern construction. They're nearly impossible to disrupt and their values are only ever fit for summing to their own target numbers, meaning that as far as their neighbors are concerned, they're worthless for summing to moderate values and might as well be locked at 0. This ability to "shut off" cells makes for readily controllable machinery, as in this +3/5/7 gun derived from naturally occurring patterns:</p>
-					<img src="../resources/images/automaton/gun.gif" style="width: 50%; image-rendering: pixelated;" />
+					<div class="imagerow">
+						<img src="../resources/images/automaton/gun.gif" style="image-rendering: pixelated;" />
+						<img src="../resources/images/automaton/diagram9.png" />
+					</div>
 					<p>But by far the strangest thing I've found doesn't have anything to do with diverging values. It's this, a <a href="http://conwaylife.com/wiki/Replicator">replicator</a> spaceship:</p>
 					<img src="../resources/images/automaton/replicator.gif" style="width: 50%; image-rendering: pixelated;" />
 					<p>This self-duplicating spaceship runs in a variant of +10/3/11 that allows each cell to use its own value as well as the values of its neighbors to sum to the target number. It occurs naturally and with high frequency in random <a href="http://conwaylife.com/wiki/Soup">soups</a> using this rule. It begins life with a population of just 8 (which can be trivially reduced to 6) and 48 generations later emits a copy of its earlier self. What makes this replicator somewhat unusual, I think, is that the "mature" version of it — once it has emitted a copy — can no longer replicate. It's like an actual organism, except that it doesn't die. But since that makes it a linear-growth pattern, I guess that's okay with me.</p>
-					<img src="../resources/images/automaton/diagram9.png" style="width: 100%;" />
+					<img src="../resources/images/automaton/diagram10.png" style="width: 100%;" />
 					<p>I haven't yet found a variant of the subset sum automata that matches the simultaneous unpredictability and intuitiveness of beloved and better studied CA like Life. Obviously. There are, though, plenty of avenues still to be explored. A <a href="https://catagolue.appspot.com/statistics">programmatic search for interesting patterns in the ash of random soups</a> would find plenty of cool stuff I didn't have the patience to look for in my hand-tuned experiments. I've been surprised by how different a rule's behavior can be when you only use orthogonal neighbors, or throw in a cell's own value as in my replicator example. There are a couple of interesting rules that use a constant target number instead a target offset, and the new sums you can find by permitting negative numbers are probably worth checking into... but ultimately, the only thing I know about subset sum automata is that they make some pretty cool GIFs.</p>
 					<div class="imagegrid" style="image-rendering: pixelated;">
 						<div>
