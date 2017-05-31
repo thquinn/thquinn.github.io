@@ -170,10 +170,30 @@ a {
 	font-style: italic;
 }
 
+.dotdotdot {
+	text-indent: inherit;
+	text-align: center;
+	font-size: 2vw;
+	word-spacing: 3vw;
+}
+.dotdotdot:after {
+	content: "· · ·";
+}
+
+.footnote {
+	font-size: .875vw;
+}
+
 #rightcol {
 	margin-left: 75%;
 	font-size: 75%;
 	padding-left: 2vw;
+}
+#rightcol > div {
+	padding-bottom: 1vw;
+}
+#rightcol > div > div:not(:first-child) {
+    text-indent: 10%;
 }
 
 .clear {
