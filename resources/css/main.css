@@ -110,6 +110,9 @@ canvas {
 .homethumb:hover div {
 	opacity: 1;
 }
+.homethumb div img {
+	width: 50%;
+}
 
 /* article */
 
