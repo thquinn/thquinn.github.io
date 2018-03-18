@@ -1,33 +1,23 @@
-// TODO: Music
+// TODO: Music! Use howler's preload.
 // TODO: Final polish!
-// 		Improve the vanishes for the new 3D look. A buncha triangles?
-//		More on-screen buttons. Mute SFX, mute music, pause.
+// 		Improve the vanishes for the new 3D look. Cube shape? Delaunay triangulation? (https://github.com/mapbox/delaunator)
 //		Better sound effects.
 //			Redo the mixing for multiple plays.
 //			Current sting specific to combos, align playback rate to chromatic scale ascending.
 //			A new effect for large piece destruction.
-//		Do another pass on colors.
-//		Redo the background incorporating the board perspective?
-// TODO: A speeder, replacing forced level increase? People are still having to wait for pieces, and the 12% over the 5% isn't that viscerally fun.
-// TODO: Drawing optimizations
-//		Try to rid of the second board canvas which seems necessary because the saturation blend mode is changing the alpha channel.
-// TODO: Move logic from mouse events to the main thread
+//		Do another pass on colors, including text.
+//		Call it something other than "settling the board."
 // TODO: Fix connections still breaking while falling side by side.
-// TODO: Show an example path if X seconds pass without the player getting points?
+// TODO: Move logic from mouse events to the main thread
 // TODO: Fix bad mouse events vs page interaction on mobile.
 // TODO: Combine SFX into a single wav, use Howler's "audio sprites"
-// TODO: Add sound credits, maybe just in source file?
-// TODO: findRandomMatch is creating an occasional caught type error.
-// TODO: Cram util.js up here, load the font here, and wait until it's loaded to show anything.
-// TODO: Google Analytics on the page.
+// TODO: Add sound credit
+// TODO: Wait for assets to load
+// TODO: Turn debug mode off
+// TODO: Minify
+// TODO: Back to Rawgit
 
 // KNOWN BUG: Text alignment is messed up in Firefox. Could maybe be fixed by using different baselines.
-
-// sfx:
-//		land: https://freesound.org/people/SuGu14/packs/5082
-//		break: https://freesound.org/people/sandyrb/sounds/148072/
-//		noise sweep: https://freesound.org/people/stair/sounds/387552/
-//		bass sweep: https://freesound.org/people/gellski/sounds/288879/
 
 const StateEnum = {
 	TITLE: -2,
@@ -49,26 +39,29 @@ const BOARD_WIDTH = 15;
 const BOARD_HEIGHT = 12;
 const SETUP_ROWS = 6;
 const SETUP_NO_CONNECTIONS = true;
-const COLUMN_SELECTION_WEIGHT_EXPONENT = 4;
-const COLOR_SELECTION_WEIGHT_MIN = 10;
-const COLOR_SELECTION_WEIGHT_EXPONENT = 2;
+const COLUMN_SELECTION_CHANCE_TO_WEIGHT = 1;
+const COLOR_SELECTION_CHANCE_TO_WEIGHT = .66;
 const GRAVITY = .005;
 const INITIAL_FALL_VELOCITY = .1;
 const LEVEL_RATE = 40 * 60; // 40 seconds
 const SPAWN_RATE_INITIAL = .75; // pieces spawned per second
-const SPAWN_RATE_INCREMENT = .1;
+const SPAWN_RATE_INCREMENT = .12;
 const SPAWN_RATE_INCREMENT_EXPONENT = .925;
+const SPAWN_RATE_SCALE_WITH_VACANCY = true;
 const MULTIPLIER_INCREMENT = .05;
-const MULTIPLIER_FORCE_INCREMENT = .12;
+const MULTIPLIER_FORCE_INCREMENT = .1;
+const ALLOW_INCREASE_LEVEL = true;
 const LEVEL_UP_FORCE_COOLDOWN = 1.5 * 60; // 1.5 seconds
 const CONNECTION_RATE = .015;
 const BOUNTY_POLYOMINOS = false;
 const QUAKE_METER = true;
 const QUAKE_METER_SIZE_INITIAL = 75;
-const QUAKE_METER_SIZE_INCREMENT = 25;
-const QUAKE_SPAWN_DELAY = 3 * 60; // 3 seconds
+const QUAKE_METER_SIZE_INCREMENT = 20;
+const QUAKE_SPAWN_DELAY = 6 * 60; // 6 seconds
+const QUAKE_ALLOW_WITHOUT_SETTLE = true;
 const COMBO_DELAY = 3 * 60; // 3 seconds
 const COMBO_POINTS = 200;
+const DEBUG_MODE = false;
 // Board appearance constants.
 const PIECE_SIZE = 60;
 const BOARD_3D = true;
@@ -78,9 +71,9 @@ const PERSPECTIVE_MAX_HEIGHT = .33;
 const FRONT_COLORS = ['#FF0000', '#20B0FF', '#F0D000', '#00D010', '#8040FF'];
 const SIDE_COLORS = ['#E50000', '#1EA0E5', '#D6BA00', '#00B80F', '#7339E5'];
 const BOTTOM_COLORS = ['#CC0000', '#1B8ECC', '#BDA400', '#009E0D', '#6633CC'];
-const BASE_COLOR = '#707090';
-const BASE_SIDE_COLOR = '#5B5B75';
-const BASE_BOTTOM_COLOR = '#48485C';
+const BASE_COLOR = '#818FA2';
+const BASE_SIDE_COLOR = '#6E7A8A';
+const BASE_BOTTOM_COLOR = '#5A6370';
 const STROKE_WIDTH = PIECE_SIZE / 6;
 const BOARD_PADDING = PIECE_SIZE;
 const CONNECTION_APPEARANCE_RATE = .2;
@@ -122,10 +115,14 @@ const UI_QUAKE_METER_HEIGHT = PIECE_SIZE * .5;
 const UI_QUAKE_METER_DEPTH = PIECE_SIZE;
 const UI_QUAKE_METER_X = BOARD_PADDING + PIECE_SIZE * BOARD_WIDTH / 2 - UI_QUAKE_METER_WIDTH / 2;
 const UI_QUAKE_METER_Y = canvas.height * .9425;
-const UI_QUAKE_METER_EMPTY_COLOR = '#8383A8';
+const UI_QUAKE_METER_EMPTY_COLOR = '#97A7BD';
 const UI_QUAKE_METER_FULL_COLOR = '#FAFAFF';
 const UI_QUAKE_METER_ATTRACT_Y = UI_QUAKE_METER_Y + UI_QUAKE_METER_HEIGHT / 2;
 const UI_EXAMPLE_MATCH_DELAY = 10 * 60; // 10 seconds
+const UI_MUTE_BUTTON_RADIUS = PIECE_SIZE / 3;
+const UI_MUTE_BUTTON_X = canvas.width - BOARD_PADDING / 5 - UI_MUTE_BUTTON_RADIUS;
+const UI_MUTE_BUTTON_Y = BOARD_PADDING / 5 + UI_MUTE_BUTTON_RADIUS;
+
 // Text constants.
 const TEXT_INSTRUCTIONS = ["There are five colors of blocks.",
 						   "Draw a line through one block of each color.",
@@ -133,10 +130,12 @@ const TEXT_INSTRUCTIONS = ["There are five colors of blocks.",
 						   "Survive as long as you can!",
 						   "",
 						   "Click to begin."];
-const TEXT_KEYS = ["Z: increase level",
-				   "P: pause",
-				   "M: toggle mute"];
-const TEXT_CREDITS = ["Quintacolor v 0.9.6",
+var TEXT_KEYS = ["P: pause",
+				 "M: mute/unmute"];
+if (ALLOW_INCREASE_LEVEL) {
+	TEXT_KEYS.unshift("Z: increase level")
+}
+const TEXT_CREDITS = ["Quintacolor v 0.9.7",
 			     "a game by Tom Quinn (thquinn.github.io)",
 			     "fonts Gilgongo and Source Sans Pro by Apostrophic Labs and Paul D. Hunt, respectively",
 			     "thanks to Arthee, Chet, Jay, Jonny, Maggie, San, and Tanoy",
@@ -165,9 +164,14 @@ const EFFECTS_QUAKE_STRENGTH = PIECE_SIZE / 10;
 const EFFECTS_QUAKE_FADE_SPEED = .01;
 const EFFECTS_QUAKE_LIGHT_FADE_SPEED = .01;
 // Sound constants.
+const SFX_LAND_VOLUME_MULTIPLIER = .75;
+const SFX_LAND_SETUP_VOLUME = .066;
+const SFX_BREAK_VOLUME = .2;
 const SFX_STING_MAX_VOL_PIECES = 12;
 const SFX_STING_RATE_FACTOR = .05;
+const SFX_SCORE_VOLUME = .05;
 const SFX_SCORE_REPETITION = 3;
+const SFX_QUAKE_VOLUME = .25;
 // 2D HTML5 context setup.
 const ctx = canvas.getContext('2d');
 ctx.lineCap = "square";
@@ -241,7 +245,9 @@ class Piece {
 			return;
 		}
 		// Select column.
-		if (col == null) {
+		if (col != null) { // Use predetermined column.
+			this.x = col;
+		} else if (Math.random() < COLUMN_SELECTION_CHANCE_TO_WEIGHT) { // Weight by empty space in each column.
 			let xWeights = new Array(BOARD_WIDTH).fill(0);
 			for (let x = 0; x < BOARD_WIDTH; x++) {
 				for (; xWeights[x] < BOARD_HEIGHT; xWeights[x]++) {
@@ -249,29 +255,39 @@ class Piece {
 						break;
 					}
 				}
-				xWeights[x] = Math.pow(xWeights[x], COLUMN_SELECTION_WEIGHT_EXPONENT);
+			}
+			let min = xWeights.min();
+			for (let i = 0; i < xWeights.length; i++) {
+				xWeights[i] -= min;
 			}
 			this.x = Math.pickFromWeightArray(xWeights);
-		} else {
-			this.x = col;
+		} else { // Choose a random column.
+			while (this.x == null || board[this.x][0] != null) {
+				this.x = Math.randInt(0, BOARD_WIDTH);
+			}
 		}
 		this.y = 0;
 		while (this.y < BOARD_HEIGHT - 1 && board[this.x][this.y + 1] == null) {
 			this.y++;
 		}
 		// Select color.
-		let colorWeights = new Array(COLORS.length).fill(COLOR_SELECTION_WEIGHT_MIN);
-		for (let x = 0; x < BOARD_WIDTH; x++) {
-			for (let y = 0; y < BOARD_WIDTH; y++) {
-				if (board[x][y] != null) {
-					colorWeights[board[x][y].color]++;
+		if (Math.random() < COLOR_SELECTION_CHANCE_TO_WEIGHT && !forceNoConnections) {
+			let colorWeights = new Array(COLORS.length).fill(0);
+			for (let x = 0; x < BOARD_WIDTH; x++) {
+				for (let y = 0; y < BOARD_WIDTH; y++) {
+					if (board[x][y] != null) {
+						colorWeights[board[x][y].color]++;
+					}
 				}
 			}
+			let max = colorWeights.max();
+			for (let i = 0; i < colorWeights.length; i++) {
+				colorWeights[i] = -(colorWeights[i] - max);
+			}
+			this.color = Math.pickFromWeightArray(colorWeights);
+		} else {
+			this.color = Math.randInt(0, COLORS.length);
 		}
-		for (let i = 0; i < colorWeights.length; i++) {
-			colorWeights[i] = 1 / Math.pow(colorWeights[i], COLOR_SELECTION_WEIGHT_EXPONENT);
-		}
-		this.color = Math.pickFromWeightArray(colorWeights);
 		if (COLORS.length >= 4 && forceNoConnections) {
 			let neighborColors = new Set();
 			if (this.x > 0 && board[this.x - 1][this.y] != null) {
@@ -284,7 +300,7 @@ class Piece {
 				neighborColors.add(board[this.x][this.y + 1].color);
 			}
 			while (neighborColors.has(this.color)) {
-				this.color = Math.pickFromWeightArray(colorWeights);
+				this.color = Math.randInt(0, COLORS.length);
 			}
 		}
 		// Initialize.
@@ -308,9 +324,9 @@ class Piece {
 			let fall = Math.min(this.dy, this.fallDistance, distanceToLowerNeighbor);
 			this.fallDistance -= fall;
 			if (this.fallDistance == 0) {
-				let vol = this.dy * .75;
+				let vol = this.dy * SFX_LAND_VOLUME_MULTIPLIER;
 				this.dy = 0;
-				playSFX(ASSET_SFX_LAND, state == StateEnum.SETUP ? .066 : vol);
+				playSFX(ASSET_SFX_LAND, state == StateEnum.SETUP ? SFX_LAND_SETUP_VOLUME : vol);
 			}
 		} else {
 			this.dy = 0;
@@ -470,7 +486,7 @@ class Background {
 		}
 		ctx.restore();
 		if (quakeLightEffect > 0) {
-			var alpha = quakeLightEffect * .25;
+			var alpha = quakeLightEffect * .5;
 			ctx.fillStyle = "rgba(0, 0, 0, " + alpha + ")";
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
 		}
@@ -650,6 +666,21 @@ function loop() {
 		}
 	}
 
+	// Draw mute button.
+	ctx.textAlign= 'center';
+	ctx.textBaseline = 'middle';
+	ctx.fillStyle = "#FFFFFF";
+	ctx.font = "bold " + (UI_MUTE_BUTTON_RADIUS * 1.5) + "px Source Sans Pro";
+	ctx.fillText('\u266B', UI_MUTE_BUTTON_X, UI_MUTE_BUTTON_Y);
+	if (localStorage.mute == 'true') {
+		ctx.strokeStyle = '#E00000';
+		ctx.lineWidth = PIECE_SIZE / 20;
+		ctx.beginPath();
+		ctx.arc(UI_MUTE_BUTTON_X, UI_MUTE_BUTTON_Y, UI_MUTE_BUTTON_RADIUS, .25 * Math.PI, 2.25 * Math.PI, false);
+		ctx.lineTo(UI_MUTE_BUTTON_X - Math.sqrt(2) / 2 * UI_MUTE_BUTTON_RADIUS, UI_MUTE_BUTTON_Y - Math.sqrt(2) / 2 * UI_MUTE_BUTTON_RADIUS);
+		ctx.stroke();
+	}
+
 	// Pause check.
 	if (keysPressed.has(KeyBindings.PAUSE) && (state == StateEnum.RUNNING || state == StateEnum.PAUSED)) {
 		state = state == StateEnum.RUNNING ? StateEnum.PAUSED : StateEnum.RUNNING;
@@ -695,11 +726,13 @@ function loop() {
 	if (quakeMeter < quakeMeterAppearance) {
 		quakeMeterAppearance = quakeMeter * .067 + quakeMeterAppearance * .933;
 	}
-	if (state == StateEnum.RUNNING && QUAKE_METER && keysPressed.has(KeyBindings.QUAKE) && quakeMeter >= quakeMeterSize) {
-		quake();
-		quakeMeter = 0;
-		quakeMeterAppearance = 0;
-		quakeMeterSize += QUAKE_METER_SIZE_INCREMENT;
+	if (state == StateEnum.RUNNING && QUAKE_METER && keysPressed.has(KeyBindings.QUAKE)) {
+		if (quakeMeter >= quakeMeterSize) {
+			quake();
+		} else if (DEBUG_MODE) {
+			quakeMeter = quakeMeterSize;
+			quakeMeterAppearance = quakeMeterSize;
+		}
 	}
 	// Update pieces.	
 	if (state == StateEnum.SETUP || state == StateEnum.RUNNING) {
@@ -723,7 +756,7 @@ function loop() {
 			scorePopup -= drainAmount;
 			scoreAppearance += drainAmount;
 			if (clock % SFX_SCORE_REPETITION == 0) {
-				playSFX(ASSET_SFX_SCORE, .05);
+				playSFX(ASSET_SFX_SCORE, SFX_SCORE_VOLUME);
 			}
 		}
 	}
@@ -737,7 +770,7 @@ function loop() {
 			level++;
 			multiplier += MULTIPLIER_INCREMENT;
 			levelTimer = LEVEL_RATE;
-		} else if (keysPressed.has(KeyBindings.INCREASE_LEVEL) && levelUpForceCooldown == 0) {
+		} else if (ALLOW_INCREASE_LEVEL && keysPressed.has(KeyBindings.INCREASE_LEVEL) && levelUpForceCooldown == 0) {
 			level++;
 			let add = Math.precisionRound(Math.lerp(MULTIPLIER_INCREMENT, MULTIPLIER_FORCE_INCREMENT, levelTimer / LEVEL_RATE), 2);
 			multiplier = Math.precisionRound(multiplier + add, 2);
@@ -749,6 +782,22 @@ function loop() {
 			if (!spawnBlocked) {
 				new Piece();
 				let rate = SPAWN_RATE_INITIAL + Math.pow((level - 1) * SPAWN_RATE_INCREMENT, SPAWN_RATE_INCREMENT_EXPONENT);
+				if (SPAWN_RATE_SCALE_WITH_VACANCY) {
+					let count = 0;
+					for (let x = 0; x < BOARD_WIDTH; x++) {
+						for (let y = 0; y < BOARD_HEIGHT; y++) {
+							if (board[x][y] != null) {
+								count += BOARD_HEIGHT - y;
+								break;
+							}
+						}
+					}
+					let percentFull = count / (BOARD_WIDTH * BOARD_HEIGHT);
+					if (percentFull < .5) {
+						let rateMultiplier = Math.min(.5 / percentFull, 4);
+						rate *= rateMultiplier;
+					}
+				}
 				spawnTimer += 60 / rate;
 			}
 		} else if (quakeSpawnDelay > 0) {
@@ -771,7 +820,7 @@ function loop() {
 	}
 	// Draw board.
 	if (state == StateEnum.GAME_OVER) {
-		// Create board mask.
+		// Create board mask. We could avoid the second canvas by using ctx.filter = saturate, but mobile Safari doesn't support it.
 		boardDesaturationCtx.clearRect(0, 0, boardDesaturationCanvas.width, boardDesaturationCanvas.height);
 		boardDesaturationCtx.drawImage(boardCanvas, 0, 0);
 		// Desaturate.
@@ -935,7 +984,7 @@ function loop() {
 	// Draw quake light effect.
 	if (quakeLightEffect > 0) {
 		// Fullscreen flash.
-		let fullscreenAlpha = Math.max(0, (quakeLightEffect - .75) * 4);
+		let fullscreenAlpha = Math.max(0, (quakeLightEffect - .9) * 10);
 		if (fullscreenAlpha > 0) {
 			ctx.fillStyle = "rgba(255, 255, 255, " + fullscreenAlpha + ")";
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -1017,8 +1066,16 @@ canvas.addEventListener('touchstart', function(e) {
 	mouseDownHelper(pos.x, pos.y, false);
 });
 function mouseDownHelper(x, y, rightClick) {
+	if (rightClick) {
+		selected = [];
+		return;
+	}
 	if (state == StateEnum.TITLE) {
 		state = StateEnum.SETUP;
+		return;
+	}
+	if (Math.hypot(x - UI_MUTE_BUTTON_X, y - UI_MUTE_BUTTON_Y) <= UI_MUTE_BUTTON_RADIUS) {
+		keysPressed.add(KeyBindings.MUTE);
 		return;
 	}
 	if (state == StateEnum.GAME_OVER && gameOverClock >= UI_GAME_OVER_FADE_TIME) {
@@ -1026,10 +1083,6 @@ function mouseDownHelper(x, y, rightClick) {
 		return;
 	}
 	if (state != StateEnum.RUNNING) {
-		return;
-	}
-	if (rightClick) {
-		selected = [];
 		return;
 	}
 	if (Math.hypot(x - UI_LEVEL_CIRCLE_X, y - UI_LEVEL_CIRCLE_Y) <= UI_LEVEL_CIRCLE_RADIUS) {
@@ -1089,7 +1142,7 @@ function mouseUpHelper() {
 		}
 		scorePoints(Math.round(piecesDestroyed * 100 * multiplier));
 		// Play sound effects.
-		playSFX(ASSET_SFX_BREAK, .2);
+		playSFX(ASSET_SFX_BREAK, SFX_BREAK_VOLUME);
 		let stingStrength = (piecesDestroyed - COLORS.length) / SFX_STING_MAX_VOL_PIECES;
 		if (piecesDestroyed > SFX_STING_MAX_VOL_PIECES) {
 			ASSET_SFX_STING.rate(1 + .1 * (piecesDestroyed - SFX_STING_MAX_VOL_PIECES));
@@ -1109,6 +1162,9 @@ function mouseUpHelper() {
 window.addEventListener('keydown', function(e) {
 	keysPressed.add(e.keyCode);
 	keysDown.add(e.keyCode);
+	if (e.keyCode == 32) {
+		e.preventDefault();
+	}
 });
 window.addEventListener('keyup', function(e) {
 	keysDown.delete(e.keyCode);
@@ -1332,6 +1388,10 @@ function drawPolyominoUI() {
 }
 
 function quake() {
+	if (!QUAKE_ALLOW_WITHOUT_SETTLE && !boardHasHole()) {
+		return;
+	}
+
 	for (let x = 0; x < BOARD_WIDTH; x++) {
 		for (let y = BOARD_HEIGHT - 1; y >= 0; y--) {
 			if (board[x][y] == null) {
@@ -1343,10 +1403,26 @@ function quake() {
 		}
 	}
 	fallCheck();
+	quakeMeter = 0;
+	quakeMeterAppearance = 0;
+	quakeMeterSize += QUAKE_METER_SIZE_INCREMENT;
 	quakeSpawnDelay = QUAKE_SPAWN_DELAY;
 	quakeScreenShake = 1;
 	quakeLightEffect = 1;
-	playSFX(ASSET_SFX_QUAKE, .25);
+	playSFX(ASSET_SFX_QUAKE, SFX_QUAKE_VOLUME);
+}
+function boardHasHole() {
+	for (let x = 0; x < BOARD_WIDTH; x++) {
+		let sawPiece = false;
+		for (let y = 0; y < BOARD_HEIGHT; y++) {
+			if (board[x][y] != null) {
+				sawPiece = true;
+			} else if (sawPiece && board[x][y] == null) {
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 start();
