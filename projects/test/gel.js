@@ -1,3 +1,8 @@
+// TODO
+//	- An on-click event
+//	- Convert to three.js JSON format
+//	- Consolidate libraries
+
 const canvas = document.getElementById('headerCanvas');
 
 THREE.Cache.enabled = true;
@@ -14,7 +19,7 @@ scene.add(light);
 var gel;
 
 var loader = new THREE.GLTFLoader();
-loader.load('https://rawgit.com/thquinn/thquinn.github.io/master/resources/3d/gel.gltf', function (object) {
+loader.load('../../resources/3d/gel.gltf', function (object) {
 	gel = object.scene.children[0];
 	for (let i = 0; i < gel.children[0].children.length; i++) {
 		for (let j = 0; j < 6; j++) {
@@ -83,11 +88,11 @@ class Interpolator {
 		return this.fromLow ? Math.randInt(this.lowWaitMin, this.lowWaitMax + 1) : Math.randInt(this.highWaitMin, this.highWaitMax + 1);
 	}
 }
-var squishInterpolator = new Interpolator(0, .1, .3, .4, 90, 120, 0, 0, 0, 0, true, true, false);
-var blinkInterpolator = new Interpolator(0, 0, 1, 1, 4, 4, 200, 300, 0, 0, false, true, true);
+var squishInterpolator = new Interpolator(-.25, -.1, .3, .4, 90, 120, 0, 0, 0, 0, true, true, false);
+var blinkInterpolator = new Interpolator(0, 0, 1, 1, 3, 3, 200, 300, 0, 0, false, true, true);
 var leafInterpolator = new Interpolator(0, .2, .4, .5, 300, 400, 30, 60, 30, 60, true, true, false);
 var leanInterpolator = new Interpolator(-.5, -.2, .2, .5, 300, 400, 30, 60, 30, 60, true, true, false);
-var turnInterpolator = new Interpolator(-.25, -.25, -.4, -.4, 10, 10, 500, 900, 200, 300, true, true, true);
+var turnInterpolator = new Interpolator(-.35, -.35, -.5, -.57, 10, 10, 500, 900, 200, 300, true, true, true);
 
 function loop() {
 	window.requestAnimationFrame(loop);
@@ -109,5 +114,4 @@ function loop() {
 
 	renderer.render(scene, camera);
 }
-
 loop();
