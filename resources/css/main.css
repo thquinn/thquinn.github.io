@@ -61,6 +61,10 @@ canvas {
 	text-align: center;
 	padding-bottom: .75vw;
 	background: #FFF;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 #header a {
