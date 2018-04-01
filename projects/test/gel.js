@@ -4,6 +4,7 @@
 //	- Consolidate libraries
 
 const canvas = document.getElementById('headerCanvas');
+canvas.style.opacity = 0;
 
 THREE.Cache.enabled = true;
 var scene = new THREE.Scene();
@@ -13,8 +14,11 @@ var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias:
 camera.position.z = 50;
 camera.position.y = 18;
 
-var light = new THREE.AmbientLight(0xFFFFFF, 1.75); // soft white light
+var light = new THREE.AmbientLight(0xFFFFFF, 1.75);
 scene.add(light);
+var light2 = new THREE.PointLight(0xFFFFFF, .5, 0);
+light2.position.set(150, 150, 150);
+scene.add(light2);
 
 var gel;
 
@@ -88,7 +92,7 @@ class Interpolator {
 		return this.fromLow ? Math.randInt(this.lowWaitMin, this.lowWaitMax + 1) : Math.randInt(this.highWaitMin, this.highWaitMax + 1);
 	}
 }
-var squishInterpolator = new Interpolator(-.25, -.1, .3, .4, 90, 120, 0, 0, 0, 0, true, true, false);
+var squishInterpolator = new Interpolator(-.25, -.15, .3, .35, 120, 150, 0, 0, 0, 0, true, true, false);
 var blinkInterpolator = new Interpolator(0, 0, 1, 1, 3, 3, 200, 300, 0, 0, false, true, true);
 var leafInterpolator = new Interpolator(0, .2, .4, .5, 300, 400, 30, 60, 30, 60, true, true, false);
 var leanInterpolator = new Interpolator(-.5, -.2, .2, .5, 300, 400, 30, 60, 30, 60, true, true, false);
@@ -98,6 +102,11 @@ function loop() {
 	window.requestAnimationFrame(loop);
 	
 	if (gel) {
+		let opacity = Number.parseFloat(canvas.style.opacity);
+		if (opacity < 1) {
+			canvas.style.opacity = Math.min(1, opacity + .033);
+		}
+
 		squishInterpolator.update();
 		blinkInterpolator.update();
 		leafInterpolator.update();

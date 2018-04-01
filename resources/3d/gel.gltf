@@ -7,7 +7,7 @@
     "buffers": [
         {
             "byteLength": 58892,
-            "uri": "buffer.bin"
+            "uri": "gel.bin"
         }
     ],
     "bufferViews": [
@@ -1487,9 +1487,9 @@
             },
             "pbrMetallicRoughness": {
                 "baseColorFactor": [
-                    0.588235318660736,
-                    0.588235318660736,
-                    0.588235318660736,
+                    0.75,
+                    0.75,
+                    0.75,
                     1.0
                 ],
                 "metallicFactor": 0.200000002980232,
