@@ -99,7 +99,11 @@ var leanInterpolator = new Interpolator(-.7, -.2, .2, .7, 300, 400, 30, 60, 30, 
 var turnInterpolator = new Interpolator(-.35, -.35, -.5, -.57, 10, 10, 500, 900, 200, 300, true, true, true);
 var interpolators = [squishInterpolator, blinkInterpolator, leafInterpolator, leanInterpolator, turnInterpolator];
 var cringeTimer = 0, cringe = 0;
-canvas.addEventListener('click', function() { if (cringe == 0) cringeTimer = 1; }, true);
+canvas.addEventListener('click', function(e) {
+	if (cringe == 0)
+		cringeTimer = 1;
+	e.preventDefault();
+});
 
 function loop() {
 	window.requestAnimationFrame(loop);
