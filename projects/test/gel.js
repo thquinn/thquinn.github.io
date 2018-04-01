@@ -12,7 +12,7 @@ var camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 10
 var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
 
 camera.position.z = 50;
-camera.position.y = 18;
+camera.position.y = 19;
 
 var light = new THREE.AmbientLight(0xFFFFFF, 1.75);
 scene.add(light);
@@ -95,8 +95,11 @@ class Interpolator {
 var squishInterpolator = new Interpolator(-.25, -.15, .3, .35, 120, 150, 0, 0, 0, 0, true, true, false);
 var blinkInterpolator = new Interpolator(0, 0, 1, 1, 3, 3, 200, 300, 0, 0, false, true, true);
 var leafInterpolator = new Interpolator(0, .2, .4, .5, 300, 400, 30, 60, 30, 60, true, true, false);
-var leanInterpolator = new Interpolator(-.5, -.2, .2, .5, 300, 400, 30, 60, 30, 60, true, true, false);
+var leanInterpolator = new Interpolator(-.7, -.2, .2, .7, 300, 400, 30, 60, 30, 60, true, true, false);
 var turnInterpolator = new Interpolator(-.35, -.35, -.5, -.57, 10, 10, 500, 900, 200, 300, true, true, true);
+var interpolators = [squishInterpolator, blinkInterpolator, leafInterpolator, leanInterpolator, turnInterpolator];
+var cringeTimer = 0, cringe = 0;
+canvas.addEventListener('click', function() { if (cringe == 0) cringeTimer = 1; }, false);
 
 function loop() {
 	window.requestAnimationFrame(loop);
@@ -107,18 +110,39 @@ function loop() {
 			canvas.style.opacity = Math.min(1, opacity + .033);
 		}
 
-		squishInterpolator.update();
-		blinkInterpolator.update();
-		leafInterpolator.update();
-		leanInterpolator.update();
-		turnInterpolator.update();
-		for (let i = 0; i < gel.children[0].children.length; i++) {
-			gel.children[0].children[i].morphTargetInfluences[0] = squishInterpolator.value;
-			gel.children[0].children[i].morphTargetInfluences[2] = blinkInterpolator.value;
-			gel.children[0].children[i].morphTargetInfluences[3] = leafInterpolator.value;
-			gel.children[0].children[i].morphTargetInfluences[5] = leanInterpolator.value;
+		if (cringeTimer > 0) {
+			if (cringeTimer > 240) {
+				cringeTimer = 0;
+			} else {
+				cringeTimer++;
+				cringe = Math.min(1, cringeTimer / 4);
+			}
+		} else if (cringe > 0) {
+			cringe = Math.max(0, cringe - .01);
 		}
-		gel.rotation.y = turnInterpolator.value;
+
+		if (cringe == 0) {
+			for (let interpolator of interpolators) {
+				interpolator.update();
+			}
+		}
+		let easedCringe = Math.easeInOutQuad(cringe, 0, 1, 1);
+		let values = [
+			easedCringe * 1.25 + squishInterpolator.value * (1 - easedCringe),
+			easedCringe * .65 + blinkInterpolator.value * (1 - easedCringe),
+			easedCringe * 0 + leafInterpolator.value * (1 - easedCringe),
+			easedCringe * 0 + leanInterpolator.value * (1 - easedCringe),
+			turnInterpolator.value,
+		];
+
+		for (let i = 0; i < gel.children[0].children.length; i++) {
+			gel.children[0].children[i].morphTargetInfluences[0] = values[0];
+			gel.children[0].children[i].morphTargetInfluences[2] = values[1];
+			gel.children[0].children[i].morphTargetInfluences[3] = values[2];
+			gel.children[0].children[i].morphTargetInfluences[5] = values[3];
+		}
+		gel.position.x = cringe == 1 ? Math.randFloat(-.25, .25) : 0;
+		gel.rotation.y = values[4];
 	}
 
 	renderer.render(scene, camera);
