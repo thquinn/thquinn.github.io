@@ -85,7 +85,7 @@ const SELECTION_INVALID_COLOR = '#FFD0D0';
 const BOARD_GAME_OVER_DESATURATION = .95;
 const UI_WIDTH = PIECE_SIZE * 8;
 // Canvas setup.
-const canvas = document.getElementById('canvas');
+const canvas = document.getElementById('gameCanvas');
 canvas.width = BOARD_WIDTH * PIECE_SIZE + 2 * BOARD_PADDING + UI_WIDTH;
 canvas.height = BOARD_HEIGHT * PIECE_SIZE + BOARD_PADDING;
 const boardCanvas = document.createElement('canvas');

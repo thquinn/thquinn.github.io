@@ -1,18 +1,38 @@
-// TODO
-//	- An on-click event
-//	- Convert to three.js JSON format
-//	- Consolidate libraries
+// Requires https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js, folded into the minified version
 
-const canvas = document.getElementById('headerCanvas');
-canvas.style.opacity = 0;
+Math.randFloat = function (min, max) {
+	return Math.random() * (max - min) + min;
+};
+Math.randInt = function (min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+};
+// from http://www.gizma.com/easing/
+Math.easeInOutQuad = function (t, b, c, d) {
+  t /= d/2;
+  if (t < 1) return c/2*t*t + b;
+  t--;
+  return -c/2 * (t*(t-2) - 1) + b;
+};
+
+const gelCanvas = document.getElementById('headerCanvas');
+gelCanvas.style.opacity = 0;
 
 THREE.Cache.enabled = true;
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(45, canvas.width / canvas.height, 1, 1000);
-var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+var camera = new THREE.PerspectiveCamera(45, gelCanvas.width / gelCanvas.height, 1, 1000);
+var renderer = new THREE.WebGLRenderer({ canvas: gelCanvas, alpha: true, antialias: true });
+function resize() {
+	gelCanvas.width = gelCanvas.parentNode.offsetHeight;
+	gelCanvas.height = gelCanvas.parentNode.offsetHeight;
+	renderer.setSize(gelCanvas.parentNode.offsetHeight, gelCanvas.parentNode.offsetHeight);
+	camera.aspect = gelCanvas.offsetHeight / gelCanvas.offsetHeight;
+    camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', resize);
+resize();
 
 camera.position.z = 50;
-camera.position.y = 19;
+camera.position.y = 16;
 
 var light = new THREE.AmbientLight(0xFFFFFF, 1.75);
 scene.add(light);
@@ -23,7 +43,7 @@ scene.add(light2);
 var gel;
 
 var loader = new THREE.GLTFLoader();
-loader.load('../../resources/3d/gel.gltf', function (object) {
+loader.load('https://cdn.rawgit.com/thquinn/thquinn.github.io/c8eb3c34/resources/3d/gel.gltf', function (object) {
 	gel = object.scene.children[0];
 	for (let i = 0; i < gel.children[0].children.length; i++) {
 		for (let j = 0; j < 6; j++) {
@@ -94,28 +114,28 @@ class Interpolator {
 }
 var squishInterpolator = new Interpolator(-.25, -.15, .3, .35, 120, 150, 0, 0, 0, 0, true, true, false);
 var blinkInterpolator = new Interpolator(0, 0, 1, 1, 3, 3, 200, 300, 0, 0, false, true, true);
-var leafInterpolator = new Interpolator(0, .2, .4, .5, 300, 400, 30, 60, 30, 60, true, true, false);
-var leanInterpolator = new Interpolator(-.7, -.2, .2, .7, 300, 400, 30, 60, 30, 60, true, true, false);
+var leafInterpolator = new Interpolator(.4, .5, 0, .2, 300, 400, 30, 60, 30, 60, true, true, false);
+var leanInterpolator = new Interpolator(-.7, -.2, .2, .5, 300, 400, 30, 60, 30, 60, true, true, false);
 var turnInterpolator = new Interpolator(-.35, -.35, -.5, -.57, 10, 10, 500, 900, 200, 300, true, true, true);
 var interpolators = [squishInterpolator, blinkInterpolator, leafInterpolator, leanInterpolator, turnInterpolator];
 var cringeTimer = 0, cringe = 0;
-canvas.addEventListener('click', function(e) {
+gelCanvas.addEventListener('click', function(e) {
 	if (cringe == 0)
 		cringeTimer = 1;
 	e.preventDefault();
 });
 
-function loop() {
-	window.requestAnimationFrame(loop);
+function gelLoop() {
+	window.requestAnimationFrame(gelLoop);
 	
 	if (gel) {
-		let opacity = Number.parseFloat(canvas.style.opacity);
+		let opacity = parseFloat(gelCanvas.style.opacity);
 		if (opacity < 1) {
-			canvas.style.opacity = Math.min(1, opacity + .033);
+			gelCanvas.style.opacity = Math.min(1, opacity + .033);
 		}
 
 		if (cringeTimer > 0) {
-			if (cringeTimer > 240) {
+			if (cringeTimer > 180) {
 				cringeTimer = 0;
 			} else {
 				cringeTimer++;
@@ -151,4 +171,4 @@ function loop() {
 
 	renderer.render(scene, camera);
 }
-loop();
+gelLoop();

@@ -46,25 +46,26 @@ a {
 	color: #77A;
 }
 
-canvas {
-	max-width: 100%;
-	padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    -webkit-transform: translate3d(0, 0, 0)
-    touch-action: pinch-zoom;
-}
-
 #header {
+	height: 8vw;
 	text-align: center;
-	padding-bottom: .75vw;
 	background: #FFF;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+#headerCanvas {
+	display: inline-block;
+	width: 0px;
+	margin-right: -1vw;
+}
+
+#headerText {
+	display: inline-block;
+	vertical-align: top;
+	padding-top: .15vw;
 }
 
 #header a {
@@ -212,6 +213,18 @@ canvas {
 }
 #rightcol > div > div:not(:first-child) {
     text-indent: 10%;
+}
+
+/* game */
+#gameCanvas {
+	max-width: 100%;
+	padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    -webkit-transform: translate3d(0, 0, 0)
+    touch-action: pinch-zoom;
 }
 
 .clear {

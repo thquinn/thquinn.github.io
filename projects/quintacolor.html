@@ -15,22 +15,26 @@
 	</head>
 	<body>
 		<div id="header">
-			<a href="../index.html"><h1>Tom Quinn</h1></a>
-			<a href="../index.html"><h3>thquinn.github.io</h3></a>
+			<canvas id='headerCanvas'></canvas>
+			<div id='headerText'>
+				<a href="../index.html"><h1>Tom Quinn</h1></a>
+				<a href="../index.html"><h3>thquinn.github.io</h3></a>
+			</div>
 		</div>
 		<div id="spacer">&nbsp;</div>
 		<div id="bg" style="background-color: rgba(0, 0, 0, 0);">
-			<canvas id="canvas" width=1920 height=1080></canvas>
+			<canvas id="gameCanvas" width=1920 height=1080></canvas>
 		</div>
 		<div style="text-align:center; color:#FFFFFF;">
-			QUINTACOLOR 0.9.7 CHANGELOG<br />
-			more pieces fall while the board is less than half full<br />
-			increased the jump in difficulty per level<br />
-			you can no longer skip levels<br />
-			extended quake pause from 3 to 6 seconds<br />
-			changed weighting formula for column and color<br />
+			QUINTACOLOR 0.9.8 CHANGELOG<br />
+			quake now pauses the combo timer<br />
+			music<br />
+			new sound effects<br />
 		</div>
 	</body>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/91/three.min.js"></script>
+	<script type="text/javascript" src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script>
+	<script type="text/javascript" src="../resources/js/gel.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.9/howler.js"></script>
 	<script type="text/javascript" src="util.js"></script>
 	<script type="text/javascript" src="quintacolor.js"></script>
