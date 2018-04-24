@@ -109,7 +109,7 @@ a {
     justify-content: flex-end;
     align-items: flex-end;
     opacity: 0;
-	background: rgba(0, 0, 0, 0.5);
+	background: rgba(0, 0, 0, 0.75);
 	transition: all .1s linear;
 	color: #FFF;
 }
@@ -117,7 +117,11 @@ a {
 	opacity: 1;
 }
 .homethumb div img {
-	width: 50%;
+	display: block;
+	max-width: 50%;
+	max-height: 50%;
+	width: auto;
+	height: auto;
 }
 
 /* article */
