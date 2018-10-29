@@ -62,6 +62,18 @@ Math.pointLineDist = function(x, y, x0, y0, x1, y1, o) {
     return Math.abs(a * x + b * y + c) / Math.sqrt(a * a + b * b);
   }
 };
+// from https://stackoverflow.com/questions/9043805/test-if-two-lines-intersect-javascript-function: (x1, y1)<->(x2, y2) x (x3, y3)<->(x4, y4)
+Math.lineSegmentIntersection = function(a,b,c,d,p,q,r,s) {
+  var det, gamma, lambda;
+  det = (c - a) * (s - q) - (r - p) * (d - b);
+  if (det === 0) {
+    return false;
+  } else {
+    lambda = ((s - q) * (r - a) + (p - r) * (s - b)) / det;
+    gamma = ((b - d) * (r - a) + (c - a) * (s - b)) / det;
+    return (0 < lambda && lambda < 1) && (0 < gamma && gamma < 1);
+  }
+};
 // from http://www.gizma.com/easing/
 Math.easeInOutQuad = function (t, b, c, d) {
 	t /= d/2;

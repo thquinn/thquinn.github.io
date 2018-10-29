@@ -7,12 +7,13 @@ const SCALE = Number(urlParams.get('scale') || 1);
 const AMBIENT_FREQUENCY = Number(urlParams.get('ambient_frequency') || 1);
 const WAVE_SPEED = canvas.height / 400 * Number(urlParams.get('wave_speed') || 1);
 const WAVE_FREQUENCY = Number(urlParams.get('wave_frequency') || 1);
+const CIRCLE_CHANCE = Number(urlParams.get('circle_chance') || .5);
 
 const diagonal = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
 const squareSize = canvas.height / 22 * SCALE;
-const padding = canvas.height / 100 * SCALE;
+const padding = canvas.height / 103 * SCALE;
 const minAmbientTimer = Math.floor(240 / AMBIENT_FREQUENCY);
-const maxAmbientTimer = Math.ceil(480 / AMBIENT_FREQUENCY);
+const maxAmbientTimer = Math.ceil(360 / AMBIENT_FREQUENCY);
 const excitementDistance = canvas.height / 6;
 const minWaveTimer = Math.floor(600 / WAVE_FREQUENCY);
 const maxWaveTimer = Math.ceil(1200 / WAVE_FREQUENCY);
@@ -74,9 +75,14 @@ class LineWave {
 	update() {
 		this.x += Math.cos(this.angle) * WAVE_SPEED;
 		this.y += Math.sin(this.angle) * WAVE_SPEED;
-		let outX = this.x < -excitementDistance || this.x > canvas.width + excitementDistance;
-		let outY = this.y < -excitementDistance || this.y > canvas.height + excitementDistance;
-		if (outX && outY) {
+		let testX1 = this.x - diagonal * Math.cos(this.angle + Math.PI / 2);
+		let testY1 = this.y - diagonal * Math.sin(this.angle + Math.PI / 2);
+		let testX2 = this.x + diagonal * Math.cos(this.angle + Math.PI / 2);
+		let testY2 = this.y + diagonal * Math.sin(this.angle + Math.PI / 2);
+		let intersect1 = Math.lineSegmentIntersection(testX1, testY1, testX2, testY2, -excitementDistance, -excitementDistance, canvas.width + excitementDistance, -excitementDistance);
+		let intersect2 = Math.lineSegmentIntersection(testX1, testY1, testX2, testY2, -excitementDistance, -excitementDistance, -excitementDistance, canvas.height + excitementDistance);
+		let intersect3 = Math.lineSegmentIntersection(testX1, testY1, testX2, testY2, canvas.width + excitementDistance, -excitementDistance, canvas.width + excitementDistance, canvas.height + excitementDistance);
+		if (!intersect1 && !intersect2 && !intersect3) {
 			killWave();
 			return;
 		}
@@ -128,7 +134,7 @@ function loop() {
 	} else {
 		waveCooldown--;
 		if (waveCooldown == 0) {
-			wave = Math.random() < .5 ? new LineWave() : new CircleWave();
+			wave = Math.random() > CIRCLE_CHANCE ? new LineWave() : new CircleWave();
 		}
 	}
 
