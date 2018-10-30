@@ -1,23 +1,27 @@
+// TODO: Group square draw calls by rounded brightness
+// TODO: Mitigate circle distance calls... round and memoize?
+
 var canvas = document.getElementById('canvas');
 
 var HUE = Number(urlParams.get('hue') || 220);
-const HUESHIFT = Number(urlParams.get('hue_shift') || 0);
+const HUESHIFT = Number(urlParams.get('hue_shift') || 1) * .02;
 const SATURATION = Number(urlParams.get('saturation') || 50);
 const SCALE = Number(urlParams.get('scale') || 1);
 const AMBIENT_FREQUENCY = Number(urlParams.get('ambient_frequency') || 1);
 const WAVE_SPEED = canvas.height / 400 * Number(urlParams.get('wave_speed') || 1);
 const WAVE_FREQUENCY = Number(urlParams.get('wave_frequency') || 1);
 const CIRCLE_CHANCE = Number(urlParams.get('circle_chance') || .5);
+const ROUNDING = Number(urlParams.get('rounding') || 0);
 
 const diagonal = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
 const squareSize = canvas.height / 22 * SCALE;
-const padding = canvas.height / 103 * SCALE;
+const padding = canvas.height / 102.25 * SCALE;
 const minAmbientTimer = Math.floor(240 / AMBIENT_FREQUENCY);
 const maxAmbientTimer = Math.ceil(360 / AMBIENT_FREQUENCY);
 const excitementDistance = canvas.height / 6;
 const minWaveTimer = Math.floor(600 / WAVE_FREQUENCY);
 const maxWaveTimer = Math.ceil(1200 / WAVE_FREQUENCY);
-const circleWaveFadeFrames = 30;
+const circleWaveFadeFrames = 60;
 var ctx = canvas.getContext('2d');
 
 class Square {
@@ -44,6 +48,9 @@ class Square {
 		let distance = wave ? wave.getDistance(this.x + squareSize / 2, this.y + squareSize / 2) : Number.MAX_SAFE_INTEGER;
 		let waveExcitement = distance <= excitementDistance ? this.waveMult * (1 - distance / excitementDistance) : 0;
 		let luminosity = ambientExcitement * 15 + waveExcitement * 20 + 20;
+		if (ROUNDING > 0) {
+			luminosity = Math.round(luminosity / ROUNDING) * ROUNDING;
+		}
 		ctx.fillStyle = 'hsl({0}, {1}%, {2}%)'.format(HUE, SATURATION, luminosity);
 		ctx.fillRect(this.x, this.y, squareSize, squareSize);		
 	}
@@ -109,7 +116,7 @@ class CircleWave {
 	}
 	getDistance(x, y) {
 		let fadeDistance = this.t <= circleWaveFadeFrames ? excitementDistance * (1 - this.t / circleWaveFadeFrames) : 0;
-		return Math.abs(Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(y - this.y, 2)) - this.r) + fadeDistance;
+		return Math.abs(Math.hypot(x - this.x ,y - this.y) - this.r) + fadeDistance;
 	}
 }
 
@@ -138,7 +145,7 @@ function loop() {
 		}
 	}
 
-	ctx.fillStyle = 'hsl({0}, {1}%, 5%)'.format(HUE, SATURATION);
+	ctx.fillStyle = 'hsl({0}, {1}%, 10%)'.format(HUE, SATURATION);
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	for (let square of squares) {
 		square.draw();

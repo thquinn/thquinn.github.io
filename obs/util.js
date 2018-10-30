@@ -34,12 +34,57 @@ if (!String.prototype.format) {
   };
 }
 
+function arraysEqual(a, b) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length != b.length) return false;
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+function shuffleArray(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
+}
+
+class StringSet {
+    constructor() {
+      this.map = new Map();
+      this[Symbol.iterator] = this.values;
+    }
+    add(item) {
+      this.map.set(item.toString(), item);
+    }
+    has(item) {
+      return this.map.has(item.toString());
+    }
+    remove(item) {
+      this.map.delete(item.toString());
+    }
+    random() {
+      return this.map.get([...this.map.keys()][Math.floor(Math.random() * this.map.size)])
+    }
+    size() {
+      return this.map.size;
+    }
+}
+
 Math.mod = function(n, m) {
   if (n >= 0) {
   	return n % m;
   }
   return (n % m) + m;
 }
+Math.lerp = function (v0, v1, t) {
+    return v0*(1-t)+v1*t;
+};
 Math.randInt = function (min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
 };
