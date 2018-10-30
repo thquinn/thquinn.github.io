@@ -88,6 +88,9 @@ Math.lerp = function (v0, v1, t) {
 Math.randInt = function (min, max) {
 	return Math.floor(Math.random() * (max - min)) + min;
 };
+Math.randFloat = function (min, max) {
+  return Math.random() * (max - min) + min;
+};
 // from http://jsfromhell.com/math/dot-line-length
 Math.pointLineDist = function(x, y, x0, y0, x1, y1, o) {
   function lineLength(x, y, x0, y0){

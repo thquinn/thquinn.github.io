@@ -10,19 +10,29 @@ var POLY_COLOR = urlParams.get('poly_color') || '#3B3E40';
 var POLY_STROKE = Number(urlParams.get('poly_stroke') || 4) * GRID_STROKE;
 var DRAW_RATE = Number(urlParams.get('draw_rate') || 1) * .00075;
 var FILL_DELAY = Number(urlParams.get('fill_delay') || 60);
-var FILL_RATE = Number(urlParams.get('fill_rate') || .005);
+var FILL_RATE = Number(urlParams.get('fill_rate') || .01);
+var SPAWN_TIMER = Number(urlParams.get('spawn_timer') || 5);
 
 const diagonal = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
 var ctx = canvas.getContext('2d');
 ctx.lineJoin = 'round';
 ctx.lineCap = 'round';
 
+function withinCanvas(x, y) {
+	return x > 0 && y > 0 && x <= canvas.width && y <= canvas.height;
+}
 function withinSquaredCanvas(x, y) {
 	let maxLeg = Math.max(canvas.width, canvas.height) * 2 / 3;
 	let xDist = Math.abs(x - canvas.width / 2);
 	let yDist = Math.abs(y - canvas.height / 2);
 	return xDist <= maxLeg && yDist <= maxLeg;
 }
+function rotateFromZero(x, y, theta) {
+	let sin = Math.sin(theta);
+	let cos = Math.cos(theta);
+	return [x * cos - y * sin, x * sin + y * cos];
+}
+
 var gridOffsetX = 0, gridOffsetY = 0;
 function drawGrid() {
 	ctx.strokeStyle = 'hsl({0}, 67%, 94%)'.format(HUE);
@@ -141,6 +151,7 @@ class Polyomino {
 		this.percentDrawn = 0;
 		this.fillDelay = 0;
 		this.fillOpacity = 0;
+		this.dead = false;
 	}
 	// Check there's a path from emptyCoor to the perimeter if filledCoors and newCoor are filled.
 	checkIsntEnclosed(emptyCoor, filledCoors, newCoor) {
@@ -182,10 +193,12 @@ class Polyomino {
 		}
 	}
 	draw() {
+		let deadCheck = this.fillOpacity == 1;
 		let lineWidth = POLY_STROKE * (1 - this.fillOpacity);
 		ctx.lineWidth = lineWidth;
-		ctx.strokeStyle = lineWidth > 0 ? POLY_COLOR : 'transparent';
+		ctx.strokeStyle = lineWidth > 0 ? ctx.fillStyle = 'hsl({0}, 55%, 91%)'.format(HUE) : 'transparent';
 		let numVertices = (this.outlineCoors.length - 1) * this.percentDrawn;
+		ctx.beginPath();
 		for (let i = 0; i < numVertices; i++) {
 			let coor = this.outlineCoors[i];
 			let xy = this.convertToScreenSpace(coor[0], coor[1]);
@@ -193,6 +206,11 @@ class Polyomino {
 				ctx.moveTo(xy[0], xy[1]);
 			} else {
 				ctx.lineTo(xy[0], xy[1]);
+			}
+			if (this.fillOpacity && deadCheck) {
+				if (withinCanvas(xy[0], xy[1])) {
+					deadCheck = false;
+				}
 			}
 		}
 		if (this.percentDrawn == 1) {
@@ -204,33 +222,41 @@ class Polyomino {
 			let y2 = Math.lerp(this.outlineCoors[baseIndex][1], this.outlineCoors[baseIndex + 1][1], remainder);
 			let xy = this.convertToScreenSpace(x2, y2);
 			ctx.lineTo(xy[0], xy[1]);
+			ctx
 		}
 		ctx.stroke();
 		if (this.fillOpacity > 0) {
-			ctx.fillStyle = "rgba(59, 62, 64, {0})".format(this.fillOpacity);
+			ctx.fillStyle = 'hsla({0}, 55%, 91%, {1})'.format(HUE, this.fillOpacity);
 			ctx.fill();
+		}
+
+		if (deadCheck) {
+			this.dead = true;
 		}
 	}
 	convertToScreenSpace(x, y) {
-		x -= (this.width - 1) / 2;
-		y -= (this.height - 1) / 2;
-		let rot = this.rotateFromZero(x * SPACING, y * SPACING, GRID_ANGLE);
+		x -= (this.width - 1) / 2 + (this.width % 2 == 0 ? 0 : 0.5);
+		y -= (this.height - 1) / 2 + (this.height % 2 == 0 ? 0 : 0.5);;
+		let rot = rotateFromZero(x * SPACING, y * SPACING, GRID_ANGLE);
 		return [rot[0] + this.x, rot[1] + this.y];
-	}
-	rotateFromZero(x, y, theta) {
-		let sin = Math.sin(theta);
-		let cos = Math.cos(theta);
-		return [x * cos - y * sin, x * sin + y * cos];
 	}
 }
 
+var frame = -1;
 var polyominos = [];
-polyominos.push(new Polyomino(canvas.width - 14, -10, 8, 8));
-polyominos.push(new Polyomino(canvas.width * 1.25 + 12, canvas.height / 3 + 33, 10, 10));
-function loop() {
-	window.requestAnimationFrame(loop);
-	ctx.fillStyle = 'hsl({0}, 89%, 96%)'.format(HUE);
-	ctx.fillRect(0, 0, canvas.width, canvas.height);
+function loop(draw = true) {
+	frame++;
+	if (frame == 0) {
+		for (let i = 0; i < 1800; i++) {
+			loop(false);
+		}
+	}
+	
+	if (draw) {
+		window.requestAnimationFrame(loop);
+		ctx.fillStyle = 'hsl({0}, 89%, 96%)'.format(HUE);
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
+	}
 
 	gridOffsetX -= Math.cos(SCROLL_ANGLE) * SCROLL_SPEED;
 	gridOffsetY -= Math.sin(SCROLL_ANGLE) * SCROLL_SPEED;
@@ -250,10 +276,41 @@ function loop() {
 		gridOffsetX += SPACING * Math.sin(GRID_ANGLE);
 		gridOffsetY -= SPACING * Math.cos(GRID_ANGLE);
 	}
-	
-	drawGrid();
-	for (let polyomino of polyominos) {
-		polyomino.update();
-		polyomino.draw();
+	if (draw) {
+		drawGrid();
 	}
+
+	if (frame % SPAWN_TIMER == 0) {
+		trySpawnPolyomino();
+	}
+	for (let i = polyominos.length - 1; i >= 0; i--) {
+		polyominos[i].update();
+		if (polyominos[i].dead) {
+			polyominos.splice(i, 1);
+			continue;
+		}
+		if (draw) {
+			polyominos[i].draw();
+		}
+	}
+}
+function trySpawnPolyomino() {
+	let angle = SCROLL_ANGLE + Math.randFloat(-Math.PI / 6, Math.PI / 4);
+	let distance = diagonal / SPACING * .66;
+	let x = Math.round(Math.cos(angle) * distance);
+	let y = Math.round(Math.sin(angle) * distance);
+	let width = Math.randInt(7, 12);
+	let height = Math.randInt(7, 12);
+	for (let other of polyominos) {
+		let unrotated = rotateFromZero(other.x - canvas.width / 2, other.y - canvas.height / 2, -GRID_ANGLE);
+		let otherX = unrotated[0] / SPACING;
+		let otherY = unrotated[1] / SPACING;
+		let collideX = Math.abs(x - otherX) <= (width + other.width) / 2 + 1;
+		let collideY = Math.abs(y - otherY) <= (height + other.height) / 2 + 1;
+		if (collideX && collideY) {
+			return;
+		}
+	}
+	let rot = rotateFromZero(x, y, GRID_ANGLE);
+	polyominos.push(new Polyomino(canvas.width / 2 + rot[0] * SPACING + gridOffsetX, canvas.height / 2 + rot[1] * SPACING + gridOffsetY, width, height));
 }
