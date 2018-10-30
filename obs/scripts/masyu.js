@@ -2,15 +2,15 @@ var canvas = document.getElementById('canvas');
 
 var HUE = Number(urlParams.get('hue') || 203);
 var SCROLL_ANGLE = Number(urlParams.get('scroll_angle') || -15) * Math.PI / 180;
-var SCROLL_SPEED = Number(urlParams.get('scroll_speed') || 11) * canvas.height / 6000;
+var SCROLL_SPEED = Number(urlParams.get('scroll_speed') || 11) * canvas.height / 10000;
 var GRID_ANGLE = Number(urlParams.get('grid_angle') || -10) * Math.PI / 180;
-var GRID_STROKE = Number(urlParams.get('grid_stroke') || 1) * canvas.height / 200;
-var SPACING = Number(urlParams.get('spacing') || 1) * canvas.height / 15;
+var GRID_STROKE = Number(urlParams.get('grid_stroke') || 1) * canvas.height / 300;
+var SPACING = Number(urlParams.get('spacing') || 1) * canvas.height / 20;
 var POLY_COLOR = urlParams.get('poly_color') || '#3B3E40';
-var POLY_STROKE = Number(urlParams.get('poly_stroke') || 3) * canvas.height / 160;
-var DRAW_RATE = Number(urlParams.get('draw_rate') || 1) * .01;
-var FILL_DELAY = Number(urlParams.get('fill_delay') || 30);
-var FILL_RATE = Number(urlParams.get('fill_rate') || .01);
+var POLY_STROKE = Number(urlParams.get('poly_stroke') || 4) * GRID_STROKE;
+var DRAW_RATE = Number(urlParams.get('draw_rate') || 1) * .00075;
+var FILL_DELAY = Number(urlParams.get('fill_delay') || 60);
+var FILL_RATE = Number(urlParams.get('fill_rate') || .005);
 
 const diagonal = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
 var ctx = canvas.getContext('2d');
@@ -171,6 +171,8 @@ class Polyomino {
 	}
 
 	update() {
+		this.x -= Math.cos(SCROLL_ANGLE) * SCROLL_SPEED;
+		this.y -= Math.sin(SCROLL_ANGLE) * SCROLL_SPEED;
 		this.percentDrawn = Math.min(1, this.percentDrawn + DRAW_RATE);
 		if (this.percentDrawn == 1) {
 			this.fillDelay = Math.min(FILL_DELAY, this.fillDelay + 1);
@@ -186,12 +188,11 @@ class Polyomino {
 		let numVertices = (this.outlineCoors.length - 1) * this.percentDrawn;
 		for (let i = 0; i < numVertices; i++) {
 			let coor = this.outlineCoors[i];
-			let x = canvas.width / 2 + (coor[0] - this.width / 2) * SPACING;
-			let y = canvas.height / 2 + (coor[1] - this.height / 2) * SPACING;
+			let xy = this.convertToScreenSpace(coor[0], coor[1]);
 			if (i == 0) {
-				ctx.moveTo(x, y);
+				ctx.moveTo(xy[0], xy[1]);
 			} else {
-				ctx.lineTo(x, y);
+				ctx.lineTo(xy[0], xy[1]);
 			}
 		}
 		if (this.percentDrawn == 1) {
@@ -201,9 +202,8 @@ class Polyomino {
 			let remainder = numVertices - baseIndex;
 			let x2 = Math.lerp(this.outlineCoors[baseIndex][0], this.outlineCoors[baseIndex + 1][0], remainder);
 			let y2 = Math.lerp(this.outlineCoors[baseIndex][1], this.outlineCoors[baseIndex + 1][1], remainder);
-			let x = canvas.width / 2 + (x2 - this.width / 2) * SPACING;
-			let y = canvas.height / 2 + (y2 - this.height / 2) * SPACING;
-			ctx.lineTo(x, y);
+			let xy = this.convertToScreenSpace(x2, y2);
+			ctx.lineTo(xy[0], xy[1]);
 		}
 		ctx.stroke();
 		if (this.fillOpacity > 0) {
@@ -212,18 +212,21 @@ class Polyomino {
 		}
 	}
 	convertToScreenSpace(x, y) {
-		let midx = this.width / 2;
-		let midy = this.height / 2;
-		let rotxy = rotateFromZero(midx * SPACING, midy * SPACING);
-		return [rotxy[0] + this.x, rotxy[1] + this.y];
+		x -= (this.width - 1) / 2;
+		y -= (this.height - 1) / 2;
+		let rot = this.rotateFromZero(x * SPACING, y * SPACING, GRID_ANGLE);
+		return [rot[0] + this.x, rot[1] + this.y];
 	}
 	rotateFromZero(x, y, theta) {
-		return [x * Math.cos(theta) - y * Math.sin(theta),
-				y * Math.sin(theta) - x * Math.sin(theta)];
+		let sin = Math.sin(theta);
+		let cos = Math.cos(theta);
+		return [x * cos - y * sin, x * sin + y * cos];
 	}
 }
 
-var polyomino = new Polyomino(canvas.width / 2, canvas.height / 2, 10, 10);
+var polyominos = [];
+polyominos.push(new Polyomino(canvas.width - 14, -10, 8, 8));
+polyominos.push(new Polyomino(canvas.width * 1.25 + 12, canvas.height / 3 + 33, 10, 10));
 function loop() {
 	window.requestAnimationFrame(loop);
 	ctx.fillStyle = 'hsl({0}, 89%, 96%)'.format(HUE);
@@ -249,6 +252,8 @@ function loop() {
 	}
 	
 	drawGrid();
-	polyomino.update();
-	polyomino.draw();
+	for (let polyomino of polyominos) {
+		polyomino.update();
+		polyomino.draw();
+	}
 }
