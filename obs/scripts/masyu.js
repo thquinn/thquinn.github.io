@@ -1,4 +1,5 @@
-var canvas = document.getElementById('canvas');
+const canvas = document.getElementById('canvas');
+const diagonal = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
 
 var HUE = Number(urlParams.get('hue') || 203);
 var SCROLL_ANGLE = Number(urlParams.get('scroll_angle') || -15) * Math.PI / 180;
@@ -6,14 +7,12 @@ var SCROLL_SPEED = Number(urlParams.get('scroll_speed') || 11) * canvas.height /
 var GRID_ANGLE = Number(urlParams.get('grid_angle') || -10) * Math.PI / 180;
 var GRID_STROKE = Number(urlParams.get('grid_stroke') || 1) * canvas.height / 300;
 var SPACING = Number(urlParams.get('spacing') || 1) * canvas.height / 20;
-var POLY_COLOR = urlParams.get('poly_color') || '#3B3E40';
 var POLY_STROKE = Number(urlParams.get('poly_stroke') || 4) * GRID_STROKE;
 var DRAW_RATE = Number(urlParams.get('draw_rate') || 1) * .00075;
 var FILL_DELAY = Number(urlParams.get('fill_delay') || 60);
-var FILL_RATE = Number(urlParams.get('fill_rate') || .01);
+var FILL_RATE = Number(urlParams.get('fill_rate') || .0033);
 var SPAWN_TIMER = Number(urlParams.get('spawn_timer') || 5);
 
-const diagonal = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
 var ctx = canvas.getContext('2d');
 ctx.lineJoin = 'round';
 ctx.lineCap = 'round';
@@ -222,7 +221,6 @@ class Polyomino {
 			let y2 = Math.lerp(this.outlineCoors[baseIndex][1], this.outlineCoors[baseIndex + 1][1], remainder);
 			let xy = this.convertToScreenSpace(x2, y2);
 			ctx.lineTo(xy[0], xy[1]);
-			ctx
 		}
 		ctx.stroke();
 		if (this.fillOpacity > 0) {

@@ -1,7 +1,8 @@
 // TODO: Group square draw calls by rounded brightness
 // TODO: Mitigate circle distance calls... round and memoize?
 
-var canvas = document.getElementById('canvas');
+const canvas = document.getElementById('canvas');
+const diagonal = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
 
 var HUE = Number(urlParams.get('hue') || 220);
 const HUESHIFT = Number(urlParams.get('hue_shift') || 1) * .02;
@@ -13,7 +14,6 @@ const WAVE_FREQUENCY = Number(urlParams.get('wave_frequency') || 1);
 const CIRCLE_CHANCE = Number(urlParams.get('circle_chance') || .5);
 const ROUNDING = Number(urlParams.get('rounding') || 0);
 
-const diagonal = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
 const squareSize = canvas.height / 22 * SCALE;
 const padding = canvas.height / 102.25 * SCALE;
 const minAmbientTimer = Math.floor(240 / AMBIENT_FREQUENCY);
