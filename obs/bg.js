@@ -1,4 +1,4 @@
-const BG_NAMES = new Set(['holocube', 'masyu', 'squares']);
+const BG_NAMES = new Set(['holocube', 'masyu', 'prisms', 'squares']);
 const urlParams = new URLSearchParams(window.location.search);
 const bgParam = urlParams.get('bg');
 if (BG_NAMES.has(bgParam)) {

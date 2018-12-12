@@ -8,10 +8,10 @@ var GRID_ANGLE = Number(urlParams.get('grid_angle') || -10) * Math.PI / 180;
 var GRID_STROKE = Number(urlParams.get('grid_stroke') || 1) * canvas.height / 300;
 var SPACING = Number(urlParams.get('spacing') || 1) * canvas.height / 20;
 var POLY_STROKE = Number(urlParams.get('poly_stroke') || 4) * GRID_STROKE;
-var DRAW_RATE = Number(urlParams.get('draw_rate') || 1) * .00075;
+var DRAW_RATE = Number(urlParams.get('draw_rate') || 1) * .0007;
 var FILL_DELAY = Number(urlParams.get('fill_delay') || 60);
 var FILL_RATE = Number(urlParams.get('fill_rate') || .0033);
-var SPAWN_TIMER = Number(urlParams.get('spawn_timer') || 5);
+var SQUARE_CHANCE = Number(urlParams.get('square_chance') || .66);
 
 var ctx = canvas.getContext('2d');
 ctx.lineJoin = 'round';
@@ -72,7 +72,7 @@ class Polyomino {
 		while (borderCoors.size() > 0) {
 			// Sometimes don't fill in the entire available area.
 			let fillPercent = squareCoors.size() / ((width - 1) * (height - 1));
-			if (fillPercent > .525 && Math.random() < .2) {
+			if (fillPercent > .55 && Math.random() < .2) {
 				break;
 			}
 
@@ -193,7 +193,7 @@ class Polyomino {
 	}
 	draw() {
 		let deadCheck = this.fillOpacity == 1;
-		let lineWidth = POLY_STROKE * (1 - this.fillOpacity);
+		let lineWidth = POLY_STROKE * (1 - this.fillOpacity * .66);
 		ctx.lineWidth = lineWidth;
 		ctx.strokeStyle = lineWidth > 0 ? ctx.fillStyle = 'hsl({0}, 55%, 91%)'.format(HUE) : 'transparent';
 		let numVertices = (this.outlineCoors.length - 1) * this.percentDrawn;
@@ -278,9 +278,7 @@ function loop(draw = true) {
 		drawGrid();
 	}
 
-	if (frame % SPAWN_TIMER == 0) {
-		trySpawnPolyomino();
-	}
+	trySpawnPolyomino();
 	for (let i = polyominos.length - 1; i >= 0; i--) {
 		polyominos[i].update();
 		if (polyominos[i].dead) {
@@ -297,8 +295,8 @@ function trySpawnPolyomino() {
 	let distance = diagonal / SPACING * .66;
 	let x = Math.round(Math.cos(angle) * distance);
 	let y = Math.round(Math.sin(angle) * distance);
-	let width = Math.randInt(7, 12);
-	let height = Math.randInt(7, 12);
+	let width = Math.randInt(8, 20);
+	let height = Math.random() < SQUARE_CHANCE ? width : Math.randInt(8, 20);
 	for (let other of polyominos) {
 		let unrotated = rotateFromZero(other.x - canvas.width / 2, other.y - canvas.height / 2, -GRID_ANGLE);
 		let otherX = unrotated[0] / SPACING;

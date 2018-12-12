@@ -3,7 +3,12 @@
 const canvas = document.getElementById('canvas');
 const diagonal = Math.sqrt(canvas.width * canvas.width + canvas.height * canvas.height);
 
+var HUE = Number(urlParams.get('hue') || 110);
+var SCALE = Number(urlParams.get('scale') || 1) * diagonal / 6;
+
 var ctx = canvas.getContext('2d');
+ctx.lineJoin = 'bevel';
+ctx.lineWidth = 2;
 
 class Cube {
 	constructor() {
@@ -18,20 +23,34 @@ class Cube {
 		this.faces = [[0, 1, 3, 2], [4, 5, 7, 6], [0, 1, 5, 4], [2, 3, 7, 6], [0, 2, 6, 4], [1, 3, 7, 5]];
 		// TODO: quaternion rotation
 		this.rotation = [Math.random() * 2 * Math.PI, Math.random() * 2 * Math.PI, Math.random() * 2 * Math.PI];
-		this.scale = 500;
 	}
 
-	draw() {
+	draw(xOff = 0, yOff = 0, theta = 0) {
 		let rotVert = this.rotated_vertices();
+		// Rotate about angle.
+		let sin = Math.sin(theta);
+		let cos = Math.cos(theta);
+		for (let v of rotVert) {
+			let x = v[0] * cos - v[1] * sin;
+			let y = v[0] * sin + v[1] * cos;
+			v[0] = x;
+			v[1] = y;
+		}
+		// Draw faces.
 		for (let face of this.faces) {
 			// Create face path.
 			ctx.beginPath();
-			ctx.moveTo(canvas.width / 2 + rotVert[face[0]][0] * this.scale, canvas.height / 2 + rotVert[face[0]][1] * this.scale);
-			for (let i = 1; i < face.length; i++) {
-				ctx.lineTo(canvas.width / 2 + rotVert[face[i]][0] * this.scale, canvas.height / 2 + rotVert[face[i]][1] * this.scale);
+			for (let i = 0; i < face.length; i++) {
+				let x = canvas.width / 2 + rotVert[face[i]][0] * SCALE + xOff;
+				let y = canvas.height / 2 + rotVert[face[i]][1] * SCALE + yOff;
+				if (i == 0) {
+					ctx.moveTo(x, y);
+				} else {
+					ctx.lineTo(x, y);
+				}
 			}
 			ctx.closePath();
-			// Draw a linear gradient across each edge of the face.
+			// Draw a linear gradient perpendicular to each edge of the face.
 			for (let i = 0; i < face.length; i++) {
 				let x1 = rotVert[face[i]][0];
 				let x2 = rotVert[face[(i + 1) % face.length]][0];
@@ -43,22 +62,20 @@ class Cube {
 				let midY = (y1 + y2) / 2;
 				let angle = Math.atan2(y1 - y2, x1 - x2) + Math.PI / 2;
 				angle = closerAngle(midX, midY, angle, x3, y3);
-				// TODO: shorten gradients based on tilt of face
 				let targetX = midX + Math.cos(angle) * .4;
 				let targetY = midY + Math.sin(angle) * .4;
-				midX = canvas.width / 2 + midX * this.scale;
-				midY = canvas.height / 2 + midY * this.scale;
-				targetX = canvas.width / 2 + targetX * this.scale;
-				targetY = canvas.height / 2 + targetY * this.scale;
+				midX = canvas.width / 2 + midX * SCALE + xOff;
+				midY = canvas.height / 2 + midY * SCALE + yOff;
+				targetX = canvas.width / 2 + targetX * SCALE + xOff;
+				targetY = canvas.height / 2 + targetY * SCALE + yOff;
 
 				let gradient = ctx.createLinearGradient(midX, midY, targetX, targetY);
-				gradient.addColorStop(0, 'hsla(110, 50%, 50%, 0.1)');
-				gradient.addColorStop(1, 'hsla(110, 50%, 50%, 0.0)');
+				gradient.addColorStop(0, 'hsla({0}, 50%, 50%, 0.1)'.format(HUE));
+				gradient.addColorStop(1, 'hsla({0}, 50%, 50%, 0)'.format(HUE));
 				ctx.fillStyle = gradient;
 				ctx.fill();
-				ctx.lineWidth = 2;
 				ctx.shadowBlur = 20;
-				ctx.shadowColor = 'hsl(110, 50%, 50%)';
+				ctx.shadowColor = 'hsl({0}, 50%, 50%)'.format(HUE);
 				// TODO: just draw each edge once; stroking each face is drawing each edge twice.
 				ctx.stroke();
 				ctx.shadowBlur = 0;
@@ -83,15 +100,14 @@ function closerAngle(x, y, angle, x2, y2) {
 }
 
 var cube = new Cube();
+var thetaOff = 0;
 function loop() {
 	window.requestAnimationFrame(loop);
-	ctx.fillStyle = 'hsl(110, 10%, 10%)';
+	ctx.fillStyle = 'hsl({0}, 10%, 10%)'.format(HUE);
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
-	ctx.strokeStyle = 'hsl(110, 50%, 50%)';
-	ctx.lineJoin = 'bevel';
-	ctx.lineWidth = canvas.height / 100;
-	cube.rotation[0] += .001;
-	cube.rotation[1] += .002;
-	cube.rotation[2] += .003;
+	ctx.strokeStyle = 'hsl({0}, 50%, 50%)'.format(HUE);
+	cube.rotation[0] += .0003;
+	cube.rotation[1] += .0006;
+	cube.rotation[2] += .0009;
 	cube.draw();
 }

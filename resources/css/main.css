@@ -43,7 +43,7 @@ p {
 
 a {
 	text-decoration: inherit;
-	color: #77A;
+	color: #57D;
 }
 
 #header {
@@ -93,6 +93,7 @@ a {
 	position: relative;
 	margin: 1vw auto auto auto;
 	width: 75%;
+	font-size: 1.5vw;
 }
 .homethumb img {
 	display: block;
@@ -105,7 +106,7 @@ a {
     right: 0;
     bottom: 0;
     display: flex;
-    padding: .6vw 1vw;
+    padding: .6vw .75vw;
     justify-content: flex-end;
     align-items: flex-end;
     opacity: 0;
@@ -118,7 +119,7 @@ a {
 }
 .homethumb div img {
 	display: block;
-	max-width: 50%;
+	max-width: 40%;
 	max-height: 50%;
 	width: auto;
 	height: auto;
@@ -188,9 +189,31 @@ a {
 	padding: 0 .75vw;
 }
 
+.imageheader {
+	text-align: center;
+}
+.imageheader img {
+	text-align: center;
+	display: inline-block;
+	max-width: 60%;
+	max-height: 8vw;
+	width: auto;
+	height: auto;
+}
+
+.fullwidth {
+	width: 100% !important;
+}
+
 .disclaimer {
 	color: #BBB;
 	font-style: italic;
+}
+
+hr {
+	width: 80%;
+	margin-top: 3vw;
+	margin-bottom: 3vw;
 }
 
 .dotdotdot {
@@ -217,6 +240,26 @@ a {
 }
 #rightcol > div > div:not(:first-child) {
     text-indent: 10%;
+}
+
+/* ludum dare article */
+.ldcaption {
+	padding-top: .5vw;
+	font-size: .75vw;
+	text-align: center;
+}
+.ldcaption span:first-of-type {
+	padding-right: 2vw;
+	font-weight: bold;
+}
+.lddownload > div {
+	padding-left: 27.5%;
+	text-indent: 0;
+}
+.lddownload > div > a > i {
+	width: 2vw;
+	padding-right: .5vw;
+	text-align: center;
 }
 
 /* game */
