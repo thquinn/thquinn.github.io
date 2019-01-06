@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Print and Play Games</title>
+		<link rel="stylesheet" type="text/css" href="../resources/css/main.css" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" />
+		<meta property="og:image" /> <!-- TODO -->
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115922554-1"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		  gtag('config', 'UA-115922554-1');
+		</script>
+	</head>
+	<body>
+		<div id="header">
+			<canvas id='headerCanvas'></canvas>
+			<div id='headerText'>
+				<a href="../index.html"><h1>Tom Quinn</h1></a>
+				<a href="../index.html"><h3>thquinn.github.io</h3></a>
+			</div>
+		</div>
+		<div id="spacer">&nbsp;</div>
+		<div id="bg">
+			<div id="twocol">
+				<div id="leftcol">
+					<h2>Print and Play Games</h2>
+					<p>I design the occasional physical game. I've tested all of these with my smart and very indulging friends, but I wouldn't consider any of them finished. If you end up trying any of them out, <a href="mailto:thomashquinn@gmail.com">let me know!</a> I'd love to hear your feedback.</p><br/>
+
+					<div class="imageheader">
+						<img src="../resources/images/printandplay/maxematicslogo.png"/>
+					</div>
+					<div class="ldcaption">
+						<span><b>Genre:</b> Math</span>
+						<span><b>Time to Play:</b> 5-10 minutes</span>
+					</div>
+					<img class="fullwidth" src="../resources/images/printandplay/maxematics.png"/>
+					<p>A simple game where you try to make the biggest number you can. Good for kids who want to work on their mental arithmetic, as well as nerds looking to show off. In an effort to balance it, and as a bit of a game-design experiment, I wrote a program to simulate thousands of hands and test the relative power of each card.</p>
+					<p>Requires a 30-second timer or hourglass. Feel free to just use a smartphone.</p>
+					<div class="lddownload">
+						<div><a href="../resources/pdf/maxematics_pnp_v15.pdf"><i class="fa fa-file"></i>print and play PDF (version 15, 1/4/2019)</a></div>
+						<div><a href="../resources/pdf/maxematics_rules.pdf"><i class="fas fa-file"></i>rules PDF</a></div>
+						<div><a href="https://github.com/thquinn/MaxematicsTester"><i class="fas fa-code-branch"></i>balance tool source code</a></div>
+						<div><a href="https://docs.google.com/spreadsheets/d/1dGhcaCQDu3bZTlW9tJ9rRbWXfCALCQFK6u56CxXK4_g/edit#gid=70219426"><i class="fas fa-table"></i>balance statistics</a></div>
+					</div>
+					
+					<hr />
+
+					<div class="imageheader">
+						<img src="../resources/images/printandplay/bazaarlogo.png"/>
+					</div>
+					<div class="ldcaption">
+						<span><b>Genre:</b> Strategy, Politics</span>
+						<span><b>Time to Play:</b> 2-3 hours</span>
+					</div>
+					<img class="fullwidth" src="../resources/images/printandplay/bazaar.png"/>
+					<p>A free-for-all strategy-and-diplomacy card game that plays like a combination of Steve Jackson's <a href="https://boardgamegeek.com/boardgame/28/illuminati-deluxe-edition">Illuminati</a> and <a href="https://boardgamegeek.com/boardgame/39463/cosmic-encounter">Cosmic Encounter</a>. Features 194 unique cards. I designed this one all the way back in 2012, so I have a love/hate relationship with it. I've updated it quite a bit since then, though, and it can still satisfy a particular itch for crazy combos and backstabbing.</p>
+					<p>Requires a 20-sided die and some way to keep track of money (Monopoly money works just fine).</p>
+					<div class="lddownload">
+						<div><a href="../resources/pdf/bazaar_pnp_v4.pdf"><i class="fa fa-file"></i>print and play PDF (version 4, 11/30/2017)</a></div>
+						<div><a href="../resources/pdf/bazaar_rules.pdf"><i class="fas fa-file"></i>rules PDF</a></div>
+					</div>
+
+					<hr />
+
+					<div class="imageheader">
+						<img src="../resources/images/printandplay/qustomcubelogo.png"/>
+					</div>
+					<img class="fullwidth" src="../resources/images/printandplay/qustomcubephoto.png"/>
+					<p>A collection of 360 custom Magic: The Gathering cards designed for <a href="https://mtg.gamepedia.com/Cube_Draft">cube drafting.</a> My goal was to experiment in unexplored design space, resulting in a complex and technical environment. Not for novice players.</p>
+					<div class="lddownload">
+						<div><a href="https://imgur.com/a/QL61OdW"><i class="fa fa-scroll"></i>card image gallery (version 1, 10/21/2018)</a></div>
+						<div><a href="../resources/images/printandplay/tqcback.png"><i class="fa fa-hat-wizard"></i>printer-ready card back</a></div>
+					</div>
+
+				</div>
+				<div class="clear" />
+			</div>
+		</div>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/91/three.min.js"></script>
+		<script type="text/javascript" src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script>
+		<script type="text/javascript" src="../resources/js/gel.js"></script>
+	</body>
+</html>
