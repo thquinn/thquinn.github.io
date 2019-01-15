@@ -43,7 +43,7 @@ p {
 
 a {
 	text-decoration: inherit;
-	color: #57F;
+	color: #68F;
 }
 
 #header {
@@ -248,8 +248,11 @@ hr {
 	font-size: .75vw;
 	text-align: center;
 }
+.ldcaption span {
+	padding-left: 2vw;
+}
 .ldcaption span:first-of-type {
-	padding-right: 2vw;
+	padding-left: 0vw !important;
 }
 .lddownload > div {
 	padding-left: 27.5%;
