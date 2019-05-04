@@ -11,6 +11,26 @@
 		  gtag('js', new Date());
 		  gtag('config', 'UA-115922554-1');
 		</script>
+		<!-- Populate recent blog posts -->
+		<iframe id="blogindex" src="resources/blog/index.txt" onload="LoadFile();" style="display: none;"></iframe>
+		<script type="text/javascript">
+			function LoadFile() {
+			    var oFrame = document.getElementById("blogindex");
+			    var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+			    while (strRawContents.indexOf("\r") >= 0) {
+			        strRawContents = strRawContents.replace("\r", "");
+			    }
+			    var arrLines = strRawContents.split("\n");
+			    for (var i = arrLines.length - 1; i >= 0; i--) {
+			        var d = document.createElement('div');
+			        var a = document.createElement('a');
+			        a.href = "blog.html?post=" + i;
+			        a.innerHTML = arrLines[i];
+					document.getElementById('blog_col').appendChild(d);
+					d.appendChild(a);
+			    }
+			}
+		</script>
 	</head>
 	<body>
 		<div id="header">
@@ -21,49 +41,54 @@
 			</div>
 		</div>
 		<div id="onecol">
-			<div id="onecol_label">PROJECTS</div>
-			<a href="https://thquinn.itch.io/quintacolor">
-				<div class="homethumb">
-					<div><img src="resources/images/homelogos/quintacolor.png" /></div>
-					<img src="resources/images/homethumbs/quintacolor.png" />
-				</div>
-			</a>
-			<a href="https://thquinn.itch.io/stereotype">
-				<div class="homethumb">
-					<div><img src="resources/images/homelogos/stereotype.png" /></div>
-					<img src="resources/images/homethumbs/stereotype.png" />
-				</div>
-			</a>
-			<a href="projects/ludumdare.html">
-				<div class="homethumb">
-					<div><img src="resources/images/homelogos/ludumdare.png" /></div>
-					<img src="resources/images/homethumbs/ludumdare.png" />
-				</div>
-			</a>
-			<a href="projects/printandplay.html">
-				<div class="homethumb">
-					<div>Print-and-Play Games</div>
-					<img src="resources/images/homethumbs/printandplay.png" />
-				</div>
-			</a>
-			<a href="projects/automaton.html">
-				<div class="homethumb">
-					<div>Subset Sum Automata</div>
-					<img src="resources/images/homethumbs/automaton.png" />
-				</div>
-			</a>
-			<a href="https://github.com/thquinn">
-				<div class="homethumb">
-					<div><img src="resources/images/homelogos/github.png" /></div>
-					<img src="resources/images/homethumbs/github.png" />
-				</div>
-			</a>
-			<a href="http://cargocollective.com/tomquinn">
-				<div class="homethumb">
-					<div>Old Stuff</div>
-					<img src="resources/images/homethumbs/portfolio.png" />
-				</div>
-			</a>
+			<div id="project_col">
+				<div id="onecol_label">PROJECTS</div>
+				<a href="https://thquinn.itch.io/quintacolor">
+					<div class="homethumb">
+						<div><img src="resources/images/homelogos/quintacolor.png" /></div>
+						<img src="resources/images/homethumbs/quintacolor.png" />
+					</div>
+				</a>
+				<a href="https://thquinn.itch.io/stereotype">
+					<div class="homethumb">
+						<div><img src="resources/images/homelogos/stereotype.png" /></div>
+						<img src="resources/images/homethumbs/stereotype.png" />
+					</div>
+				</a>
+				<a href="projects/ludumdare.html">
+					<div class="homethumb">
+						<div><img src="resources/images/homelogos/ludumdare.png" /></div>
+						<img src="resources/images/homethumbs/ludumdare.png" />
+					</div>
+				</a>
+				<a href="projects/printandplay.html">
+					<div class="homethumb">
+						<div>Print-and-Play Games</div>
+						<img src="resources/images/homethumbs/printandplay.png" />
+					</div>
+				</a>
+				<a href="projects/automaton.html">
+					<div class="homethumb">
+						<div>Subset Sum Automata</div>
+						<img src="resources/images/homethumbs/automaton.png" />
+					</div>
+				</a>
+				<a href="https://github.com/thquinn">
+					<div class="homethumb">
+						<div><img src="resources/images/homelogos/github.png" /></div>
+						<img src="resources/images/homethumbs/github.png" />
+					</div>
+				</a>
+				<a href="http://cargocollective.com/tomquinn">
+					<div class="homethumb">
+						<div>Old Stuff</div>
+						<img src="resources/images/homethumbs/portfolio.png" />
+					</div>
+				</a>
+			</div>
+			<div id="blog_col">
+				<div id="blog_label">Latest blog posts:</div>
+			</div>
 		</div>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/91/three.min.js"></script>
 		<script type="text/javascript" src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script>

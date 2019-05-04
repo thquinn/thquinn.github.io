@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Tom's Blog</title>
+		<link rel="stylesheet" type="text/css" href="resources/css/main.css" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" />
+		<meta property="og:image" /> <!-- TODO -->
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115922554-1"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		  gtag('config', 'UA-115922554-1');
+		</script>
+		<!-- Populate recent blog posts -->
+		<iframe id="blogindex" src="resources/blog/index.txt" onload="LoadFile();" style="display: none;"></iframe>
+		<script type="text/javascript">
+			function getQueryStringValue(key) {  
+			  return decodeURIComponent(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + encodeURIComponent(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+			}  
+			function LoadFile() {
+			    var oFrame = document.getElementById("blogindex");
+			    var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+			    while (strRawContents.indexOf("\r") >= 0) {
+			        strRawContents = strRawContents.replace("\r", "");
+			    }
+			    var arrLines = strRawContents.split("\n");
+			    var current_id = parseInt(getQueryStringValue("post"));
+			    if (current_id > 0) {
+			    	var previous_link = document.getElementById('previous_link');
+			    	previous_link.innerHTML = "<i class=\"fas fa-long-arrow-alt-left\"></i>" + arrLines[current_id - 1];
+			    	previous_link.href = "blog.html?post=" + (current_id - 1);
+			    }
+			    if (current_id < arrLines.length - 1) {
+			    	var next_link = document.getElementById('next_link');
+			    	next_link.innerHTML = arrLines[current_id + 1] + "<i class=\"fas fa-long-arrow-alt-right\"></i>";
+			    	next_link.href = "blog.html?post=" + (current_id + 1);
+			    }
+			}
+		</script>
+	</head>
+	<body>
+		<div id="header">
+			<canvas id='headerCanvas'></canvas>
+			<div id='headerText'>
+				<a href="index.html"><h1>Tom Quinn</h1></a>
+				<a href="index.html"><h3>thquinn.github.io</h3></a>
+			</div>
+		</div>
+		<div id="spacer">&nbsp;</div>
+		<div id="bg">
+			<div id="twocol">
+				<div id="leftcol">
+					<div id="post"></div>
+					<div id="blog_links">
+						<a id="previous_link" />
+						<a id="next_link" />
+					</div>
+				</div>
+				<div class="clear" />
+			</div>
+		</div>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/91/three.min.js"></script>
+		<script type="text/javascript" src="https://rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script>
+		<script type="text/javascript" src="resources/js/gel.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+		<script type="text/javascript">
+			var client = new XMLHttpRequest();
+			client.open('GET', 'resources/blog/' + getQueryStringValue("post") + ".md");
+			client.onreadystatechange = function() {
+			  var converter = new showdown.Converter({noHeaderId: true, headerLevelStart: 2, simpleLineBreaks: true, parseImgDimensions: true});
+			  document.getElementById("post").innerHTML = converter.makeHtml(client.responseText);
+			  document.title = "Tom's Blog: " + client.responseText.substr(2, client.responseText.indexOf("\n") - 2);
+			}
+			client.onerror = function() {
+			  window.location.href = "index.html";
+			}
+			client.send();
+		</script>
+	</body>
+</html>

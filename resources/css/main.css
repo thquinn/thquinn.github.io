@@ -37,6 +37,11 @@ h3 {
 	margin-top: -.675vw;
 }
 
+h6 {
+	margin-top: -1vw;
+	font-weight: normal;
+}
+
 p {
 	text-indent: 4vw;
 }
@@ -44,6 +49,10 @@ p {
 a {
 	text-decoration: inherit;
 	color: #68F;
+}
+
+ul {
+	padding-left: 4vw;
 }
 
 #header {
@@ -75,9 +84,26 @@ a {
 /* homepage */
 
 #onecol {
+	width: 75vw;
+	min-width: 1152px;
+	margin: 1vw auto auto 25vw;
+}
+#project_col {
+	float: left;
 	width: 50vw;
 	min-width: 768px;
-	margin: 1vw auto;
+}
+#blog_col {
+	float: left;
+	width: 28vw;
+	min-width: 384px;
+	margin-left: -4vw;
+	color: #FFF;
+	font-size: .75vw;
+}
+#blog_label {
+	margin-top: .5vw;
+	font-size: 1vw;
 }
 
 #onecol_label {
@@ -139,8 +165,10 @@ a {
 }
 
 #twocol {
+	display: table;
 	width: 65vw;
 	min-width: 768px;
+	height: auto;
 	margin: auto;
 	padding-left: 10vw;
 	padding-top: 1.5vw;
@@ -240,6 +268,25 @@ hr {
 }
 #rightcol > div > div:not(:first-child) {
     text-indent: 10%;
+}
+
+/* blog */
+p > img {
+	display: block;
+	width: 90%;
+	margin: auto;
+}
+#blog_links {
+	width: 125%;
+	transform: translate(-12.5%);
+	padding-top: 2vw;
+	font-weight: bold;
+}
+#blog_links i {
+	margin: 0 0.5vw 0 0.5vw;
+}
+#next_link {
+	float: right;
 }
 
 /* ludum dare article */
