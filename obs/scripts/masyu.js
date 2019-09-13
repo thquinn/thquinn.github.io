@@ -57,6 +57,7 @@ function drawGrid() {
 }
 
 const NEIGHBORS = [[-1, 0], [0, -1], [1, 0], [0, 1]];
+const SURROUNDING = [[-1, -1], [0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0]];
 class Polyomino {
 	constructor(x, y, width, height) {
 		this.x = x;
@@ -67,7 +68,7 @@ class Polyomino {
 		let squareCoors = new StringSet();
 		let borderCoors = new StringSet();
 		let badCoors = new StringSet();
-		let start = [Math.randInt(0, width - 2), Math.randInt(0, height - 1)];
+		let start = [Math.randInt(0, width - 1), Math.randInt(0, height - 1)];
 		borderCoors.add(start);
 		while (borderCoors.size() > 0) {
 			// Sometimes don't fill in the entire available area.
@@ -111,6 +112,53 @@ class Polyomino {
 					badCoors.add(next);
 				} else {
 					borderCoors.add(next);
+				}
+			}
+		}
+		// Fill out some interior squares.
+		for (let i = 0; i < 100; i++) {
+			let p = [Math.randInt(0, width - 1), Math.randInt(0, height - 1)];
+			if (squareCoors.has(p)) {
+				continue;
+			}
+			let surroundSquare = Array.from(SURROUNDING, x => squareCoors.has([p[0] + x[0], p[1] + x[1]]));
+			if (surroundSquare.every(x => x == false)) {
+				continue;
+			}
+			if (surroundSquare.every(x => x == true)) {
+				continue;
+			}
+			let inarow = 0;
+			for (let rot = 0; rot < 8; rot++) {
+				surroundSquare.push(surroundSquare.shift());
+				if (!surroundSquare[0]) {
+					continue;
+				}
+				let count = 1;
+				let done = false;
+				let error = false;
+				for (let j = 1; j < 8; j++) {
+					if (surroundSquare[j]) {
+						if (done) {
+							error = true;
+							break;
+						} else {
+							count++;
+						}
+					} else {
+						done = true;
+					}
+				}
+				if (!error) {
+					inarow = count;
+					break;
+				}
+			}
+			if (inarow >= 3 && inarow <= 6) {
+				squareCoors.add(p);
+				let fillPercent = squareCoors.size() / ((width - 1) * (height - 1));
+				if (fillPercent > .65) {
+					break;
 				}
 			}
 		}

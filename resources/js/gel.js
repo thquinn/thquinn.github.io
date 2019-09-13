@@ -112,7 +112,7 @@ class Interpolator {
 		return this.fromLow ? Math.randInt(this.lowWaitMin, this.lowWaitMax + 1) : Math.randInt(this.highWaitMin, this.highWaitMax + 1);
 	}
 }
-var squishInterpolator = new Interpolator(-.25, -.15, .3, .35, 120, 150, 0, 0, 0, 0, true, true, false);
+var squishInterpolator = new Interpolator(-.25, -.15, .15, .2, 150, 180, 0, 0, 0, 0, true, true, false);
 var blinkInterpolator = new Interpolator(0, 0, 1, 1, 3, 3, 45, 300, 0, 0, false, true, true);
 var leafInterpolator = new Interpolator(.4, .5, 0, .2, 300, 400, 30, 60, 30, 60, true, true, false);
 var leanInterpolator = new Interpolator(-.7, -.2, .2, .5, 300, 400, 30, 60, 30, 60, true, true, false);
