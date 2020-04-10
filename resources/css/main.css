@@ -288,6 +288,9 @@ p > img {
 #next_link {
 	float: right;
 }
+i {
+	text-indent: 0.25vw;
+}
 
 /* ludum dare article */
 .ldcaption {
