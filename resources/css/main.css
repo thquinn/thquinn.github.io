@@ -295,7 +295,7 @@ i {
 /* ludum dare article */
 .ldcaption {
 	padding-top: .5vw;
-	font-size: .75vw;
+	font-size: .85vw;
 	text-align: center;
 }
 .ldcaption span {
@@ -312,6 +312,7 @@ i {
 	width: 2vw;
 	padding-right: .5vw;
 	text-align: center;
+	vertical-align: middle;
 }
 
 /* game */
