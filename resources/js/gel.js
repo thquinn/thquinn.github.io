@@ -39,6 +39,13 @@ scene.add(light);
 var light2 = new THREE.PointLight(0xFFFFFF, .5, 0);
 light2.position.set(150, 150, 150);
 scene.add(light2);
+const geometry = new THREE.CircleGeometry(11, 16);
+const material = new THREE.MeshBasicMaterial({ color: 0xE0E0E0 });
+var shadow = new THREE.Mesh(geometry, material);
+shadow.translateY(-2);
+shadow.translateZ(-4.5);
+shadow.rotateX(-1.8);
+scene.add(shadow);
 
 var gel;
 
@@ -150,7 +157,7 @@ function gelLoop() {
 				interpolator.update();
 			}
 		}
-		let easedCringe = Math.easeInOutQuad(cringe, 0, 1, 1);
+		let easedCringe = Math.easeInOutQuad(cringe, 0, .92, 1);
 		let values = [
 			easedCringe * 1.25 + squishInterpolator.value * (1 - easedCringe),
 			easedCringe * .65 + blinkInterpolator.value * (1 - easedCringe),
@@ -167,6 +174,9 @@ function gelLoop() {
 		}
 		gel.position.x = cringe == 1 ? Math.randFloat(-.25, .25) : 0;
 		gel.rotation.y = values[4];
+
+		let shadowScale = 1 + values[0] * .15;
+		shadow.scale.set(shadowScale, shadowScale, shadowScale);
 	}
 
 	renderer.render(scene, camera);
