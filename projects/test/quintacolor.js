@@ -87,7 +87,7 @@ boardDesaturationCanvas.height = boardCanvas.height;
 const UI_TITLE_LOGO_SIZE = canvas.width * 2 / 3;
 const UI_TITLE_LOGO_BUMP = .033;
 const UI_TITLE_FADE_RATE = .025;
-const UI_TEXT_COLOR = "#76a1d9";
+const UI_TEXT_COLOR = "#f2f7fd";
 const UI_SCORE_DIGITS = 10;
 const UI_SCORE_FONT_SIZE = UI_WIDTH / UI_SCORE_DIGITS * 1.75;
 const UI_SCORE_POPUP_DRAIN_PERCENT = .04;
@@ -96,7 +96,7 @@ const UI_BONUS_TIMER = COMBO_DELAY;
 const UI_BONUS_FLASH_FRAMES = 3;
 const UI_LEVEL_CIRCLE_RADIUS = PIECE_SIZE * .66;
 const UI_LEVEL_CIRCLE_X = canvas.width - BOARD_PADDING - UI_LEVEL_CIRCLE_RADIUS;
-const UI_LEVEL_CIRCLE_Y = canvas.height * .4125;
+const UI_LEVEL_CIRCLE_Y = canvas.height * .38;
 const UI_POLYOMINO_AREA_SIZE = PIECE_SIZE * 2.5;
 const UI_POLYOMINO_BLOCK_FILL = .8;
 const UI_GAME_OVER_FADE_TIME = 60;
@@ -132,7 +132,7 @@ const TEXT_CREDITS = ["Quintacolor v 1.0.2",
 				      "thanks to Arthee, Chet, Jay, Jonny, Maggie, San, and Tanoy",
 				      "best played in Chrome"];
 // Background appearance.
-const BACKGROUND_COLOR = "#C3DCF0";
+const BACKGROUND_COLOR = "#c1d1de";
 const BACKGROUND_TILT = Math.PI * .05;
 const BACKGROUND_SQUIGGLE_COLOR = "rgba(0, 0, 255, .02)";
 const BACKGROUND_SQUIGGLE_SIZE = PIECE_SIZE * 5;
@@ -980,7 +980,7 @@ function loop() {
 		ctx.beginPath();
 		ctx.arc(UI_LEVEL_CIRCLE_X, UI_LEVEL_CIRCLE_Y, UI_LEVEL_CIRCLE_RADIUS, Math.PI * 1.5, Math.PI * (1.5 - 2 * levelPercent), true);
 		ctx.lineTo(UI_LEVEL_CIRCLE_X, UI_LEVEL_CIRCLE_Y);
-		ctx.fillStyle = "rgba(255, 255, 255, .5)";
+		ctx.fillStyle = "rgba(255, 255, 255, .2)";
 		ctx.fill();
 		ctx.textAlign = 'center';
 		ctx.fillStyle = UI_TEXT_COLOR;
