@@ -297,6 +297,10 @@ p > img {
 #blog_links i {
 	margin: 0 0.5vw 0 0.5vw;
 }
+#home_link {
+            left: 50%; 
+			position:fixed;
+}
 #next_link {
 	float: right;
 }
