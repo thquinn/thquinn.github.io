@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Alegreya');
+@import url('https://fonts.googleapis.com/css?family=Alegreya:400,500,600');
 
 html, body {
 	height: 100%;
@@ -306,6 +306,21 @@ p > img {
 }
 i {
 	text-indent: 0.25vw;
+}
+auto-card a {
+	color: #000;
+	font-weight: 500;
+}
+.decklist {
+	width: 50%;
+	margin: auto;
+	padding: 1vw;
+	background-color: #f9f3e2;
+	border: .1vw solid #ab9966;
+	column-count: 2;
+	white-space: pre-line;
+	font-size: .85vw;
+	column-rule: .1vw solid #d0d0c0;
 }
 
 /* ludum dare article */
