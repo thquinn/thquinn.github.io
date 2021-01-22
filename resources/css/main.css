@@ -95,7 +95,7 @@ code {
 
 /* homepage */
 
-#onecol {
+#homecol {
 	width: 75vw;
 	min-width: 1152px;
 	margin: 1vw auto auto 24vw;
@@ -118,7 +118,7 @@ code {
 	font-size: 1vw;
 }
 
-#onecol_label {
+#homecol_label {
 	color: #FFF;
 	font-size: 2.5vw;
 	width: 0px;
@@ -174,6 +174,18 @@ code {
 	padding-bottom: 1vw;
 	width: 100%;
 	background: #FFF;
+}
+
+#onecol {
+	width: 45vw;
+	margin: auto;
+	padding-top: 1.5vw;
+}
+
+#onecol > img {
+	width: 90%;
+	display: block;
+    margin: 1vw auto;
 }
 
 #twocol {

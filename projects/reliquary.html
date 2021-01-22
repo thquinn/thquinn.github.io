@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Reliquary</title>
+		<link rel="stylesheet" type="text/css" href="../resources/css/main.css" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" />
+		<meta property="og:image" /> <!-- TODO -->
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115922554-1"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		  gtag('config', 'UA-115922554-1');
+		</script>
+		<style>
+			.relic_row { position: relative; height: 5vw; margin-left: 1vw;  margin-bottom: 1vw; }
+			.relic_row > div:first-of-type::before { position:absolute; height:100%; width: 5vw; background-image: url("../resources/images/reliquary/relicbg.png"); background-size:cover; content:" "; }
+			.relic_row > div > img { position:absolute; height: 100%; }
+			.relic_row > div:nth-of-type(2) { position:relative; padding-top: .5vw; left: 6vw; font-size: .9vw; }
+			.keyword_red { color: #A00000; font-weight: bold; }
+			.keyword_green { color: #00A000; font-weight: bold; }
+			.keyword_blue { color: #5050B0; font-weight: bold; }
+			.keyword_purple { color: #800080; font-weight: bold; }
+			.keyword_gray { color: #707070; font-weight: bold; }
+			.keyword_gold { color: #A0A000; font-weight: bold; }
+			.stsenergy { height: .9vw; transform: translate(0, .1vw); content: url("../resources/images/reliquary/energy.png"); }
+			.relic_explanation { position:relative; top: -.4vw; font-size: .6vw; font-style: italic; }
+		</style>
+	</head>
+	<body>
+		<div id="header">
+			<canvas id='headerCanvas'></canvas>
+			<div id='headerText'>
+				<a href="../index.html"><h1>Tom Quinn</h1></a>
+				<a href="../index.html"><h3>thquinn.github.io</h3></a>
+			</div>
+		</div>
+		<div id="spacer">&nbsp;</div>
+		<div id="bg">
+			<div id="onecol">
+				<img src="../resources/images/reliquary/logo2.png" />
+				<p>Reliquary a collection of relics for Slay the Spire. You can find it on the Steam Workshop here, and the source code is <a href="https://github.com/thquinn/Reliquary">over here</a>.
+				
+				<h2 style="text-align: center;">Relics</h2>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/boilingFlask.png" /></div>
+					<div>
+						<span><b>Boiling Flask</b></span><br />
+						<span class="keyword_blue">Uncommon</span><br/>
+						<span>At the start of each combat, if your potion slots are full, choose a Vapor and add it into your hand.</span><br/>
+						<span class="relic_explanation">(Vapors are cards which Retain and Exhaust, with minor effects derived from your Potions.)</span>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/bookmark.png" /></div>
+					<div>
+						<span><b>Bookmark</b></span><br />
+						<span class="keyword_blue">Uncommon</span><br/>
+						<span>At the start of each combat, draw an extra card for each Innate card in your deck.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/boomerang.png" /></div>
+					<div>
+						<span><b>Boomerang</b></span><br />
+						<span class="keyword_gray">Common</span><br/>
+						<span>Put the first card you play each turn on top of your draw pile.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/brokenClock.png" /></div>
+					<div>
+						<span><b>Broken Clock</b></span><br />
+						<span class="keyword_green">Shop</span><br/>
+						<span>Each combat starts with two player turns, then two enemy turns.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/ember.png" /></div>
+					<div>
+						<span><b>Ember</b></span><br />
+						<span class="keyword_red">Boss</span><br/>
+						<span>Gain <img class="stsenergy" /> at the start of your turn. Take 1 damage for each <img class="stsenergy" /> beyond the third you spend each turn.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/expiredCoupon.png" /></div>
+					<div>
+						<span><b>Expired Coupon</b></span><br />
+						<span class="keyword_gray">Common</span><br/>
+						<span>Whenever you reach 80 or more total unblocked damage in a combat, deals 10 damage to ALL enemies.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/featherDuster.png" /></div>
+					<div>
+						<span><b>Feather Duster</b></span><br />
+						<span class="keyword_blue">Uncommon</span><br/>
+						<span>Upon pickup, remove any number of cards from your deck except Strike, Defend, and Curse cards.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/firecrackers.png" /></div>
+					<div>
+						<span><b>Firecrackers</b></span><br />
+						<span class="keyword_blue">Uncommon</span><br/>
+						<span>Overkill damage is dealt to ALL other enemies.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/iridiumChain.png" /></div>
+					<div>
+						<span><b>Iridium Chain</b></span><br />
+						<span class="keyword_blue">Uncommon</span><br/>
+						<span>Whenever you play a Power card, put an Ethereal copy into your hand that costs 1 more.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/jackalopeAntler.png" /></div>
+					<div>
+						<span><b>Jackalope Antler</b></span><br />
+						<span class="keyword_blue">Uncommon</span><br/>
+						<span>Whenever an enemy dies, refund the Energy cost of the last card you played.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/kinkedSpring.png" /></div>
+					<div>
+						<span><b>Kinked Spring</b></span><br />
+						<span class="keyword_red">Boss</span><br/>
+						<span>Gain <img class="stsenergy" /> at the start of your turn. Your discard pile can't shuffle into your draw pile during your turn.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/knoch.png" /></div>
+					<div>
+						<span><b>Knoch</b></span><br />
+						<span class="keyword_gray">Common</span><br/>
+						<span>Enemies with 25% or less HP are Weak.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/medicineBall.png" /></div>
+					<div>
+						<span><b>Medicine Ball</b></span><br />
+						<span><span class="keyword_blue">Uncommon</span> <b>&middot;</b> <span class="keyword_red">Ironclad</span><br/>
+						<span>You have additional Strength equal to your enemies' combined Strength.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/mudwinsCradle.png" /></div>
+					<div>
+						<span><b>Mudwin's Cradle</b></span><br />
+						<span><span class="keyword_blue">Uncommon</span> <b>&middot;</b> <span class="keyword_purple">Watcher</span><br/>
+						<span>Whenever you exit Divinity, gain 2 Mantra for each time you entered Divinity this combat (up to a max of 9).</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/ouijaBoard.png" /></div>
+					<div>
+						<span><b>Ouija Board</b></span><br />
+						<span class="keyword_gold">Rare</span><br/>
+						<span>Once each turn, right click to play a card from your discard pile with random targets and shuffle it into your draw pile. It costs 1 more.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/porcupineQuills.png" /></div>
+					<div>
+						<span><b>Porcupine Quills</b></span><br />
+						<span class="keyword_gray">Common</span><br/>
+						<span>Whenever you receive 12 or more unblocked damage, deal that much damage back.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/purpleTingedLeaf.png" /></div>
+					<div>
+						<span><b>Purple-Tinged Leaf</b></span><br />
+						<span class="keyword_blue">Uncommon</span><br/>
+						<span>Upon pickup, choose a card. Whenever you play that card, heal 1 HP.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/quartzCube.png" /></div>
+					<div>
+						<span><b>Quartz Cube</b></span><br />
+						<span class="keyword_blue">Uncommon</span><br/>
+						<span>At the start of each combat with 2 or more enemies, apply 2 Stunned to one. It can't be damaged while Stunned.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/radioactivePellet.png" /></div>
+					<div>
+						<span><b>Radioactive Pellet</b></span><br />
+						<span><span class="keyword_gray">Common</span> <b>&middot;</b> <span class="keyword_green">Silent</span><br/>
+						<span>Poison doesn't decrement.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/redPaperclip.png" /></div>
+					<div>
+						<span><b>Red Paperclip</b></span><br />
+						<span class="keyword_red">Boss</span><br/>
+						<span>Gain <img class="stsenergy" /> at the start of your turn. Replaces a random Uncommon relic.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/roseTintedGlasses.png" /></div>
+					<div>
+						<span><b>Rose-Tinted Glasses</b></span><br />
+						<span class="keyword_gray">Common</span><br/>
+						<span>The first 2 times you draw a Status each combat, Exhaust it and draw a card.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/rosewoodLute.png" /></div>
+					<div>
+						<span><b>Rosewood Lute</b></span><br />
+						<span class="keyword_gray">Common</span><br/>
+						<span>Whenever you block damage exactly, gain <img class="stsenergy" /> next turn.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/sculptingSteel.png" /></div>
+					<div>
+						<span><b>Sculpting Steel</b></span><br />
+						<span class="keyword_blue">Uncommon</span><br/>
+						<span>Upon pickup, becomes a copy of a random relic you already have.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/shortFuse.png" /></div>
+					<div>
+						<span><b>Short Fuse</b></span><br />
+						<span><span class="keyword_blue">Uncommon</span> <b>&middot;</b> <span class="keyword_blue">Defect</span><br/>
+						<span>Your Lightning Orbs target the enemy with the least HP.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/silkGlove.png" /></div>
+					<div>
+						<span><b>Silk Glove</b></span><br />
+						<span class="keyword_gray">Common</span><br/>
+						<span>Whenever you would discard a single card at the end of your turn, Retain it.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/stiletto.png" /></div>
+					<div>
+						<span><b>Stiletto</b></span><br />
+						<span class="keyword_gray">Common</span><br/>
+						<span>Your Attacks deal double damage to enemies' Block.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/tatteredRug.png" /></div>
+					<div>
+						<span><b>Tattered Rug</b></span><br />
+						<span class="keyword_gray">Common</span><br/>
+						<span>You can sell potions to the Merchant.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/tridentHead.png" /></div>
+					<div>
+						<span><b>Trident Head</b></span><br />
+						<span class="keyword_blue">Uncommon</span><br/>
+						<span>The first card you play on a single enemy each combat is copied to all other enemies.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/writOfMandamus.png" /></div>
+					<div>
+						<span><b>Writ of Mandamus</b></span><br />
+						<span class="keyword_red">Boss</span><br/>
+						<span>Gain <img class="stsenergy" /> at the start of your turn. At the end of your turn, you lose 3 Block.</span><br/>
+					</div>
+				</div>
+				
+				<br/>
+				<h2 style="text-align: center;">Changelog</h2>
+			</div>
+		</div>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/91/three.min.js"></script>
+		<script type="text/javascript" src="https://rawcdn.githack.com/mrdoob/three.js/r100/examples/js/loaders/GLTFLoader.js"></script>
+		<script type="text/javascript" src="../resources/js/gel.js"></script>
+	</body>
+</html>
