@@ -47,7 +47,7 @@
 		<div id="bg">
 			<div id="onecol">
 				<img src="../resources/images/reliquary/logo2.png" />
-				<p>Reliquary is a collection of relics for <a href="https://www.megacrit.com/">Slay the Spire</a>. You find it on the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2371967829">Steam Workshop</a>, and take a gander at <a href="https://github.com/thquinn/Reliquary">the source code on Github</a>. The latest version is <b>0.1</b> (<a href="#changelog">changelog</a>).
+				<p>Reliquary is a collection of relics for <a href="https://www.megacrit.com/">Slay the Spire</a>. You find it on the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2371967829">Steam Workshop</a>, and take a gander at <a href="https://github.com/thquinn/Reliquary">the source code on Github</a>. The latest version is <b>0.1.1</b> (<a href="#changelog">changelog</a>).
 				
 				<h2 style="text-align: center;">Relics</h2>
 				
@@ -83,7 +83,7 @@
 					<div><img src="../resources/images/reliquary/relics/bookmark.png" /></div>
 					<div>
 						<span><b>Bookmark</b></span><br />
-						<span class="keyword_blue">Uncommon</span><br/>
+						<span class="keyword_green">Shop</span><br/>
 						<span>At the start of each combat, draw an extra card for each Innate card in your deck.</span><br/>
 					</div>
 				</div>
@@ -120,7 +120,7 @@
 					<div>
 						<span><b>Ember</b></span><br />
 						<span class="keyword_red">Boss</span><br/>
-						<span>Gain <img class="stsenergy" /> at the start of your turn. Take 1 damage for each <img class="stsenergy" /> beyond the third you spend each turn.</span><br/>
+						<span>Gain <img class="stsenergy" /> at the start of your turn. Take 2 damage for each Energy beyond the third you spend each turn.</span><br/>
 					</div>
 				</div>
 				
@@ -157,6 +157,7 @@
 						<span><b>Hot Poker</b></span><br />
 						<span class="keyword_blue">Uncommon</span><br/>
 						<span>Whenever you draw a card during your turn, deal damage equal to its cost to a random enemy.</span><br/>
+						<span class="relic_explanation">(This doesn't include the cards you draw at the start of your turn.)</span>
 					</div>
 				</div>
 				
@@ -174,7 +175,7 @@
 					<div>
 						<span><b>Ivory Trinket</b></span><br />
 						<span><span class="keyword_gray">Common</span> <b>&middot;</b> <span class="keyword_purple">Watcher</span><br/>
-						<span>Every 10th time you Retain a Miracle, add a Miracle into your hand.</span><br/>
+						<span>Every 5th time you Retain a Miracle, add a Miracle into your hand.</span><br/>
 					</div>
 				</div>
 				
@@ -201,7 +202,7 @@
 					<div>
 						<span><b>Kinked Spring</b></span><br />
 						<span class="keyword_red">Boss</span><br/>
-						<span>Gain <img class="stsenergy" /> at the start of your turn. Your discard pile can't shuffle into your draw pile during your turn.</span><br/>
+						<span>Gain <img class="stsenergy" /> at the start of your turn. Your discard pile will only shuffle into your draw pile if your draw pile is empty at the end of your turn.</span><br/>
 					</div>
 				</div>
 				
@@ -228,7 +229,7 @@
 					<div>
 						<span><b>Medicine Ball</b></span><br />
 						<span><span class="keyword_blue">Uncommon</span> <b>&middot;</b> <span class="keyword_red">Ironclad</span><br/>
-						<span>You have additional Strength equal to your enemies' combined Strength.</span><br/>
+						<span>You have additional Strength equal to the highest Strength among enemies (0 minimum).</span><br/>
 					</div>
 				</div>
 				
@@ -237,7 +238,7 @@
 					<div>
 						<span><b>Mudwin's Cradle</b></span><br />
 						<span><span class="keyword_blue">Uncommon</span> <b>&middot;</b> <span class="keyword_purple">Watcher</span><br/>
-						<span>Whenever you exit Divinity, gain 2 Mantra for each time you entered Divinity this combat (up to a max of 9).</span><br/>
+						<span>Whenever you exit Divinity, gain 3 Mantra for each time you entered Divinity this combat (6 maximum).</span><br/>
 					</div>
 				</div>
 				
@@ -270,11 +271,20 @@
 				</div>
 				
 				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/princelyHelmet.png" /></div>
+					<div>
+						<span><b>Princely Helmet</b></span><br />
+						<span class="keyword_gold">Rare</span><br/>
+						<span>Double the first X Block you receive each combat, where X is the floor you're on.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
 					<div><img src="../resources/images/reliquary/relics/purpleTingedLeaf.png" /></div>
 					<div>
 						<span><b>Purple-Tinged Leaf</b></span><br />
 						<span class="keyword_blue">Uncommon</span><br/>
-						<span>Upon pickup, choose a card. Whenever you play this card, heal 1 HP.</span><br/>
+						<span>Upon pickup, choose an Attack. Whenever you play this card, heal 1 HP.</span><br/>
 					</div>
 				</div>
 				
@@ -283,7 +293,7 @@
 					<div>
 						<span><b>Quartz Cube</b></span><br />
 						<span class="keyword_blue">Uncommon</span><br/>
-						<span>At the start of each combat with 2 or more enemies, apply 2 Stunned to one. It can't be damaged while Stunned.</span><br/>
+						<span>At the start of each combat with 2 or more enemies, apply 2 Stunned and 2 Intangible to one.</span><br/>
 					</div>
 				</div>
 				
@@ -310,7 +320,7 @@
 					<div>
 						<span><b>Red Paperclip</b></span><br />
 						<span class="keyword_red">Boss</span><br/>
-						<span>Gain <img class="stsenergy" /> at the start of your turn. Replaces a random Uncommon relic.</span><br/>
+						<span>Gain <img class="stsenergy" /> at the start of your turn. Replaces 2 random Common or Uncommon relics.</span><br/>
 					</div>
 				</div>
 				
@@ -354,7 +364,7 @@
 					<div><img src="../resources/images/reliquary/relics/shortFuse.png" /></div>
 					<div>
 						<span><b>Short Fuse</b></span><br />
-						<span><span class="keyword_gold">Rare</span> <b>&middot;</b> <span class="keyword_blue">Defect</span><br/>
+						<span><span class="keyword_blue">Uncommon</span> <b>&middot;</b> <span class="keyword_blue">Defect</span><br/>
 						<span>Your Lightning Orbs target the enemy with the least HP.</span><br/>
 					</div>
 				</div>
@@ -381,8 +391,8 @@
 					<div><img src="../resources/images/reliquary/relics/tamtam.png" /></div>
 					<div>
 						<span><b>Tam-Tam</b></span><br />
-						<span><span class="keyword_gold">Rare</span> <b>&middot;</b> <span class="keyword_red">Ironclad</span><br/>
-						<span>Whenever you completely block an attack, gain 2 Strength and ALL enemies gain 1 Strength.</span><br/>
+						<span><span class="keyword_green">Shop</span> <b>&middot;</b> <span class="keyword_red">Ironclad</span><br/>
+						<span>Whenever you start your turn with Block, gain 2 Strength and ALL enemies gain 1 Strength.</span><br/>
 					</div>
 				</div>
 				
@@ -426,18 +436,39 @@
 				<br/>
 				<a id="changelog"></a>
 				<h2 style="text-align: center;">Changelog</h2>
-				<ul>
-					<li>0.1 (1/24/2021): Initial release.</li>
+				<ul style="font-size: .9vw;">
+					<li><b>0.1.1</b> (1/25/2021)
+						<ul>
+							<li>added Princely Helmet</li>
+							<li>Bookmark: Uncommon → Shop.</li>
+							<li>Ember: 1 → 2 damage.</li>
+							<li>Iridium Chain: upgrading created cards (e.g. with Master Reality) no longer resets the cost.</li>
+							<li>Ivory Trinket: every 10th time → every 5th time.</li>
+							<li>Kinked Spring: now doesn't shuffle during your draw for turn, closed edge-case loopholes.</li>
+							<li>Medicine Ball: now max among enemies and doesn't copy negative Strength.</li>
+							<li>Mudwin's Cradle: 2/4/6/8/9 → 3/6 Mantra.</li>
+							<li>Purple-Tinged Leaf: now works on Attacks only.</li>
+							<li>Quartz Cube: applies Intangible instead of Invincible.</li>
+							<li>Red Paperclip: replaces 2 Common or Uncommon relics.</li>
+							<li>Short Fuse: Rare → Uncommon.</li>
+							<li>Tam-Tam: Rare → Shop, checks once per turn for leftover block instead of on every attack.</li>
+							<li>Writ of Mandamus: lose 3 Block → lose 5 Block.</li>
+							<li>fixed bugs with Boomerang, Medicine Ball, and Red Cape</li>
+							<li>improved tooltips and misc strings</li>
+							<li>Vapors no longer default to seen</li>
+						</ul></li>
+					<li><b>0.1</b> (1/23/2021): Initial release.</li>
 				</ul>
 				
 				<br/>
 				<h2 style="text-align: center;">Credits</h2>
-				<ul>
+				<ul style="font-size: .9vw;">
 					<li>design and art by me</li>
 					<li>additional design by Grace Ku</li>
 					<li>testing by to Grace Ku and Wilson Chung, for testing</li>
-					<li>thanks to the developers of <a href="https://github.com/kiooeht/ModTheSpire">ModTheSpire</a>, <a href="https://github.com/daviscook477/BaseMod">BaseMod</a>, and <a href="https://github.com/kiooeht/StSLib">StSLib</a>, especially <a href="https://github.com/kiooeht">kiooeht</a>
-					<li>thanks to the <a href="https://discord.com/invite/slaythespire">Slay the Spire Discord</a> members Alchyr, Gk, Jobby, Raz, squeeb, and vex
+					<li>thanks to the developers of <a href="https://github.com/kiooeht/ModTheSpire">ModTheSpire</a>, <a href="https://github.com/daviscook477/BaseMod">BaseMod</a>, and <a href="https://github.com/kiooeht/StSLib">StSLib</a>, especially <a href="https://github.com/kiooeht">kiooeht</a></li>
+					<li>thanks to <a href="https://discord.com/invite/slaythespire">Slay the Spire Discord</a> members Alchyr, Gk, Jobby, Raz, squeeb, and vex for technical help</li>
+					<li>thanks to the many people who gave balance and design feedback!</li>
 				</ul>
 				
 				<br/>
