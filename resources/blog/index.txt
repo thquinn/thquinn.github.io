@@ -5,3 +5,4 @@
 4/28/2020: Ludum Dare 46 Postmortem
 11/2/2020: Ludum Dare 47 Postmortem
 12/7/2020: Monte Carlo & Magic: the Gathering
+1/27/2021: MCTS & Magic: the Gathering
