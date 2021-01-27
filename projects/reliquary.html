@@ -93,7 +93,7 @@
 					<div>
 						<span><b>Boomerang</b></span><br />
 						<span class="keyword_gray">Common</span><br/>
-						<span>Put the first card you play each turn on top of your draw pile.</span><br/>
+						<span>Put the fourth card you play each turn on top of your draw pile.</span><br/>
 					</div>
 				</div>
 				
@@ -193,7 +193,7 @@
 					<div>
 						<span><b>Kill Pill</b></span><br />
 						<span><span class="keyword_gold">Rare</span> <b>&middot;</b> <span class="keyword_green">Silent</span><br/>
-						<span>Whenever you apply Poison, it triggers immediately.</span><br/>
+						<span>The first time you apply Poison to each enemy each turn, it triggers immediately.</span><br/>
 					</div>
 				</div>
 				
@@ -348,6 +348,7 @@
 						<span><b>Sculpting Steel</b></span><br />
 						<span class="keyword_blue">Uncommon</span><br/>
 						<span>Upon pickup, becomes a copy of a random relic you already have.</span><br/>
+						<span class="relic_explanation">(Chooses from among compatible relics. Boss relics with non-compounding downsides are excluded.)</span>
 					</div>
 				</div>
 				
@@ -423,6 +424,14 @@
 					</div>
 				</div>
 				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/weakTea.png" /></div>
+					<div>
+						<span><b>Weak Tea</b></span><br />
+						<span class="keyword_gray">Common</span><br/>
+						<span>The first Colorless card you play each combat costs 1 less.</span><br/>
+					</div>
+				</div>
 				
 				<div class="relic_row">
 					<div><img src="../resources/images/reliquary/relics/writOfMandamus.png" /></div>
@@ -437,26 +446,34 @@
 				<a id="changelog"></a>
 				<h2 style="text-align: center;">Changelog</h2>
 				<ul style="font-size: .9vw;">
-					<li><b>0.1.1</b> (1/25/2021)
-						<ul>
-							<li>added Princely Helmet</li>
-							<li>Bookmark: Uncommon → Shop.</li>
-							<li>Ember: 1 → 2 damage.</li>
-							<li>Iridium Chain: upgrading created cards (e.g. with Master Reality) no longer resets the cost.</li>
-							<li>Ivory Trinket: every 10th time → every 5th time.</li>
-							<li>Kinked Spring: now doesn't shuffle during your draw for turn, closed edge-case loopholes.</li>
-							<li>Medicine Ball: now max among enemies and doesn't copy negative Strength.</li>
-							<li>Mudwin's Cradle: 2/4/6/8/9 → 3/6 Mantra.</li>
-							<li>Purple-Tinged Leaf: now works on Attacks only.</li>
-							<li>Quartz Cube: applies Intangible instead of Invincible.</li>
-							<li>Red Paperclip: replaces 2 Common or Uncommon relics.</li>
-							<li>Short Fuse: Rare → Uncommon.</li>
-							<li>Tam-Tam: Rare → Shop, checks once per turn for leftover block instead of on every attack.</li>
-							<li>Writ of Mandamus: lose 3 Block → lose 5 Block.</li>
-							<li>fixed bugs with Boomerang, Medicine Ball, and Red Cape</li>
-							<li>improved tooltips and misc strings</li>
-							<li>Vapors no longer default to seen</li>
-						</ul></li>
+					<li><b>0.1.2</b> (1/26/2021)<ul>
+						<li>added Weak Tea</li>
+						<li>Boomerang: first card → fourth card</li>
+						<li>Iridium Chain: the added Ethereal now overrides Powers with Retain</li>
+						<li>Kill Pill: triggers only once per enemy per turn</li>
+						<li>Kinked Spring: fixed interaction with onShuffle effects, including Ball Bearing</li>
+						<li>Knoch: fixed not reapplying Weak</li>
+						<li>Red Cape: displays message when targeting a non-Taunted enemy, attempted crash fix</li>
+					</ul></li>
+					<li><b>0.1.1</b> (1/25/2021)<ul>
+						<li>added Princely Helmet</li>
+						<li>Bookmark: Uncommon → Shop</li>
+						<li>Ember: 1 → 2 damage</li>
+						<li>Iridium Chain: upgrading created cards (e.g. with Master Reality) no longer resets the cost</li>
+						<li>Ivory Trinket: every 10th time → every 5th time</li>
+						<li>Kinked Spring: now doesn't shuffle during your draw for turn, closed edge-case loopholes</li>
+						<li>Medicine Ball: copies max Strength among enemies, ignoring negative Strength</li>
+						<li>Mudwin's Cradle: 2/4/6/8/9 → 3/6 Mantra</li>
+						<li>Purple-Tinged Leaf: now works on Attacks only</li>
+						<li>Quartz Cube: applies Intangible instead of Invincible</li>
+						<li>Red Paperclip: replaces 2 Common or Uncommon relics</li>
+						<li>Short Fuse: Rare → Uncommon</li>
+						<li>Tam-Tam: Rare → Shop, checks once per turn for leftover block instead of on every attack</li>
+						<li>Writ of Mandamus: lose 3 Block → lose 5 Block</li>
+						<li>fixed bugs with Boomerang, Medicine Ball, and Red Cape</li>
+						<li>improved tooltips and misc strings</li>
+						<li>Vapors no longer default to seen</li>
+					</ul></li>
 					<li><b>0.1</b> (1/23/2021): Initial release.</li>
 				</ul>
 				
@@ -465,7 +482,7 @@
 				<ul style="font-size: .9vw;">
 					<li>design and art by me</li>
 					<li>additional design by Grace Ku</li>
-					<li>testing by to Grace Ku and Wilson Chung, for testing</li>
+					<li>thanks to my wonderful playtesters, Grace Ku and Wilson Chung</li>
 					<li>thanks to the developers of <a href="https://github.com/kiooeht/ModTheSpire">ModTheSpire</a>, <a href="https://github.com/daviscook477/BaseMod">BaseMod</a>, and <a href="https://github.com/kiooeht/StSLib">StSLib</a>, especially <a href="https://github.com/kiooeht">kiooeht</a></li>
 					<li>thanks to <a href="https://discord.com/invite/slaythespire">Slay the Spire Discord</a> members Alchyr, Gk, Jobby, Raz, squeeb, and vex for technical help</li>
 					<li>thanks to the many people who gave balance and design feedback!</li>
