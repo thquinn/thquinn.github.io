@@ -47,7 +47,7 @@
 		<div id="bg">
 			<div id="onecol">
 				<img src="../resources/images/reliquary/logo2.png" />
-				<p>Reliquary is a collection of relics for <a href="https://www.megacrit.com/">Slay the Spire</a>. You find it on the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2371967829">Steam Workshop</a>, and take a gander at the <a href="https://github.com/thquinn/Reliquary">source code on Github</a>. The latest version is <b>0.3</b> (<a href="#changelog">changelog</a>).
+				<p>Reliquary is a collection of relics for <a href="https://www.megacrit.com/">Slay the Spire</a>. You find it on the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2371967829">Steam Workshop</a>, and take a gander at the <a href="https://github.com/thquinn/Reliquary">source code on Github</a>. The latest version is <b>0.3.1</b> (<a href="#changelog">changelog</a>).
 				
 				<h2 style="text-align: center;">Relics</h2>
 				
@@ -183,7 +183,7 @@
 					<div>
 						<span><b>Expired Coupon</b></span><br />
 						<span class="keyword_gray">Common</span><br/>
-						<span>Whenever you reach 70 or more total unblocked damage dealt in a combat, deal 10 damage to ALL enemies.</span><br/>
+						<span>When you reach 70 or more total unblocked damage dealt in a combat, deal 10 damage to ALL enemies.</span><br/>
 					</div>
 				</div>
 				
@@ -201,7 +201,7 @@
 					<div>
 						<span><b>Ferry Pass</b></span><br />
 						<span class="keyword_gray">Common</span><br/>
-						<span>When you play every unique non-Curse card in your deck in one combat, lose this and add a Rare relic to that combat's reward.</span><br/>
+						<span>When you play every unique playable card in your deck in one combat, lose this and add a Rare relic to that combat's reward.</span><br/>
 						<span class="relic_explanation">(Only appears with 12 or more unique cards in your deck. Upgraded versions of a card count as the same unique card.)</span>
 					</div>
 				</div>
@@ -285,7 +285,7 @@
 					<div>
 						<span><b>Kinked Spring</b></span><br />
 						<span class="keyword_red">Boss</span><br/>
-						<span>Gain <img class="stsenergy" /> at the start of your turn. Your discard pile will only shuffle into your draw pile if your draw pile is empty at the end of your turn.</span><br/>
+						<span>Gain <img class="stsenergy" /> at the start of your turn. Your discard pile only shuffles into your draw pile when you end your turn with an empty draw pile.</span><br/>
 					</div>
 				</div>
 				
@@ -444,11 +444,21 @@
 				</div>
 				
 				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/runicRemote.png" /></div>
+					<div>
+						<span><b>Runic Remote</b></span><br />
+						<span class="keyword_blue">Uncommon</span><br/>
+						<span>Whenever you win a combat without taking damage, you may choose a card corresponding to a defeated enemy.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
 					<div><img src="../resources/images/reliquary/relics/rustamsPendant.png" /></div>
 					<div>
 						<span><b>Rustam's Pendant</b></span><br />
 						<span class="keyword_red">Boss</span><br/>
 						<span>Gain <img class="stsenergy" /> at the start of your turn. Has a different drawback for each character.</span><br/>
+						<span class="relic_explanation">(-1 Strength on Ironclad, -1 Dexterity on Silent, -1 Focus on Defect, and -3 Devotion on Watcher + enter Atonement stance at -10 Mantra)</span>
 					</div>
 				</div>
 				
@@ -553,6 +563,16 @@
 				</div>
 				
 				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/thinkingCap.png" /></div>
+					<div>
+						<span><b>Thinking Cap</b></span><br />
+						<span class="keyword_blue">Uncommon</span><br/>
+						<span>At the start of each combat, draw the second-to-last card you played last combat.</span><br/>
+						<span class="relic_explanation">(Only cards in your deck count.)</span>
+					</div>
+				</div>
+				
+				<div class="relic_row">
 					<div><img src="../resources/images/reliquary/relics/thirdArm.png" /></div>
 					<div>
 						<span><b>Third Arm</b></span><br />
@@ -610,9 +630,10 @@
 				<h2 style="text-align: center;">Credits</h2>
 				<ul style="font-size: .9vw;">
 					<li>design, code, and art by me</li>
-					<li>additional design by Grace Ku</li>
+					<li>additional design by Grace Ku and 旅渚</li>
 					<li>Simplified Chinese translation by 旅渚</li>
 					<li>Russian translation by Rustam Eyniyev</li>
+					<li>Japanese translation by wii</li>
 					<li>thanks to my wonderful playtesters, Grace Ku and Wilson Chung</li>
 					<li>thanks to the developers of <a href="https://github.com/kiooeht/ModTheSpire">ModTheSpire</a>, <a href="https://github.com/daviscook477/BaseMod">BaseMod</a>, and <a href="https://github.com/kiooeht/StSLib">StSLib</a>, especially <a href="https://github.com/kiooeht">kiooeht</a></li>
 					<li>thanks to <a href="https://discord.com/invite/slaythespire">Slay the Spire Discord</a> members Alchyr, Gk, Jobby, Raz, squeeb, and vex for technical help</li>
@@ -623,11 +644,40 @@
 				<a id="changelog"></a>
 				<h2 style="text-align: center;">Changelog</h2>
 				<ul style="font-size: .9vw;">
+					<li><b>0.3.1</b> (4/3/2021)<ul>
+						<li>added Runic Remote and Thinking Cap</li>
+						<li>Japanese translation by wii!</li>
+						<li>Big Hammer: upon pickup, Upgrade an Upgraded card</li>
+						<li>Big Hammer: fixed Limit Break++ crash</li>
+						<li>Big Hammer: added missing Rupture++</li>
+						<li>Big Hammer: fixed True Grit++ UI bug</li>
+						<li>Boiling Flask: Explosive and Fire vapor damage now affected by modifiers</li>
+						<li>Craggleroot: skips over X cards</li>
+						<li>Feather Duster: no longer spawns in shops</li>
+						<li>Feather Duster: fixed unintended confirmations</li>
+						<li>Ferry Pass: becomes disabled on activation instead of getting removed</li>
+						<li>Finger Trap: no longer prevents damage outside of combat</li>
+						<li>Iridium Chain: copies are unaffected by Mummified Hand</li>
+						<li>Porcupine Quills: no longer triggers on self damage</li>
+						<li>Quartz Cube: fixed crash interaction with Artifact</li>
+						<li>Rustam's Pendant: fixed Mantra getting stuck at -1</li>
+						<li>Rustam's Pendant: fixed Devotion stacking bug</li>
+						<li>Sod: flashes when about to trigger</li>
+						<li>Solitaire: upon pickup, Upgrade an Upgraded card</li>
+						<li>Solitaire: fixed Battle Hymn++</li>
+						<li>Solitaire: Blasphemy++ no longer stacks</li>
+						<li>Solitaire: Conjure Blade++ typo</li>
+						<li>Tattered Rug: no longer spawns in shops</li>
+						<li>Trident Head: fixed for "self and enemy" targeting cards</li>
+						<li>replaced missized Strong Vapor image</li>
+					</ul></li>
 					<li><b>0.3</b> (2/15/2021)<ul>
 						<li>added Big Hammer, Citrus Reamer, Finger Trap, Gummy Vitamins, Rustam's Pendant, Sod, Spinner, Third Arm, and Vitrine</li>
 						<li>Feather Duster: only spawns after floor 20</li>
 						<li>Ferry Pass: fixed spawning with too few unique cards</li>
+						<li>Ferry Pass: fixed requiring Unplayable cards to be played</li>
 						<li>Hot Poker: fixed crash with no targets</li>
+						<li>Kinked Spring: can no longer be received from Neow with an 11 or 12 card deck</li>
 						<li>Sculpting Steel: disallowed nonfunctional relics</li>
 						<li>Solitaire: Rare → Boss</li>
 						<li>Solitaire: improved Eruption++</li>
