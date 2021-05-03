@@ -311,14 +311,26 @@ p > img {
 	margin: 0 0.5vw 0 0.5vw;
 }
 #home_link {
-            left: 50%; 
-			position:fixed;
+	left: 50%; 
+	position:fixed;
 }
 #next_link {
 	float: right;
 }
 i {
 	text-indent: 0.25vw;
+}
+.blogcaption {
+	text-align: center;
+	font-size: .625vw;
+	font-style: italic;
+	margin-top: -0.8vw;
+}
+.youtube {
+	display: block;
+	margin: 0 auto;
+	width: 24vw;
+	height: 13.5vw;
 }
 auto-card a {
 	color: #000;
