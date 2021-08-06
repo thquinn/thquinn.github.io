@@ -22,8 +22,8 @@ loop();
 
 function fetchGist() {
 	let requestTime = new Date();
-	let options = gistTime === undefined ? undefined : {headers: {'If-Modified-Since': gistTime.toUTCString()}};
-	fetch('https://gist.githubusercontent.com/thquinn/7fa8e34c354cfce5ed071369f6d0b793/raw', options)
+	let opt = {method: 'GET', headers: {'If-Modified-Since': 'Tue, 5 Aug 2020 10:10:24 GMT'}};
+	fetch('https://thingproxy.freeboard.io/fetch/https://gist.githubusercontent.com/thquinn/7fa8e34c354cfce5ed071369f6d0b793/raw')
 		.then(r => {
 			console.log(r.status);
 			return r.text();
@@ -38,3 +38,4 @@ function fetchGist() {
 		});
 }
 fetchGist();
+//setInterval(fetchGist, 2000);
