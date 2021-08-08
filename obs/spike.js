@@ -1,8 +1,8 @@
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-ctx.textBaseline = 'middle';
 const imgScribbles = document.getElementById('imgScribbles');
 const imgTrophies = document.getElementById('imgTrophies');
+const imgTrophy = document.getElementById('imgTrophy');
 const streamerName = new URLSearchParams(window.location.search).get('streamer') || 'aspiringspike';
 const key = new URLSearchParams(window.location.search).get('key');
 
@@ -22,6 +22,10 @@ const ROW_NAME_SCALE = .8;
 const ROW_N_OTHERS_SCALE = .5;
 const ROW_SPAWN_Y = canvas.height * 1.25;
 const SHADOW_OFFSET = canvas.height * .0125;
+const POPUP_DURATION = 600;
+const BIG_TROPHY_HEIGHT = canvas.height * .4;
+const POPUP_NAME_SCALE = .6;
+const POPUP_GOT_SCALE = .8;
 const SCRIBBLE_GRID_SPAN = 3;
 const SCRIBBLE_ANGLE = 8 * Math.PI / 9;
 const SCRIBBLE_COS = Math.cos(SCRIBBLE_ANGLE);
@@ -37,27 +41,88 @@ const SCRIBBLE_ANIM_SPEED = 40;
 // CLASSES
 // ----------------------------------------
 
+let popup = null;
+class Popup {
+	constructor(names) {
+		this.names = names;
+		this.frame = 0;
+		this.y = canvas.height;
+	}
+	
+	update() {
+		this.frame++;
+		if (this.frame === POPUP_DURATION) {
+			this.leaving = true;
+		}
+		let targetY = this.leaving ? -canvas.height : 0;
+		this.y = lerp(this.y, targetY, LERP_T);
+		if (this.y < canvas.height * -0.5) {
+			this.giveWay = true;
+		}
+		if (this.y < canvas.height * -0.9) {
+			this.destroying = true;
+		}
+	}
+	
+	draw() {
+		let nameSize = ROW_HEIGHT * POPUP_NAME_SCALE;
+		let gotSize = ROW_HEIGHT * POPUP_GOT_SCALE;
+		let height = BIG_TROPHY_HEIGHT + nameSize * this.names.length + gotSize;
+		let topY = this.y + canvas.height / 2 - height / 2;
+		ctx.globalAlpha = SHADOW_ALPHA;
+		ctx.drawImage(imgTrophy, 0, 256, 256, 256, canvas.width / 2 - BIG_TROPHY_HEIGHT / 2, topY + SHADOW_OFFSET * 1.5, BIG_TROPHY_HEIGHT, BIG_TROPHY_HEIGHT);
+		ctx.globalAlpha = 1;
+		ctx.drawImage(imgTrophy, 0, 0, 256, 256, canvas.width / 2 - BIG_TROPHY_HEIGHT / 2, topY, BIG_TROPHY_HEIGHT, BIG_TROPHY_HEIGHT);
+		ctx.textBaseline = 'top';
+		ctx.textAlign = 'center';
+		ctx.font = nameSize + 'px Calistoga';
+		topY += BIG_TROPHY_HEIGHT;
+		for (let i = 0; i < this.names.length; i++) {
+			let name = this.names[i];
+			if (this.names.length === 2 && i === 0) {
+				name += ' and';
+			} else if (this.names.length > 2) {
+				if (i === this.names.length - 2) {
+					name += ', and';
+				} else if (i < this.names.length - 1) {
+					name += ',';
+				}
+			}
+			drawTextWithShadow(name, canvas.width / 2, topY, SHADOW_OFFSET)
+			topY += nameSize;
+		}
+		ctx.font = gotSize + 'px Changa';
+		let gotString = this.names.length === 1 ? "GOT A TROPHY!" : "GOT TROPHIES!";
+		ctx.fillStyle = COLOR_SHADOW;
+		ctx.fillText(gotString, canvas.width / 2, topY + SHADOW_OFFSET);
+		ctx.fillStyle = COLOR_TEXT;
+		ctx.fillText(gotString, canvas.width / 2, topY);
+	}
+}
+
 class Title {
 	constructor() {
 		this.x = 0;
 	}
 	
 	update() {
-		
+		let moveForPopup = popup && !popup.giveWay;
+		let targetX = moveForPopup ? canvas.width : 0;
+		if (this.x > 0 && !moveForPopup) {
+			this.x = -canvas.width;
+		}
+		this.x = lerp(this.x, targetX, LERP_T);
 	}
 	
 	draw() {
-		let midX = canvas.width / 2;
+		let midX = canvas.width / 2 + this.x;
 		let midY = HEADER_HEIGHT / 2;
 		midY += HEADER_TEXT_SIZE * .33; // middle textBaseline isn't quite centered.
+		ctx.textBaseline = 'middle';
 		ctx.textAlign = 'center';
 		ctx.font = HEADER_TEXT_SIZE + 'px Changa';
-		ctx.fillStyle = COLOR_SHADOW;
-		ctx.fillText("MODERN LEAGUE", midX, midY - HEADER_TEXT_SIZE / 2 + SHADOW_OFFSET);
-		ctx.fillText("TROPHY LEADERBOARD", midX, midY + HEADER_TEXT_SIZE / 2 + SHADOW_OFFSET);
-		ctx.fillStyle = COLOR_TEXT;
-		ctx.fillText("MODERN LEAGUE", midX, midY - HEADER_TEXT_SIZE / 2);
-		ctx.fillText("TROPHY LEADERBOARD", midX, midY + HEADER_TEXT_SIZE / 2);
+		drawTextWithShadow("MODERN LEAGUE", midX, midY - HEADER_TEXT_SIZE / 2, SHADOW_OFFSET)
+		drawTextWithShadow("TROPHY LEADERBOARD", midX, midY + HEADER_TEXT_SIZE / 2, SHADOW_OFFSET)
 	}
 }
 
@@ -70,11 +135,10 @@ class Row {
 		this.nOthers = nOthers;
 		this.y = ROW_SPAWN_Y;
 		this.scale = ROW_SCALE_SMALL;
-		this.color = name.toLowerCase() === streamerName ? COLOR_TEXT_SPECIAL : COLOR_TEXT;
 	}
 	updateValues(index, trophies, place, nOthers) {
 		this.index = index;
-		this.trophies = trophies;
+		this.trophiesNew = trophies;
 		this.place = place;
 		this.nOthers = nOthers;
 	}
@@ -83,21 +147,33 @@ class Row {
 	}
 	
 	layout() {
-		this.scale = Math.lerp(this.scale, this.place === 0 ? ROW_SCALE_LARGE : ROW_SCALE_SMALL, LERP_T);
+		if (popup) {
+			return;
+		}
+		this.scale = lerp(this.scale, this.place === 0 ? ROW_SCALE_LARGE : ROW_SCALE_SMALL, LERP_T);
 	}
 	
 	update() {
+		if (popup) {
+			return;
+		}
 		let aboveRowsHeight = rows.filter(r => !r.destroying && r.index < this.index).reduce((acc, v) => acc + v.height, 0);
 		let totalRowsHeight = rows.filter(r => !r.destroying).reduce((acc, v) => acc + v.height, 0);
 		let midY = (canvas.height + HEADER_HEIGHT) / 2;
 		let targetY = this.destroying ? ROW_SPAWN_Y : midY - totalRowsHeight / 2 + aboveRowsHeight + ROW_HEIGHT * .1;
-		this.y = Math.lerp(this.y, targetY, LERP_T);
+		this.y = lerp(this.y, targetY, LERP_T);
+		if (this.trophiesNew) {
+			this.trophies = this.trophiesNew;
+			this.trophiesNew = null;
+		}
 	}
 	
 	draw() {
-		let leftX = canvas.width * (1 - this.scale) / 2;
+		let leftPadding = canvas.width * (1 - this.scale) / 2;
+		let leftX = leftPadding + title.x;
 		let nameSize = ROW_HEIGHT * this.scale * ROW_NAME_SCALE;
 		let trophySize = nameSize * 1.33;
+		ctx.textBaseline = 'middle';
 		ctx.font = nameSize + 'px Calistoga';
 		let measure = ctx.measureText(this.name);
 		let scaleFactor = Math.min(1, canvas.width * this.scale * .66 / measure.width);
@@ -115,30 +191,21 @@ class Row {
 		let textY = this.y + nameSize * .066; // middle textBaseline isn't quite centered.
 		// Draw name.
 		ctx.textAlign = 'left';
-		ctx.fillStyle = COLOR_SHADOW;
-		ctx.fillText(this.name, textX, textY + SHADOW_OFFSET);
-		ctx.fillStyle = this.color;
-		ctx.fillText(this.name, textX, textY);
+		drawTextWithShadow(this.name, textX, textY, SHADOW_OFFSET);
 		// Draw "and N others" text.
 		if (this.nOthers) {
 			let nOthersString = 'and ' + this.nOthers + (this.nOthers === 1 ? ' other' : ' others');
 			let nOthersX = textX + nameSize;
 			let nOthersY = textY + nameSize * ROW_N_OTHERS_SCALE * 1.2;
 			ctx.font = nameSize * ROW_N_OTHERS_SCALE + 'px Calistoga';
-			ctx.fillStyle = COLOR_SHADOW;
-			ctx.fillText(nOthersString, nOthersX, nOthersY + SHADOW_OFFSET);
-			ctx.fillStyle = COLOR_TEXT;
-			ctx.fillText(nOthersString, nOthersX, nOthersY);
+			drawTextWithShadow(nOthersString, nOthersX, nOthersY, SHADOW_OFFSET);
 		}
 		// Draw trophy count.
-		let trophyTextX = canvas.width - leftX;
+		let trophyTextX = canvas.width - 2 * leftPadding + leftX;
 		ctx.textAlign = 'right';
 		let trophyTextSize = ROW_HEIGHT * this.scale * ROW_NAME_SCALE * 1.2;
 		ctx.font = trophyTextSize + 'px Calistoga';
-		ctx.fillStyle = COLOR_SHADOW;
-		ctx.fillText(this.trophies, trophyTextX, textY + SHADOW_OFFSET);
-		ctx.fillStyle = this.color;
-		ctx.fillText(this.trophies, trophyTextX, textY);
+		drawTextWithShadow(this.trophies, trophyTextX, textY, SHADOW_OFFSET);
 	}
 	
 	get height() {
@@ -152,7 +219,9 @@ class Scribble {
 	
 	constructor(x, y) {
 		let i = Scribble.i;
-		Scribble.i = (Scribble.i + 1) % 12;
+		while (Scribble.i === i) {
+			Scribble.i = randInt(0, 11);
+		}
 		this.px = (i % 6) * 128;
 		this.py = Math.floor(i / 6) * 128;
 		let gridAngle = SCRIBBLE_ANGLE - Math.PI / 4;
@@ -214,6 +283,15 @@ function loop() {
 		scribble.update();
 		scribble.draw();
 	}
+	if (popup) {
+		popup.update();
+		popup.draw();
+		if (popup.destroying) {
+			popup = null;
+		}
+	}
+	title.update();
+	title.draw();
 	for (let row of rows) {
 		row.layout();
 	}
@@ -224,8 +302,6 @@ function loop() {
 	for (let row of rows) {
 		row.draw();
 	}
-	title.update();
-	title.draw();
 }
 loop();
 
@@ -262,6 +338,7 @@ function updateRowsFromQueue() {
 	let toDelete = new Set(rows);
 	let place = 0;
 	let placeValue = tuples[0][1];
+	let popupNames = rows.length === 0 ? null : [];
 	for (let [index, tuple] of tuples.entries()) {
 		if (tuple[1] < placeValue) {
 			place++;
@@ -270,14 +347,28 @@ function updateRowsFromQueue() {
 		let rowNOthers = index === tuples.length - 1 && nOthers !== 0 ? nOthers : '';
 		let existingRow = rows.find(row => row.name.toLowerCase() === tuple[0].toLowerCase());
 		if (existingRow) {
+			if (popupNames && tuple[1] > existingRow.trophies) {
+				popupNames.push(tuple[0]);
+			}
 			existingRow.updateValues(index, tuple[1], place, rowNOthers);
 			toDelete.delete(existingRow);
 			continue;
 		}
 		rows.push(new Row(index, tuple[0], tuple[1], place, rowNOthers));
+		if (popupNames) {
+			popupNames.push(tuple[0]);
+		}
 	}
 	for (let row of toDelete) {
 		row.startDestroying();
+	}
+	if (popupNames && popupNames.length > 0) {
+		let streamerIndex = popupNames.indexOf(streamerName);
+		if (streamerIndex !== -1) {
+			popupNames.splice(streamerIndex, 1);
+			popupNames.push(streamerName);
+		}
+		popup = new Popup(popupNames);
 	}
 }
 function truncateTuples(tuples) {
@@ -299,7 +390,7 @@ function truncateTuples(tuples) {
 }
 
 function fetchGist() {
-	// can also investigate Github's GQL API
+	// TODO: just fetch the raw if there's no key.
 	let opt = {method: 'GET', headers:{}};
 	opt.headers['Authorization'] = 'Basic ' + btoa('thquinn:' + key);
 	if (lastGistDate) {
@@ -333,6 +424,17 @@ function fetchGist() {
 fetchGist();
 setInterval(fetchGist, 5000);
 
-Math.lerp = function (value1, value2, amount) {
+function lerp(value1, value2, amount) {
   return value1 + (value2 - value1) * amount;
 };
+
+function randInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function drawTextWithShadow(text, x, y, offset) {
+	ctx.fillStyle = COLOR_SHADOW;
+	ctx.fillText(text, x, y + offset);
+	ctx.fillStyle = text === streamerName ? COLOR_TEXT_SPECIAL : COLOR_TEXT;
+	ctx.fillText(text, x, y);
+}
