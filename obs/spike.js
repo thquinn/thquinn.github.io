@@ -4,12 +4,13 @@ ctx.textBaseline = 'middle';
 const imgScribbles = document.getElementById('imgScribbles');
 const imgTrophies = document.getElementById('imgTrophies');
 const streamerName = new URLSearchParams(window.location.search).get('streamer') || 'aspiringspike';
+const key = new URLSearchParams(window.location.search).get('key');
 
 const COLOR_BG = '#344256';
-const COLOR_SHADOW = '#00000060';
-const SHADOW_ALPHA = 0x60 / 0xFF;
+const COLOR_SHADOW = '#0000004A';
+const SHADOW_ALPHA = 0x4A / 0xFF;
 const COLOR_TEXT = '#EEF8FD';
-const COLOR_TEXT_SPECIAL = '#EEC6B6';
+const COLOR_TEXT_SPECIAL = '#B7D8FF';
 const LERP_T = .1;
 const HEADER_HEIGHT = canvas.height * .285;
 const HEADER_TEXT_SIZE = HEADER_HEIGHT / 3;
@@ -20,7 +21,7 @@ const ROW_SCALE_SMALL = .8;
 const ROW_NAME_SCALE = .8;
 const ROW_N_OTHERS_SCALE = .5;
 const ROW_SPAWN_Y = canvas.height * 1.25;
-const SHADOW_OFFSET = canvas.height * .01;
+const SHADOW_OFFSET = canvas.height * .0125;
 const SCRIBBLE_GRID_SPAN = 3;
 const SCRIBBLE_ANGLE = 8 * Math.PI / 9;
 const SCRIBBLE_COS = Math.cos(SCRIBBLE_ANGLE);
@@ -96,7 +97,13 @@ class Row {
 	draw() {
 		let leftX = canvas.width * (1 - this.scale) / 2;
 		let nameSize = ROW_HEIGHT * this.scale * ROW_NAME_SCALE;
-		let trophySize = nameSize * 1.25;
+		let trophySize = nameSize * 1.33;
+		ctx.font = nameSize + 'px Calistoga';
+		let measure = ctx.measureText(this.name);
+		let scaleFactor = Math.min(1, canvas.width * this.scale * .66 / measure.width);
+		nameSize *= scaleFactor;
+		ctx.font = nameSize + 'px Calistoga';
+		// Draw trophy.
 		let trophyX = leftX + trophySize / 2;
 		if (this.place <= 2) {
 			ctx.globalAlpha = SHADOW_ALPHA;
@@ -104,18 +111,17 @@ class Row {
 			ctx.globalAlpha = 1;
 			ctx.drawImage(imgTrophies, this.place * 64, 0, 64, 64, trophyX - trophySize / 2, this.y - trophySize / 2, trophySize, trophySize);
 		}
-		let textX = trophyX + trophySize * .75;
+		let textX = trophyX + trophySize * .66;
 		let textY = this.y + nameSize * .066; // middle textBaseline isn't quite centered.
 		// Draw name.
 		ctx.textAlign = 'left';
-		ctx.font = nameSize + 'px Calistoga';
 		ctx.fillStyle = COLOR_SHADOW;
 		ctx.fillText(this.name, textX, textY + SHADOW_OFFSET);
 		ctx.fillStyle = this.color;
 		ctx.fillText(this.name, textX, textY);
 		// Draw "and N others" text.
 		if (this.nOthers) {
-			let nOthersString = 'and ' + this.nOthers + ' others';
+			let nOthersString = 'and ' + this.nOthers + (this.nOthers === 1 ? ' other' : ' others');
 			let nOthersX = textX + nameSize;
 			let nOthersY = textY + nameSize * ROW_N_OTHERS_SCALE * 1.2;
 			ctx.font = nameSize * ROW_N_OTHERS_SCALE + 'px Calistoga';
@@ -127,7 +133,8 @@ class Row {
 		// Draw trophy count.
 		let trophyTextX = canvas.width - leftX;
 		ctx.textAlign = 'right';
-		ctx.font = nameSize * 1.2 + 'px Calistoga';
+		let trophyTextSize = ROW_HEIGHT * this.scale * ROW_NAME_SCALE * 1.2;
+		ctx.font = trophyTextSize + 'px Calistoga';
 		ctx.fillStyle = COLOR_SHADOW;
 		ctx.fillText(this.trophies, trophyTextX, textY + SHADOW_OFFSET);
 		ctx.fillStyle = this.color;
@@ -148,7 +155,6 @@ class Scribble {
 		Scribble.i = (Scribble.i + 1) % 12;
 		this.px = (i % 6) * 128;
 		this.py = Math.floor(i / 6) * 128;
-		console.log(this.px + ', ' + this.py);
 		let gridAngle = SCRIBBLE_ANGLE - Math.PI / 4;
 		this.x = x * SCRIBBLE_GRID_COS + y * SCRIBBLE_GRID_SIN;
 		this.y = -x * SCRIBBLE_GRID_SIN + y * SCRIBBLE_GRID_COS;
@@ -186,6 +192,7 @@ class Scribble {
 let title = new Title();
 let rows = [];
 let lastGist = undefined;
+let lastGistDate = undefined;
 let gistQueue = [];
 let scribbles = [];
 for (let x = -SCRIBBLE_GRID_SPAN; x <= SCRIBBLE_GRID_SPAN; x++) {
@@ -213,7 +220,7 @@ function loop() {
 	for (let row of rows) {
 		row.update();
 	}
-	rows = rows.filter(r => !r.isDestroying || r.y < ROW_SPAWN_Y * .99);
+	rows = rows.filter(r => !r.destroying || r.y < ROW_SPAWN_Y * .99);
 	for (let row of rows) {
 		row.draw();
 	}
@@ -277,47 +284,46 @@ function truncateTuples(tuples) {
 	if (tuples.length <= ROW_COUNT) {
 		return 0;
 	}
-	let i = ROW_COUNT - 1;
-	if (tuples[i][1] !== tuples[i + 1][1]) {
-		tuples.length = ROW_COUNT;
-		return 0;
-	}
-	if (tuples[0][1] === tuples[i][1]) {
-		tuples.length = ROW_COUNT;
-		return 0;
-	}
 	let nOthers = 0;
-	if (tuples.length > ROW_COUNT) {
-		let value = tuples[i][1];
-		while (i > 0 && tuples[i - 1][1] === value) {
-			i--;
-		}
-		let lastRowIndex = i;
+	let i = ROW_COUNT;
+	let value = tuples[i][1];
+	while (i < tuples.length && tuples[i][1] === value) {
+		nOthers++;
 		i++;
-		while (i < tuples.length && tuples[i][1] === value) {
-			nOthers++;
-			i++;
-		}
-		if (i === tuples.length) {
-			nOthers += '+';
-		}
-		tuples.length = lastRowIndex + 1;
 	}
+	if (i === tuples.length) {
+		nOthers += '+';
+	}
+	tuples.length = ROW_COUNT;
 	return nOthers;
 }
 
 function fetchGist() {
-	//let opt = {method: 'GET', headers: {'If-Modified-Since': new Date().toUTCString()}};
-	fetch('https://gist.githubusercontent.com/thquinn/7fa8e34c354cfce5ed071369f6d0b793/raw')
+	// can also investigate Github's GQL API
+	let opt = {method: 'GET', headers:{}};
+	opt.headers['Authorization'] = 'Basic ' + btoa('thquinn:' + key);
+	if (lastGistDate) {
+		opt.headers['If-Modified-Since'] = lastGistDate.toUTCString();
+	}
+	let requestDate = new Date();
+	fetch('https://api.github.com/gists/7fa8e34c354cfce5ed071369f6d0b793', opt)
 		.then(r => {
-			return r.text();
+			if (r.status === 304) {
+				return null;
+			}
+			return r.json();
 		})
 		.then(t => {
+			if (t === null) {
+				return;
+			}
+			t = Object.values(t.files)[0].content;
 			if (t === lastGist) {
 				return;
 			}
 			lastGist = t;
 			gistQueue.push(t);
+			lastGistDate = requestDate;
 		})
 		.catch((e) => {
 			console.error('Failed to fetch gist.');
