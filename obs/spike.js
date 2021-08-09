@@ -26,7 +26,7 @@ const POPUP_DURATION = 600;
 const BIG_TROPHY_HEIGHT = canvas.height * .4;
 const POPUP_NAME_SCALE = .6;
 const POPUP_GOT_SCALE = .8;
-const SCRIBBLE_GRID_SPAN = 3;
+const SCRIBBLE_GRID_SPAN = 2;
 const SCRIBBLE_ANGLE = 8 * Math.PI / 9;
 const SCRIBBLE_COS = Math.cos(SCRIBBLE_ANGLE);
 const SCRIBBLE_SIN = Math.sin(SCRIBBLE_ANGLE);
@@ -213,17 +213,14 @@ class Row {
 	}
 }
 
+let scribbles = [];
 class Scribble {
 	static frame = 0;
-	static i = 0;
 	
 	constructor(x, y) {
-		let i = Scribble.i;
-		while (Scribble.i === i) {
-			Scribble.i = randInt(0, 11);
-		}
-		this.px = (i % 6) * 128;
-		this.py = Math.floor(i / 6) * 128;
+		this.arrayX = x + SCRIBBLE_GRID_SPAN;
+		this.arrayY = y + SCRIBBLE_GRID_SPAN;
+		this.setI();
 		let gridAngle = SCRIBBLE_ANGLE - Math.PI / 4;
 		this.x = x * SCRIBBLE_GRID_COS + y * SCRIBBLE_GRID_SIN;
 		this.y = -x * SCRIBBLE_GRID_SIN + y * SCRIBBLE_GRID_COS;
@@ -232,6 +229,32 @@ class Scribble {
 		this.x += canvas.width / 2;
 		this.y += canvas.height / 2;
 	}
+	setI() {
+		let m = 2 * SCRIBBLE_GRID_SPAN + 1;
+		let used = new Set();
+		for (let dx = -1; dx <= 1; dx++) {
+			for (let dy = -1; dy <= 1; dy++) {
+				if (dx === 0 && dy === 0) {
+					continue;
+				}
+				let x = mod(this.arrayX + dx, m);
+				let y = mod(this.arrayY + dy, m);
+				let index = this.getArrayIndex(x, y);
+				let other = scribbles.length > index ? scribbles[index] : null;
+				if (other) {
+					used.add(other.i);
+				}
+			}
+		}
+		while (this.i === undefined || used.has(this.i)) {
+			this.i = randInt(0, 11);
+		}
+		this.px = (this.i % 6) * 128;
+		this.py = Math.floor(this.i / 6) * 128;
+	}
+	getArrayIndex(x, y) {
+		return x * (2 * SCRIBBLE_GRID_SPAN + 1) + y;
+	}
 	
 	update() {
 		this.x += SCRIBBLE_COS * SCRIBBLE_SPEED;
@@ -239,10 +262,12 @@ class Scribble {
 		if (this.x < -200) {
 			this.x += (SCRIBBLE_GRID_SPAN * 2 + 1) * SCRIBBLE_GRID_COS * SCRIBBLE_DISTANCE;
 			this.y -= (SCRIBBLE_GRID_SPAN * 2 + 1) * SCRIBBLE_GRID_SIN * SCRIBBLE_DISTANCE;
+			this.setI();
 		}
 		if (this.y > canvas.height + 200) {
 			this.x -= (SCRIBBLE_GRID_SPAN * 2 + 1) * SCRIBBLE_GRID_SIN * SCRIBBLE_DISTANCE;
 			this.y -= (SCRIBBLE_GRID_SPAN * 2 + 1) * SCRIBBLE_GRID_COS * SCRIBBLE_DISTANCE;
+			this.setI();
 		}
 	}
 	draw() {
@@ -263,12 +288,12 @@ let rows = [];
 let lastGist = undefined;
 let lastGistDate = undefined;
 let gistQueue = [];
-let scribbles = [];
 for (let x = -SCRIBBLE_GRID_SPAN; x <= SCRIBBLE_GRID_SPAN; x++) {
 	for (let y = -SCRIBBLE_GRID_SPAN; y <= SCRIBBLE_GRID_SPAN; y++) {
 		scribbles.push(new Scribble(x, y));
 	}
 }
+let fade = 1;
 
 // ----------------------------------------
 // FUNCTIONS
@@ -302,6 +327,14 @@ function loop() {
 	for (let row of rows) {
 		row.draw();
 	}
+	if (fade > 0) {
+		if (rows.length > 0) {
+			fade = Math.max(0, fade - .02);
+		}
+		ctx.globalAlpha = fade;
+		clear();
+		ctx.globalAlpha = 1;
+	}
 }
 loop();
 
@@ -312,6 +345,9 @@ function clear() {
 
 function updateRowsFromQueue() {
 	if (gistQueue.length == 0) {
+		return;
+	}
+	if (popup) {
 		return;
 	}
 	let lines = gistQueue.shift().trim().split('\n');
@@ -423,6 +459,10 @@ function fetchGist() {
 }
 fetchGist();
 setInterval(fetchGist, 5000);
+
+function mod(n, m) {
+  return ((n % m) + m) % m;
+}
 
 function lerp(value1, value2, amount) {
   return value1 + (value2 - value1) * amount;
