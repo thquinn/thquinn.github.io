@@ -1,9 +1,12 @@
 const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext('2d', {alpha: false});
+const imgConfetti = document.getElementById('imgConfetti');
 const imgScribbles = document.getElementById('imgScribbles');
+const imgShine = document.getElementById('imgShine');
 const imgTrophies = document.getElementById('imgTrophies');
 const imgTrophy = document.getElementById('imgTrophy');
-const streamerName = new URLSearchParams(window.location.search).get('streamer') || 'aspiringspike';
+var streamerName = new URLSearchParams(window.location.search).get('streamer') || 'aspiringspike';
+streamerName = streamerName.toLowerCase();
 const key = new URLSearchParams(window.location.search).get('key');
 
 const COLOR_BG = '#344256';
@@ -19,13 +22,15 @@ const ROW_HEIGHT = (canvas.height - HEADER_HEIGHT) / ROW_COUNT;
 const ROW_SCALE_LARGE = .9;
 const ROW_SCALE_SMALL = .8;
 const ROW_NAME_SCALE = .8;
-const ROW_N_OTHERS_SCALE = .5;
+const ROW_N_OTHERS_SCALE = .6;
 const ROW_SPAWN_Y = canvas.height * 1.25;
 const SHADOW_OFFSET = canvas.height * .0125;
-const POPUP_DURATION = 600;
+const POPUP_DURATION = 900;
 const BIG_TROPHY_HEIGHT = canvas.height * .4;
-const POPUP_NAME_SCALE = .6;
-const POPUP_GOT_SCALE = .8;
+const POPUP_NAME_SCALE = .7;
+const POPUP_GOT_SCALE = .9;
+const POPUP_SHINE_ROTATION_SPEED = .01;
+const POPUP_SHINE_ROTATION_SPEED2 = -.014;
 const SCRIBBLE_GRID_SPAN = 2;
 const SCRIBBLE_ANGLE = 8 * Math.PI / 9;
 const SCRIBBLE_COS = Math.cos(SCRIBBLE_ANGLE);
@@ -36,10 +41,44 @@ const SCRIBBLE_GRID_SIN = Math.sin(SCRIBBLE_GRID_ANGLE);
 const SCRIBBLE_DISTANCE = canvas.height * .575;
 const SCRIBBLE_SPEED = canvas.height * .001;
 const SCRIBBLE_ANIM_SPEED = 40;
+const CONFETTI_DX_MIN = -1;
+const CONFETTI_DX_MAX = 1;
+const CONFETTI_DY_MIN = 3;
+const CONFETTI_DY_MAX = 6;
 
 // ----------------------------------------
 // CLASSES
 // ----------------------------------------
+
+let confetti = [];
+class Confetti {
+	static size = 16;
+	
+	constructor() {
+		this.x = randFloat(-canvas.width * .1 - Confetti.size, canvas.width * 1.1);
+		this.y = -Confetti.size;
+		this.dx = randFloat(CONFETTI_DX_MIN, CONFETTI_DX_MAX);
+		this.dy = randFloat(CONFETTI_DY_MIN, CONFETTI_DY_MAX);
+		this.i = randInt(0, 3);
+		this.frame = randInt(0, 31);
+	}
+	
+	updateAndDraw() {
+		this.y += this.dy;
+		if (this.y >= canvas.height) {
+			return true;
+		}
+		this.x += this.dx;
+		this.dx *= .98;
+		this.frame = (this.frame + 1) % 64;
+		let f = Math.floor(this.frame / 2);
+		if (f >= 16) {
+			f = 31 - f;
+		}
+		ctx.drawImage(imgConfetti, f * Confetti.size, this.i * Confetti.size, Confetti.size, Confetti.size, this.x, this.y, Confetti.size, Confetti.size);
+		return false;
+	}
+}
 
 let popup = null;
 class Popup {
@@ -47,9 +86,19 @@ class Popup {
 		this.names = names;
 		this.frame = 0;
 		this.y = canvas.height;
+		for (let name of names) {
+			if (name.toLowerCase() === streamerName) {
+				this.shine = true;
+				break;
+			}
+		}
 	}
 	
 	update() {
+		if (this.shine) {
+			confetti.push(new Confetti());
+			confetti.push(new Confetti());
+		}
 		this.frame++;
 		if (this.frame === POPUP_DURATION) {
 			this.leaving = true;
@@ -69,6 +118,21 @@ class Popup {
 		let gotSize = ROW_HEIGHT * POPUP_GOT_SCALE;
 		let height = BIG_TROPHY_HEIGHT + nameSize * this.names.length + gotSize;
 		let topY = this.y + canvas.height / 2 - height / 2;
+		// Draw shine.
+		if (this.shine) {
+			let trophyCenterY = topY + BIG_TROPHY_HEIGHT / 2;
+			ctx.translate(canvas.width / 2, trophyCenterY);
+			ctx.rotate(this.frame * POPUP_SHINE_ROTATION_SPEED);
+			ctx.translate(canvas.width / -2, -trophyCenterY);
+			ctx.drawImage(imgShine, canvas.width / 2 - imgShine.width / 2, trophyCenterY - imgShine.height / 2);
+			ctx.resetTransform();
+			ctx.translate(canvas.width / 2, trophyCenterY);
+			ctx.rotate(this.frame * POPUP_SHINE_ROTATION_SPEED2);
+			ctx.translate(canvas.width / -2, -trophyCenterY);
+			ctx.drawImage(imgShine, canvas.width / 2 - imgShine.width / 2, trophyCenterY - imgShine.height / 2);
+			ctx.resetTransform();
+		}
+		// Draw trophy.
 		ctx.globalAlpha = SHADOW_ALPHA;
 		ctx.drawImage(imgTrophy, 0, 256, 256, 256, canvas.width / 2 - BIG_TROPHY_HEIGHT / 2, topY + SHADOW_OFFSET * 1.5, BIG_TROPHY_HEIGHT, BIG_TROPHY_HEIGHT);
 		ctx.globalAlpha = 1;
@@ -246,6 +310,7 @@ class Scribble {
 				}
 			}
 		}
+		this.i = undefined;
 		while (this.i === undefined || used.has(this.i)) {
 			this.i = randInt(0, 11);
 		}
@@ -256,7 +321,7 @@ class Scribble {
 		return x * (2 * SCRIBBLE_GRID_SPAN + 1) + y;
 	}
 	
-	update() {
+	updateAndDraw() {
 		this.x += SCRIBBLE_COS * SCRIBBLE_SPEED;
 		this.y += SCRIBBLE_SIN * SCRIBBLE_SPEED;
 		if (this.x < -200) {
@@ -269,8 +334,6 @@ class Scribble {
 			this.y -= (SCRIBBLE_GRID_SPAN * 2 + 1) * SCRIBBLE_GRID_COS * SCRIBBLE_DISTANCE;
 			this.setI();
 		}
-	}
-	draw() {
 		let py = this.py;
 		if (Scribble.frame < SCRIBBLE_ANIM_SPEED) {
 			py += 256;
@@ -302,11 +365,12 @@ let fade = 1;
 function loop() {
 	window.requestAnimationFrame(loop);
 	Scribble.frame = (Scribble.frame + 1) % (SCRIBBLE_ANIM_SPEED * 2);
-	updateRowsFromQueue();
+	if (!popup) {
+		updateRowsFromQueue();
+	}
 	clear();
 	for (let scribble of scribbles) {
-		scribble.update();
-		scribble.draw();
+		scribble.updateAndDraw();
 	}
 	if (popup) {
 		popup.update();
@@ -326,6 +390,11 @@ function loop() {
 	rows = rows.filter(r => !r.destroying || r.y < ROW_SPAWN_Y * .99);
 	for (let row of rows) {
 		row.draw();
+	}
+	for (let i = confetti.length - 1; i >= 0; i--) {
+		if (confetti[i].updateAndDraw()) {
+			confetti.splice(i, 1);
+		}
 	}
 	if (fade > 0) {
 		if (rows.length > 0) {
@@ -365,7 +434,7 @@ function updateRowsFromQueue() {
 		}
 		let tuple = [name, trophies];
 		tuples.splice(regionIndex, 0, tuple);
-		if (name === streamerName) {
+		if (name.toLowerCase() === streamerName) {
 			regionIndex++;
 		}
 	}
@@ -399,10 +468,11 @@ function updateRowsFromQueue() {
 		row.startDestroying();
 	}
 	if (popupNames && popupNames.length > 0) {
-		let streamerIndex = popupNames.indexOf(streamerName);
+		let streamerIndex = popupNames.map(s => s.toLowerCase).indexOf(streamerName);
 		if (streamerIndex !== -1) {
+			let name = popupNames[streamerIndex];
 			popupNames.splice(streamerIndex, 1);
-			popupNames.push(streamerName);
+			popupNames.push(name);
 		}
 		popup = new Popup(popupNames);
 	}
@@ -468,6 +538,9 @@ function lerp(value1, value2, amount) {
   return value1 + (value2 - value1) * amount;
 };
 
+function randFloat(min, max) {
+  return Math.random() * (max - min) + min;
+}
 function randInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -475,6 +548,6 @@ function randInt(min, max) {
 function drawTextWithShadow(text, x, y, offset) {
 	ctx.fillStyle = COLOR_SHADOW;
 	ctx.fillText(text, x, y + offset);
-	ctx.fillStyle = text === streamerName ? COLOR_TEXT_SPECIAL : COLOR_TEXT;
+	ctx.fillStyle = text.toString().toLowerCase() === streamerName ? COLOR_TEXT_SPECIAL : COLOR_TEXT;
 	ctx.fillText(text, x, y);
 }
