@@ -483,7 +483,7 @@ function truncateTuples(tuples) {
 	}
 	let nOthers = 0;
 	let i = ROW_COUNT;
-	let value = tuples[i][1];
+	let value = tuples[i - 1][1];
 	while (i < tuples.length && tuples[i][1] === value) {
 		nOthers++;
 		i++;
