@@ -1,2 +1,4 @@
 exclude:
 - "*.md"
+keep_files:
+- "*.md"
