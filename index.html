@@ -15,18 +15,24 @@
 		<iframe id="blogindex" src="resources/blog/index.txt" onload="LoadFile();" style="display: none;"></iframe>
 		<script type="text/javascript">
 			function LoadFile() {
-			    var oFrame = document.getElementById("blogindex");
-			    var strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
+			    let oFrame = document.getElementById("blogindex");
+			    let strRawContents = oFrame.contentWindow.document.body.childNodes[0].innerHTML;
 			    while (strRawContents.indexOf("\r") >= 0) {
 			        strRawContents = strRawContents.replace("\r", "");
 			    }
-			    var arrLines = strRawContents.split("\n");
-			    for (var i = arrLines.length - 1; i >= 0; i--) {
-			        var d = document.createElement('div');
-			        var a = document.createElement('a');
+				let blogCol = document.getElementById('blog_col');
+			    let arrLines = strRawContents.split("\n");
+			    for (let i = arrLines.length - 1; i >= 0; i--) {
+			        let d = document.createElement('div');
+					let s = document.createElement('span');
+			        let a = document.createElement('a');
 			        a.href = "blog.html?post=" + i;
-			        a.innerHTML = arrLines[i];
-					document.getElementById('blog_col').appendChild(d);
+					let line = arrLines[i];
+					let colonIndex = line.indexOf(':') + 1;
+					s.innerHTML = line.substring(0, colonIndex);
+			        a.innerHTML = line.substring(colonIndex);
+					blogCol.appendChild(d);
+					d.appendChild(s);
 					d.appendChild(a);
 			    }
 			}

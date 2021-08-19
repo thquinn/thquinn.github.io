@@ -7,3 +7,4 @@
 12/7/2020: Monte Carlo & Magic: the Gathering
 1/27/2021: MCTS & Magic: the Gathering
 5/3/2021: Ludum Dare 48 Postmortem
+8/19/2021: Dicey Dungeons: Robo-JACKPOT!
