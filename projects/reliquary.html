@@ -47,7 +47,7 @@
 		<div id="bg">
 			<div id="onecol">
 				<img src="../resources/images/reliquary/logo2.png" />
-				<p>Reliquary is a collection of relics for <a href="https://www.megacrit.com/">Slay the Spire</a>. You find it on the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2371967829">Steam Workshop</a>, and take a gander at the <a href="https://github.com/thquinn/Reliquary">source code on Github</a>. The latest version is <b>0.4</b> (<a href="#changelog">changelog</a>).
+				<p>Reliquary is a collection of relics for <a href="https://www.megacrit.com/">Slay the Spire</a> with over <b>16,000 players!</b> You find it on the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2371967829">Steam Workshop</a>, and take a gander at the <a href="https://github.com/thquinn/Reliquary">source code on Github</a>. The latest version is <b>0.4.1</b> (<a href="#changelog">changelog</a>).
 				
 				<h2 style="text-align: center;">Relics</h2>
 				
@@ -578,7 +578,7 @@
 						<span><b>Rustam's Pendant</b></span><br />
 						<span class="keyword_red">Boss</span><br/>
 						<span>Gain <img class="stsenergy" /> at the start of your turn. Has a different drawback for each character.</span><br/>
-						<span class="relic_explanation">(-1 Strength on Ironclad, -1 Dexterity on Silent, -1 Focus on Defect, and -3 Devotion on Watcher, entering Atonement stance at -10 Mantra)</span>
+						<span class="relic_explanation">(-1 Strength on Ironclad, -1 Dexterity on Silent, -1 Focus on Defect, and -3 Devotion on Watcher, entering Atonement stance at -10 Mantra.)</span>
 					</div>
 				</div>
 				
@@ -643,6 +643,7 @@
 						<span><b>Sod</b></span><br />
 						<span class="keyword_blue">Uncommon</span><br/>
 						<span>Put an Upgraded copy of every 8th unupgraded card you play into your hand.</span><br/>
+						<span class="relic_explanation">(Doesn't copy Curse or Status cards.)</span>
 					</div>
 				</div>
 				
@@ -809,7 +810,26 @@
 				<a id="changelog"></a>
 				<h2 style="text-align: center;">Changelog</h2>
 				<ul style="font-size: .9vw;">
-					<li><b>0.4</b> (7/30/2021)<ul>
+					<li><b>0.4.1</b> (3/28/2022)<ul>
+						<li>fixed a bug that affected Anger and Anger+ damage calculation</li>
+						<li>Boiling Flask: added cross-mod support for Wide Potions</li>
+						<li>Crucible: fixed crash with Peace Pipe</li>
+						<li>Crusader's Map: only spawns in Act 2</li>
+						<li>Ember: no longer triggers on Curse and Status cards</li>
+						<li>Ferry Pass: no longer spawns in Act 4</li>
+						<li>Fishing Reel: spends all available Energy this turn before spending next turn's</li>
+						<li>Kinked Spring: no longer spawns on modded characters</li>
+						<li>Paper Snowflake: fixed bad interaction with Upgrades</li>
+						<li>Quartz Cube: fixed interaction with Bag of Marbles</li>
+						<li>Rabbit Ears: Darkness++ text fix</li>
+						<li>Rabbit Ears: Heatsinks++ triggers on-draw effects properly</li>
+						<li>Runic Remote: tweaked enemy/card pairings</li>
+						<li>Runic Remote: drops persist through save/load</li>
+						<li>Skeleton Key: fixed canUpgrade check</li>
+						<li>Skeleton Key: fixed Infinite Blades++</li>
+						<li>Sod: skips over copying Curse and Status cards</li>
+					</ul></li>
+					<li><b>0.4</b> (7/29/2021)<ul>
 						<li>added Aluminium Foil, Bellows, Crucible, Crusader's Map, Elizabethan Collar, Fishing Reel, the Holy Grail, Ice Cube Tray, Knife Block, Lead Dart, Paper Snowflake, Prayer Box, Rabbit Ears, Skeleton Key, Spire of Hannoy, Stimpack, Thumb Drive, and Training Wheel</li>
 						<li>fixed the Big Hammer/Solitaire infinite upgrading bug (thanks jbcall!)</li>
 						<li>second-Upgrade relics only spawn if you have an Upgraded class card</li>
