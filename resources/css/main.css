@@ -253,6 +253,12 @@ code {
 	width: auto;
 	height: auto;
 }
+.imageheader p {
+	margin: 0;
+	text-indent: 0;
+	font-style: italic;
+	font-size: .85vw;
+}
 
 .fullwidth {
 	width: 100% !important;
@@ -368,7 +374,6 @@ auto-card a {
 	width: 2vw;
 	padding-right: .5vw;
 	text-align: center;
-	vertical-align: middle;
 }
 
 /* game */
