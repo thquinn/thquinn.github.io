@@ -366,6 +366,12 @@ auto-card a {
 .ldcaption span:first-of-type {
 	padding-left: 0vw !important;
 }
+.ldscore > .fa-star {
+	width: .9vw;
+}
+.ldscore > .fa-bell {
+	width: .8vw;
+}
 .lddownload > div {
 	padding-left: 27.5%;
 	text-indent: 0;
