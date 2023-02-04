@@ -68,7 +68,15 @@
 			client.open('GET', 'resources/blog/' + getQueryStringValue("post") + ".md");
 			client.onreadystatechange = function() {
 			  var converter = new showdown.Converter({noHeaderId: true, headerLevelStart: 2, simpleLineBreaks: true, parseImgDimensions: true});
-			  document.getElementById("post").innerHTML = converter.makeHtml(client.responseText);
+			  const scriptTag = "#STARTSCRIPTS";
+			  const scriptTagIndex = client.responseText.indexOf(scriptTag);
+			  if (scriptTagIndex >= 0) {
+			    document.getElementById("post").innerHTML = converter.makeHtml(client.responseText.substr(0, scriptTagIndex));
+				const scripts = client.responseText.substr(scriptTagIndex + scriptTag.length);
+				eval(scripts);
+			  } else {
+				document.getElementById("post").innerHTML = converter.makeHtml(client.responseText);
+			  }
 			  document.title = "Tom's Blog: " + client.responseText.substr(2, client.responseText.indexOf("\n") - 2);
 			}
 			client.onerror = function() {

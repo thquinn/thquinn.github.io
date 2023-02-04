@@ -35,11 +35,15 @@ h3 {
 	margin: 0px;
 	font-weight: inherit;
 	font-size: 1.5vw;
+	margin-top: 1vw;
+}
+#headerText > * > h3 {
 	margin-top: -.675vw;
 }
 
 h6 {
 	margin-top: -1vw;
+	margin-bottom: 0;
 	font-weight: normal;
 }
 
@@ -352,6 +356,44 @@ auto-card a {
 	white-space: pre-line;
 	font-size: .85vw;
 	column-rule: .1vw solid #d0d0c0;
+}
+.bloggifgrid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 1vw;
+}
+.bloggifgrid > div {
+	position: relative;
+}
+.bloggifgrid > div > img {
+	width: 100%;
+}
+.bloggifgrid > div > div {
+	display: flex;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-color: #0000FF10;
+	justify-content: flex-end;
+	align-items: end;
+}
+.bloggifgrid > div > div > div {
+	padding: 1vw;
+	color: #006AFF;
+	font-weight: bold;
+}
+.blogzoomimage {
+	width: 30vw;
+	height: 30vw;
+	margin: auto;
+}
+.blogzoomimage:focus {
+	outline: none;
+}
+.blogzoomimage > * > *:focus {
+	outline: none;
 }
 
 /* ludum dare article */
