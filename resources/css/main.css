@@ -407,6 +407,9 @@ auto-card a {
 .ldcaption span:first-of-type {
 	padding-left: 0vw !important;
 }
+.ldscore {
+	padding-top: .2vw;
+}
 .ldscore > .fa-star {
 	width: .9vw;
 }
