@@ -16,7 +16,7 @@
 		<style>
 			.relic_row { position: relative; height: 6vw; width: 38vw; margin-left: 1vw;  margin-bottom: 1.25vw; }
 			.relic_row > div:first-of-type::before { position:absolute; height:100%; width: 6vw; background-image: url("../resources/images/reliquary/relicbg.png"); background-size:cover; content:" "; }
-			.relic_row > div > img { position:absolute; height: 100%; }
+			.relic_row > div > img { position:absolute; height: 100%; filter: drop-shadow(0vw .2vw .2vw #00000080); }
 			.relic_row > div:nth-of-type(2) { position:relative; padding-top: 1vw; left: 7vw; font-size: .9vw; }
 			.keyword_red { color: #A00000; font-weight: bold; }
 			.keyword_green { color: #00A000; font-weight: bold; }
@@ -47,7 +47,7 @@
 		<div id="bg">
 			<div id="onecol">
 				<img src="../resources/images/reliquary/logo2.png" />
-				<p>Reliquary is a collection of relics for <a href="https://www.megacrit.com/">Slay the Spire</a> with over <b>25,000 players!</b> You can find it on the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2371967829">Steam Workshop</a>, and take a gander at the <a href="https://github.com/thquinn/Reliquary">source code on Github</a>. The latest version is <b>0.5.1</b> (<a href="#changelog">changelog</a>).
+				<p>Reliquary is a collection of relics for <a href="https://www.megacrit.com/">Slay the Spire</a> with over <b>25,000 players!</b> You can find it on the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2371967829">Steam Workshop</a>, and take a gander at the <a href="https://github.com/thquinn/Reliquary">source code on Github</a>. The latest version is <b>0.5.2</b> (<a href="#changelog">changelog</a>).
 				
 				<h2 style="text-align: center;">Relics</h2>
 				
@@ -82,7 +82,7 @@
 					<div><img src="../resources/images/reliquary/relics/bellows.png" /></div>
 					<div>
 						<span><b>Bellows</b></span><br />
-						<span><span class="keyword_blue">Uncommon</span> <b>&middot;</b> <span class="keyword_red">Ironclad</span><br/>
+						<span><span class="keyword_gold">Rare</span> <b>&middot;</b> <span class="keyword_red">Ironclad</span><br/>
 						<span>Every 5 times you Exhaust a card, shuffle a card from your exhaust pile into your draw pile.</span><br/>
 					</div>
 				</div>
@@ -183,7 +183,7 @@
 					<div>
 						<span><b>Craggleroot</b></span><br />
 						<span class="keyword_red">Boss</span><br/>
-						<span>Gain <img class="stsenergy" /> at the start of your turn. The first card you draw each turn costs 1 more this combat.</span><br/>
+						<span>Gain <img class="stsenergy" /> at the start of your turn. The first card you draw each turn costs 1 more this combat until played.</span><br/>
 					</div>
 				</div>
 				
@@ -202,7 +202,7 @@
 						<span><b>Crusader's Map</b></span><br />
 						<span class="keyword_green">Shop</span><br/>
 						<span>Points the way to a fabled font of immortality.</span><br/>
-						<span class="relic_explanation">(You have a 25% chance to get the Holy Grail as a chest or elite relic.)</span>
+						<span class="relic_explanation">(You have a 33% chance to get the Holy Grail as a chest or elite relic.)</span>
 					</div>
 				</div>
 				
@@ -284,7 +284,7 @@
 					<div>
 						<span><b>Finger Trap</b></span><br />
 						<span class="keyword_green">Shop</span><br/>
-						<span>You can't lose HP during your turn.</span><br/>
+						<span>Prevent the first 13 HP you would lose during your turn each combat.</span><br/>
 					</div>
 				</div>
 				
@@ -311,7 +311,7 @@
 					<div>
 						<span><b>Free Samples</b></span><br />
 						<span class="keyword_red">Boss</span><br/>
-						<span>Gain <img class="stsenergy" /> at the start of your turn. Whenever an enemy deals unblocked attack damage to you, it gains 1 Intangible if it's not already.</span><br/>
+						<span>Gain <img class="stsenergy" /> at the start of your turn. Whenever an enemy deals unblocked attack damage to you, it gains 1 Buffer if it has none.</span><br/>
 					</div>
 				</div>
 				
@@ -404,7 +404,7 @@
 					<div>
 						<span><b>Kinked Spring</b></span><br />
 						<span class="keyword_red">Boss</span><br/>
-						<span>Gain <img class="stsenergy" /> at the start of your turn. Your discard pile only shuffles into your draw pile when you end your turn with an empty draw pile.</span><br/>
+						<span>Gain <img class="stsenergy" /><img class="stsenergy" /> at the start of your turn. Your discard pile only shuffles into your draw pile when you end your turn with an empty draw pile.</span><br/>
 					</div>
 				</div>
 				
@@ -440,7 +440,7 @@
 					<div>
 						<span><b>Love-Emitting Diode</b></span><br />
 						<span><span class="keyword_blue">Uncommon</span> <b>&middot;</b> <span class="keyword_blue">Defect</span><br/>
-						<span>Positive Focus triply affects your rightmost Orb.</span><br/>
+						<span>Positive Focus doubly affects your rightmost Orb.</span><br/>
 					</div>
 				</div>
 				
@@ -513,7 +513,7 @@
 					<div>
 						<span><b>Peacock Shield</b></span><br />
 						<span><span class="keyword_blue">Uncommon</span> <b>&middot;</b> <span class="keyword_purple">Watcher</span><br/>
-						<span>Whenever you enter Wrath, double your Block.</span><br/>
+						<span>Whenever you enter Wrath, gain 2 Block, then double your Block.</span><br/>
 					</div>
 				</div>
 				
@@ -621,7 +621,7 @@
 					<div>
 						<span><b>Red Cape</b></span><br />
 						<span class="keyword_red">Boss</span><br/>
-						<span>Gain <img class="stsenergy" /> at the start of your turn. Whenever you Attack a single enemy, other enemies can't be targeted until it dies.</span><br/>
+						<span>Gain <img class="stsenergy" /> at the start of your turn. Whenever you Attack a single enemy, other enemies can't be attacked until it dies.</span><br/>
 					</div>
 				</div>
 				
@@ -696,7 +696,7 @@
 					<div>
 						<span><b>Sheep's Eye Marble</b></span><br />
 						<span class="keyword_gold">Rare</span><br/>
-						<span>Whenever you play two copies of the same card in a row, play it again.</span><br/>
+						<span>The first time you play two copies of the same card in a row each turn, play it again.</span><br/>
 					</div>
 				</div>
 				
@@ -704,7 +704,7 @@
 					<div><img src="../resources/images/reliquary/relics/shortFuse.png" /></div>
 					<div>
 						<span><b>Short Fuse</b></span><br />
-						<span><span class="keyword_blue">Uncommon</span> <b>&middot;</b> <span class="keyword_blue">Defect</span><br/>
+						<span><span class="keyword_gray">Common</span> <b>&middot;</b> <span class="keyword_blue">Defect</span><br/>
 						<span>Your Lightning Orbs target the enemy with the least HP.</span><br/>
 					</div>
 				</div>
@@ -723,7 +723,7 @@
 					<div>
 						<span><b>Sideboard</b></span><br />
 						<span class="keyword_blue">Uncommon</span><br/>
-						<span>Chosen card rewards go into a separate pile. You can move cards from that pile to your deck between combats.</span><br/>
+						<span>Upon pickup, gain 100 Gold. Chosen card rewards go into a separate pile. You can move cards from that pile to your deck between combats.</span><br/>
 					</div>
 				</div>
 				
@@ -823,7 +823,7 @@
 					<div>
 						<span><b>Tam-Tam</b></span><br />
 						<span><span class="keyword_green">Shop</span> <b>&middot;</b> <span class="keyword_red">Ironclad</span><br/>
-						<span>Whenever you start your turn with Block, you and ALL enemies gain 1 Strength.</span><br/>
+						<span>Whenever you start your turn with Block, you gain 2 Strength and ALL enemies gain 1 Strength.</span><br/>
 					</div>
 				</div>
 				
@@ -832,7 +832,7 @@
 					<div>
 						<span><b>Tank Top</b></span><br />
 						<span class="keyword_blue">Uncommon</span><br/>
-						<span>Whenever you Attack the enemy with the most HP, if there are 2 or more enemies, deal 3 damage to the front enemy.</span><br/>
+						<span>Whenever you Attack the enemy with the most HP, if there are 2 or more enemies, deal 4 damage to the front enemy.</span><br/>
 					</div>
 				</div>
 				
@@ -923,7 +923,7 @@
 					<div>
 						<span><b>Twin Pearls</b></span><br />
 						<span class="keyword_gold">Rare</span><br/>
-						<span>You start each turn with Pearlescence in your hand.</span><br/>
+						<span>You start each odd-numbered turn with Pearlescence in your hand.</span><br/>
 						<span class="relic_explanation">(Pearlescence is a card that copies the last card played in a turn.)</span>
 					</div>
 				</div>
@@ -984,6 +984,7 @@
 					<li>Korean translation by OWATANKS</li>
 					<li>to the developers of <a href="https://github.com/kiooeht/ModTheSpire">ModTheSpire</a>, <a href="https://github.com/daviscook477/BaseMod">BaseMod</a>, and <a href="https://github.com/kiooeht/StSLib">StSLib</a>, especially <a href="https://github.com/kiooeht">kiooeht</a></li>
 					<li>to <a href="https://discord.com/invite/slaythespire">Slay the Spire Discord</a> members Alchyr, Gk, Jobby, Raz, squeeb, and vex for technical help</li>
+					<li>to Dave for extensive balance notes</li>
 					<li>and to the many people who reported bugs and gave balance and design feedback!</li>
 				</ul>
 				
@@ -991,12 +992,39 @@
 				<a id="changelog"></a>
 				<h2 style="text-align: center;">Changelog</h2>
 				<ul style="font-size: .9vw;">
+					<li><b>0.5.2</b> (4/26/2023)<ul>
+						<li>Bellows: Uncommon ￫ Rare</li>
+						<li>Big Hammer: Berserk++: ALL enemies are also Vulnerable next turn</li>
+						<li>Craggleroot: cost increase removed when card is played</li>
+						<li>Crusader's Map: 25% chance ￫ 33% chance</li>
+						<li>Ember: no longer counts autoplayed cards</li>
+						<li>Finger Trap: only prevents the first 13 player-turn damage each combat</li>
+						<li>Free Samples: gives enemies 1 Buffer instead of 1 Intangible</li>
+						<li>Kinked Spring: <img class="stsenergy" /> ￫ <img class="stsenergy" /><img class="stsenergy" /></li>
+						<li>Love-Emitting Diode: 3x ￫ 2x</li>
+						<li>Peacock Shield: gain 2 Block before doubling</li>
+						<li>Promissory Notes: only stacks up to 100</li>
+						<li>Quartz Cube: Exploders' Explosive power doesn't decrement while stunned</li>
+						<li>Red Cape: only restricts Attacks</li>
+						<li>Runic Remote: formerly unupgraded cards have a 50% chance to be Upgraded</li>
+						<li>Sheep's Eye Marble: triggers once per turn</li>
+						<li>Sideboard: 100 Gold on pickup</li>
+						<li>Short Fuse: Uncommon ￫ Common</li>
+						<li>Short Straw: no longer picks Unplayable cards</li>
+						<li>Skeleton Key: Crippling Cloud++ applies 7 ￫ 9 Poison</li>
+						<li>Skeleton Key: Deadly Poison++ applies 8 ￫ 9 Poison</li>
+						<li>Skeleton Key: Skewer++ buff at X=5+ ￫ X=4+</li>
+						<li>Tam-Tam: player Strength gain 1 ￫ 2</li>
+						<li>Tank Top: 3 damage ￫ 4 damage</li>
+						<li>Toy Rocket: Blast Off deals 20 damage ￫ 25 damage</li>
+						<li>Twin Pearls: get Pearlescence on odd-numbered turns only</li>
+					</ul></li>
 					<li><b>0.5.1</b> (3/18/2023)<ul>
 						<li>Ferry Pass: gaining cards during combat no longer resets progress</li>
 						<li>Stimpack: fixed a crash when becoming bloodied outside of combat</li>
 						<li>Twin Pearls: Pearlescence can no longer be retained</li>
 						<li>Twin Pearls: removed from Downfall's Automaton character pool</li>
-						<li>Witchy Dice: Uncommon → Shop</li>
+						<li>Witchy Dice: Uncommon ￫ Shop</li>
 					</ul></li>
 					<li><b>0.5</b> (9/22/2022)<ul>
 						<li>added Blood Sugar, Bouncer, EXA, Free Samples, Hardlight, Oven Mitt, Peacock Shield, Plasma Lobster, Promissory Notes, Rattle Coin, Sheep's Eye Marble, Short Straw, Soularoid, Splatula, Tank Top, Toy Rocket, Traffic Cone, Twin Pearls, Underdog Bone, and Witchy Dice</li>
@@ -1033,8 +1061,8 @@
 						<li>fixed the Big Hammer/Solitaire infinite upgrading bug (thanks jbcall!)</li>
 						<li>second-Upgrade relics only spawn if you have an Upgraded class card</li>
 						<li>Big Hammer: aligned Infernal Blade++ with Distraction++ and White Noise++</li>
-						<li>Bookmark: checks for newly upgraded cards each combat</li>
-						<li>Crutches: Ironclad → Shared</li>
+						<li>Bookmark: checks for newly Upgraded cards each combat</li>
+						<li>Crutches: Ironclad ￫ Shared</li>
 						<li>Dhvaja: triggers upon entering Divinity rather than upon exiting</li>
 						<li>Expired Coupon: now has no effect outside of combat</li>
 						<li>Knoch: fixed interaction with debuff-immune modded monsters</li>
@@ -1083,7 +1111,7 @@
 						<li>Hot Poker: fixed crash with no targets</li>
 						<li>Kinked Spring: can no longer be received from Neow with an 11 or 12 card deck</li>
 						<li>Sculpting Steel: disallowed nonfunctional relics</li>
-						<li>Solitaire: Rare → Boss</li>
+						<li>Solitaire: Rare ￫ Boss</li>
 						<li>Solitaire: improved Eruption++</li>
 					</ul></li>
 					<li><b>0.2.2</b> (2/7/2021)<ul>
@@ -1097,32 +1125,32 @@
 						<li>Ember: damage is dealt after the played card resolves</li>
 						<li>Ember: no longer triggers Rupture</li>
 						<li>Ouija Board: X-cost cards are played for X - 1</li>
-						<li>Ouija Board: no longer works on unplayable cards</li>
+						<li>Ouija Board: no longer works on Unplayable cards</li>
 						<li>Red Cape: half-dead enemies that keep buffs (Awakened One) don't taunt</li>
 						<li>Red Paperclip, Sculpting Steel: use seeded RNG</li>
 					</ul></li>
 					<li><b>0.2</b> (1/31/2021)<ul>
 						<li>added Conveyor, Craggleroot, Crutches, Dhvaja, Ferry Pass, New Friend, Pushpin, and Sideboard</li>
 						<li>Simplified Chinese translation by 旅渚!</li>
-						<li>Aerogel: Uncommon → Common</li>
-						<li>Expired Coupon: triggers after 80 → 70 damage</li>
+						<li>Aerogel: Uncommon ￫ Common</li>
+						<li>Expired Coupon: triggers after 80 ￫ 70 damage</li>
 						<li>Kinked Spring: fixed interaction with end-of-turn draw pile events like Study</li>
 						<li>Ouija Board: fixed chosen card shuffling into the draw pile for the rest of the combat</li>
-						<li>Princely Helmet: 1 doubled Block per floor → 8 per Act</li>
-						<li>Princely Helmet: Rare → Uncommon</li>
-						<li>Quartz Cube: each combat with 2 or more → 3 or more enemies</li>
+						<li>Princely Helmet: 1 doubled Block per floor ￫ 8 per Act</li>
+						<li>Princely Helmet: Rare ￫ Uncommon</li>
+						<li>Quartz Cube: each combat with 2 or more ￫ 3 or more enemies</li>
 						<li>Quartz Cube: fixed weird Intangible AOE behavior by switching <i>back</i> to a variant of Invincible</li>
 						<li>Red Cape: Taunt now permits autoplayed cards to target other enemies</li>
 						<li>Sculpting Steel: no longer copies Boss and Event relics</li>
 						<li>Sharkskin Sheath: removed the Energy condition and effect</li>
-						<li>Tam-Tam: 2 Strength for you and 1 for enemies → 1 for everyone</li>
-						<li>Weak Tea: first Colorless card → first 2 Colorless cards</li>
+						<li>Tam-Tam: 2 Strength for you and 1 for enemies ￫ 1 for everyone</li>
+						<li>Weak Tea: first Colorless card ￫ first 2 Colorless cards</li>
 						<li>Weak Tea: reduces costForTurn in time to interact with other effects</li>
 						<li>fixed Card Library crash bug</li>
 					</ul></li>
 					<li><b>0.1.2</b> (1/26/2021)<ul>
 						<li>added Weak Tea</li>
-						<li>Boomerang: first card → fourth card</li>
+						<li>Boomerang: first card ￫ fourth card</li>
 						<li>Iridium Chain: the added Ethereal now overrides Powers with Retain</li>
 						<li>Kill Pill: triggers only once per enemy per turn</li>
 						<li>Kinked Spring: fixed interaction with onShuffle effects, including Ball Bearing</li>
@@ -1131,19 +1159,19 @@
 					</ul></li>
 					<li><b>0.1.1</b> (1/25/2021)<ul>
 						<li>added Princely Helmet</li>
-						<li>Bookmark: Uncommon → Shop</li>
-						<li>Ember: 1 → 2 damage</li>
+						<li>Bookmark: Uncommon ￫ Shop</li>
+						<li>Ember: 1 ￫ 2 damage</li>
 						<li>Iridium Chain: upgrading created cards (e.g. with Master Reality) no longer resets the cost</li>
-						<li>Ivory Trinket: every 10th time → every 5th time</li>
+						<li>Ivory Trinket: every 10th time ￫ every 5th time</li>
 						<li>Kinked Spring: now doesn't shuffle during your draw for turn, closed edge-case loopholes</li>
 						<li>Medicine Ball: copies max Strength among enemies, ignoring negative Strength</li>
-						<li>Mudwin's Cradle: 2/4/6/8/9 → 3/6 Mantra</li>
+						<li>Mudwin's Cradle: 2/4/6/8/9 ￫ 3/6 Mantra</li>
 						<li>Purple-Tinged Leaf: now works on Attacks only</li>
 						<li>Quartz Cube: applies Intangible instead of Invincible</li>
 						<li>Red Paperclip: replaces 2 Common or Uncommon relics</li>
-						<li>Short Fuse: Rare → Uncommon</li>
-						<li>Tam-Tam: Rare → Shop, checks once per turn for leftover block instead of on every attack</li>
-						<li>Writ of Mandamus: lose 3 Block → lose 5 Block</li>
+						<li>Short Fuse: Rare ￫ Uncommon</li>
+						<li>Tam-Tam: Rare ￫ Shop, checks once per turn for leftover block instead of on every attack</li>
+						<li>Writ of Mandamus: lose 3 Block ￫ lose 5 Block</li>
 						<li>fixed bugs with Boomerang, Medicine Ball, and Red Cape</li>
 						<li>improved tooltips and misc strings</li>
 						<li>Vapors no longer default to seen</li>
