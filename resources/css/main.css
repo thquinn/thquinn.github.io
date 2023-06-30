@@ -387,6 +387,7 @@ auto-card a {
 	width: 30vw;
 	height: 30vw;
 	margin: auto;
+	margin-bottom: 1vw;
 }
 .blogzoomimage:focus {
 	outline: none;
