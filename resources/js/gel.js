@@ -50,7 +50,7 @@ scene.add(shadow);
 var gel;
 
 var loader = new THREE.GLTFLoader();
-loader.load('https://cdn.rawgit.com/thquinn/thquinn.github.io/c8eb3c34/resources/3d/gel.gltf', function (object) {
+loader.load('https://thquinn.github.io/resources/3d/gel.gltf', function (object) {
 	gel = object.scene.children[0];
 	for (let i = 0; i < gel.children[0].children.length; i++) {
 		for (let j = 0; j < 6; j++) {
