@@ -66,7 +66,10 @@
 		<script type="text/javascript">
 			var client = new XMLHttpRequest();
 			client.open('GET', 'resources/blog/' + getQueryStringValue("post") + ".md");
-			client.onreadystatechange = function() {
+			client.onreadystatechange = function(e) {
+			  if (e.currentTarget.readyState != 4) {
+			    return;
+			  }
 			  var converter = new showdown.Converter({noHeaderId: true, headerLevelStart: 2, simpleLineBreaks: true, parseImgDimensions: true});
 			  const scriptTag = "#STARTSCRIPTS";
 			  const scriptTagIndex = client.responseText.indexOf(scriptTag);

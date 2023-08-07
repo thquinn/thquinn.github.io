@@ -70,6 +70,54 @@ code {
 	border: .1vw solid #999;
 }
 
+input {
+	padding: .25vw .25vw;
+	font-family: 'Trebuchet MS';
+	font-size: inherit;
+	border: 2px solid #DDD;
+	border-radius: .25vw;
+}
+input:focus {
+	border: 2px solid #AAA;
+	outline: none;
+}
+
+button {
+	box-sizing: border-box;
+	padding: .2vw .5vw;
+	border-radius: .25vw;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: bold;
+	border: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+button:enabled:hover {
+	outline: 2px solid #DDD;
+}
+button:enabled:active {
+	outline: 2px solid #AAA;
+}
+
+textarea {
+	box-sizing: border-box;
+	width:100%;
+	padding: 1vw;
+	font-family: 'Trebuchet MS';
+	font-size: inherit;
+	resize: vertical;
+	border: 2px solid #DDD;
+	border-radius: .5vw .5vw 0 .5vw;
+	min-height: 4vw;
+}
+textarea:focus {
+	border: 2px solid #AAA;
+	outline: none;
+}
+
 #header {
 	height: 8vw;
 	text-align: center;
@@ -394,6 +442,64 @@ auto-card a {
 }
 .blogzoomimage > * > *:focus {
 	outline: none;
+}
+.blogPoemPoems {
+	columns: 2;
+}
+.blogPoemPoem {
+	padding: 1vw;
+	break-inside: avoid;
+	font-size: 1vw;
+	font-style: italic;
+	text-align: center;
+	overflow-wrap: break-word;
+}
+.blogPoemPoem > cite {
+	display: block;
+	text-align: right;
+	font-size: .625vw;
+}
+#blogPoemControls {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: .5vw;
+}
+#blogPoemLettersLeft {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: .4vw .25vw;
+}
+#blogPoemLettersLeft > span {
+	width: 2vw;
+	height: 2vw;
+	background-color: #E3CFAA;
+	filter: drop-shadow(0 .3vw 0 #ccb58a) drop-shadow(0 .1vw .05vw #0002);
+	text-align: center;
+	line-height: 1.9vw;
+	border-radius: .3vw;
+	font-family: 'Trebuchet MS';
+	font-size: 1.5vw;
+}
+#blogPoemLettersLeft > span > sub {
+	position: relative;
+	font-size: .5vw;
+	font-weight: bold;
+	bottom: .1vw;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+#blogPoemLettersOver {
+	color: #F00;
+	font-weight: bold;
+}
+.blogpoemdim {
+	opacity: 20%;
+	user-select: none;
+	filter: drop-shadow(0 .3vw 0 #ccb58a) !important;
 }
 
 /* ludum dare article */
