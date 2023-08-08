@@ -459,6 +459,11 @@ auto-card a {
 	text-align: right;
 	font-size: .625vw;
 }
+#blogPoemError {
+	min-height: 2em;
+	color: #F00;
+	font-weight: bold;
+}
 #blogPoemControls {
 	display: flex;
 	justify-content: space-between;
