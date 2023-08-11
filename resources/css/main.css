@@ -497,7 +497,7 @@ auto-card a {
 	-ms-user-select: none;
 	user-select: none;
 }
-#blogPoemLettersOver {
+.blogPoemTooManyBlanks {
 	color: #F00;
 	font-weight: bold;
 }
@@ -505,6 +505,9 @@ auto-card a {
 	opacity: 20%;
 	user-select: none;
 	filter: drop-shadow(0 .3vw 0 #ccb58a) !important;
+}
+#blogPoemUserPoemsHeader {
+	margin-top: 3vw;
 }
 
 /* ludum dare article */
