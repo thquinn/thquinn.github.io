@@ -447,18 +447,62 @@ auto-card a {
 	columns: 2;
 }
 .blogPoemPoem {
-	padding: 1vw;
+	display: flex;
+	padding: 0 0 1vw 1vw;
 	break-inside: avoid;
 	font-size: 1vw;
 	font-style: italic;
 	text-align: center;
 	overflow-wrap: break-word;
+	width: fit-content;
+	margin: auto;
 }
-.blogPoemPoem > cite {
+.blogPoemPoem > div:last-child {
+	display:flex;
+	width: 0;
+	max-height: 4vw;
+	margin-left: 1vw;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-self: flex-end;
+	justify-content: flex-end;
+	gap: .25vw;
+}
+.blogPoemPoem cite {
 	display: block;
 	text-align: right;
 	font-size: .625vw;
 }
+.blogPoemPoem img {
+	width: 1.5vw;
+	filter: drop-shadow(0 .2vw .05vw #0001);
+}
+.blogPoemBadge > div {
+	display: none;
+}
+.blogPoemBadge:hover > div {
+	display: block;
+	position: absolute;
+}
+.blogPoemTooltip {
+	position: relative;
+	top: -1vw;
+	left: 2vw;
+	max-width: 15vw;
+	padding: .75vw 1vw;
+	border-radius: .5vw;
+	background: #F8F8F8;
+	outline: solid #FFF .2vw;
+	text-align: left;
+	font-style: initial;
+	font-size: .75vw;
+	filter: drop-shadow(0 0 .2vw #0001);
+}
+.blogPoemTooltip > div:first-child {
+	font-size: 1vw;
+	font-weight: bold;
+}
+
 #blogPoemError {
 	min-height: 2em;
 	color: #F00;
@@ -505,6 +549,33 @@ auto-card a {
 	opacity: 20%;
 	user-select: none;
 	filter: drop-shadow(0 .3vw 0 #ccb58a) !important;
+}
+#blogPoemBlanksUsedP {
+	margin-bottom: 3vw;
+}
+#blogPoemBadgeList {
+	display: flex;
+	flex-direction: column;
+	gap: .5vw;
+	margin-top: 1vw;
+}
+#blogPoemBadgeList > div {
+	display: flex;
+	width: 75%;
+	margin: auto;
+	font-size: .75vw;
+}
+#blogPoemBadgeList img {
+	height: 3vw;
+	margin-right: 1vw;
+	filter: drop-shadow(0 .2vw .05vw #0001);
+}
+#blogPoemBadgeList > div > * {
+	align-self: center;
+}
+#blogPoemBadgeList > div > div > div:first-child {
+	font-weight: bold;
+	font-size: 1vw;
 }
 #blogPoemUserPoemsHeader {
 	margin-top: 3vw;
