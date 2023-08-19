@@ -444,7 +444,11 @@ auto-card a {
 	outline: none;
 }
 .blogPoemPoems {
+	margin-top: 1vw;
 	columns: 2;
+}
+#blogPoemTomsPoems{
+	margin-top: 2vw;
 }
 .blogPoemPoem {
 	display: flex;
@@ -488,6 +492,7 @@ auto-card a {
 	position: relative;
 	top: -1vw;
 	left: 2vw;
+	z-index: 1;
 	max-width: 15vw;
 	padding: .75vw 1vw;
 	border-radius: .5vw;
@@ -497,12 +502,12 @@ auto-card a {
 	font-style: initial;
 	font-size: .75vw;
 	filter: drop-shadow(0 0 .2vw #0001);
+	box-shadow: inset 0 0 .2vw #0001;
 }
 .blogPoemTooltip > div:first-child {
 	font-size: 1vw;
 	font-weight: bold;
 }
-
 #blogPoemError {
 	min-height: 2em;
 	color: #F00;
@@ -550,6 +555,9 @@ auto-card a {
 	user-select: none;
 	filter: drop-shadow(0 .3vw 0 #ccb58a) !important;
 }
+#blogPoemBlanksUsed {
+	font-family: 'Trebuchet MS';
+}
 #blogPoemBlanksUsedP {
 	margin-bottom: 3vw;
 }
@@ -578,7 +586,7 @@ auto-card a {
 	font-size: 1vw;
 }
 #blogPoemUserPoemsHeader {
-	margin-top: 3vw;
+	margin-top: 2vw;
 }
 
 /* ludum dare article */
