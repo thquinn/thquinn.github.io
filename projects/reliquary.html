@@ -47,7 +47,7 @@
 		<div id="bg">
 			<div id="onecol">
 				<img src="../resources/images/reliquary/logo2.png" />
-				<p>Reliquary is a collection of relics for <a href="https://www.megacrit.com/">Slay the Spire</a> with over <b>25,000 players!</b> You can find it on the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2371967829">Steam Workshop</a>, and take a gander at the <a href="https://github.com/thquinn/Reliquary">source code on Github</a>. The latest version is <b>0.5.2</b> (<a href="#changelog">changelog</a>).
+				<p>Reliquary is a collection of relics for <a href="https://www.megacrit.com/">Slay the Spire</a> with over <b>30,000 players!</b> You can find it on the <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2371967829">Steam Workshop</a>, and take a gander at the <a href="https://github.com/thquinn/Reliquary">source code on Github</a>. Thanks to volunteer translators from the Slay the Spire community, Reliquary is available in 6 languages! The latest version is <b>0.5.3</b> (<a href="#changelog">changelog</a>).
 				
 				<h2 style="text-align: center;">Relics</h2>
 				
@@ -93,6 +93,15 @@
 						<span><b>Big Hammer</b></span><br />
 						<span><span class="keyword_red">Boss</span> <b>&middot;</b> <span class="keyword_red">Ironclad</span><br/>
 						<span>You may upgrade Red cards a second time. Upon pickup, Upgrade an Upgraded card.</span><br/>
+					</div>
+				</div>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/bloodFilter.png" /></div>
+					<div>
+						<span><b>Blood Filter</b></span><br />
+						<span><span class="keyword_gold">Rare</span> <b>&middot;</b> <span class="keyword_red">Ironclad</span><br/>
+						<span>Whenever you lose HP during your turn, regain it at the end of combat.</span><br/>
 					</div>
 				</div>
 				
@@ -276,15 +285,6 @@
 						<span class="keyword_gray">Common</span><br/>
 						<span>When you play every unique playable card in your deck in one combat, lose this and add a Rare relic to that combat's reward.</span><br/>
 						<span class="relic_explanation">(Only appears with 12 or more unique cards in your deck. Upgraded versions of a card count as the same unique card.)</span>
-					</div>
-				</div>
-				
-				<div class="relic_row">
-					<div><img src="../resources/images/reliquary/relics/fingerTrap.png" /></div>
-					<div>
-						<span><b>Finger Trap</b></span><br />
-						<span class="keyword_green">Shop</span><br/>
-						<span>Prevent the first 13 HP you would lose during your turn each combat.</span><br/>
 					</div>
 				</div>
 				
@@ -973,18 +973,32 @@
 					</div>
 				</div>
 				
+				<h2 style="text-align: center;">Retired Relics</h2>
+				
+				<p class="relic_explanation">These are removed from the relic pool by default. You can add them back in from the title menu ￫ Mods ￫ Reliquary ￫ Config.</p>
+				
+				<div class="relic_row">
+					<div><img src="../resources/images/reliquary/relics/fingerTrap.png" /></div>
+					<div>
+						<span><b>Finger Trap</b></span><br />
+						<span class="keyword_green">Shop</span><br/>
+						<span>Prevent the first 13 HP you would lose during your turn each combat.</span><br/>
+					</div>
+				</div>
+				
 				<br/>
 				<h2 style="text-align: center;">Credits</h2>
 				<ul style="font-size: .9vw;">
 					<li>design, code, and art by me</li>
-					<li>additional design by Grace Ku, Wilson Chung, and 旅渚</li>
+					<li>additional design by Grace Ku, Wilson Chung, 旅渚, and Dextro</li>
 					<li>Simplified Chinese translation by 旅渚</li>
 					<li>Russian translation by Rustam Eyniyev</li>
 					<li>Japanese translation by wii</li>
 					<li>Korean translation by OWATANKS</li>
+					<li>Spanish translation by Dextro</li>
 					<li>thanks to the developers of <a href="https://github.com/kiooeht/ModTheSpire">ModTheSpire</a>, <a href="https://github.com/daviscook477/BaseMod">BaseMod</a>, and <a href="https://github.com/kiooeht/StSLib">StSLib</a>, especially <a href="https://github.com/kiooeht">kiooeht</a></li>
 					<li>to <a href="https://discord.com/invite/slaythespire">Slay the Spire Discord</a> members Alchyr, Gk, Jobby, Raz, squeeb, and vex for technical help</li>
-					<li>to Dave for extensive balance notes</li>
+					<li>to Dave, JohnnyBazooka89, and SandTag for balance help</li>
 					<li>and to the many people who reported bugs and gave balance and design feedback!</li>
 				</ul>
 				
@@ -992,6 +1006,17 @@
 				<a id="changelog"></a>
 				<h2 style="text-align: center;">Changelog</h2>
 				<ul style="font-size: .9vw;">
+					<li><b>0.5.3</b> (8/29/2023)<ul>
+						<li>added Blood Filter</li>
+						<li>retired Finger Trap</li>
+						<li>Spanish translation by Dextro!</li>
+						<li>Expired Coupon: counter now counts down</li>
+						<li>Feather Duster: excludes bottled cards</li>
+						<li>Ferry Pass: no longer triggers during Act 3 boss, which has no rewards screen</li>
+						<li>Red Cape: escaped enemies don't taunt</li>
+						<li>Runic Remote: fix mod-compatibility crash (?)</li>
+						<li>Tank Top: deals thorns damage instead of normal damage</li>
+					</ul></li>
 					<li><b>0.5.2</b> (4/26/2023)<ul>
 						<li>Bellows: Uncommon ￫ Rare</li>
 						<li>Big Hammer: Berserk++ also makes ALL enemies Vulnerable next turn</li>
