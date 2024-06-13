@@ -101,6 +101,10 @@ button:enabled:hover {
 button:enabled:active {
 	outline: 2px solid #AAA;
 }
+input[type=checkbox] {
+    transform: scale(1.5);
+	margin: 0;
+}
 
 textarea {
 	box-sizing: border-box;
@@ -518,6 +522,19 @@ auto-card a {
 	justify-content: space-between;
 	align-items: center;
 	margin-bottom: .5vw;
+}
+#blogPoemControls > div {
+	display: flex;
+	align-items: center;
+	gap: .5vw;
+}
+#blogPoemDomeBoxContainer {
+	display: flex;
+	flex-direction: column;
+}
+#blogPoemDomeBoxContainer > label {
+	font-size: .75vw;
+	margin-bottom: -.5vw;
 }
 #blogPoemLettersLeft {
 	display: flex;
