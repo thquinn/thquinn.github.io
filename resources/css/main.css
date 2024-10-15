@@ -474,7 +474,6 @@ auto-card a {
 	flex-wrap: wrap;
 	align-self: flex-end;
 	justify-content: flex-end;
-	gap: .25vw;
 }
 .blogPoemPoem cite {
 	display: block;
@@ -484,6 +483,9 @@ auto-card a {
 .blogPoemPoem img {
 	width: 1.5vw;
 	filter: drop-shadow(0 .2vw .05vw #0001);
+}
+.blogPoemBadge {
+	margin-top: -.1vw;
 }
 .blogPoemBadge > div {
 	display: none;
@@ -535,6 +537,7 @@ auto-card a {
 #blogPoemDomeBoxContainer > label {
 	font-size: .75vw;
 	margin-bottom: -.5vw;
+	text-align: center;
 }
 #blogPoemLettersLeft {
 	display: flex;
