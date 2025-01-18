@@ -40,6 +40,10 @@ h3 {
 	margin-top: -.675vw;
 }
 
+h5 {
+	margin-bottom: 0;
+}
+
 h6 {
 	margin-top: -1vw;
 	margin-bottom: 0;
@@ -385,7 +389,6 @@ i {
 	text-align: center;
 	font-size: .625vw;
 	font-style: italic;
-	margin-top: -0.8vw;
 }
 .youtube {
 	display: block;
