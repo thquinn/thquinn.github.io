@@ -544,6 +544,7 @@ auto-card a {
 }
 #blogPoemLettersLeft {
 	display: flex;
+	margin-top: 1vw;
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: .4vw .25vw;
