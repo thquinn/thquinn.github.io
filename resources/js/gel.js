@@ -84,18 +84,18 @@ class Interpolator {
 		this.wait = startWait ? this.generateWait() : 0;
 	}
 
-	update() {
+	update(deltaTime) {
 		if (this.wait > 0) {
-			this.wait--;
+			this.wait -= deltaTime;
 			return;
 		}
-		this.t++;
-		if (this.t == this.tEnd) {
+		this.t += deltaTime;
+		if (this.t >= this.tEnd) {
 			this.value = this.to;
 			this.from = this.to;
 			this.fromLow = !this.fromLow;
 			this.to = this.generateValue(this.fromLow);
-			this.t = 0;
+			this.t -= this.tEnd;
 			this.tEnd = this.generateTime();
 			this.wait = this.generateWait();
 			return;
@@ -131,30 +131,33 @@ gelCanvas.addEventListener('click', function(e) {
 		cringeTimer = 1;
 	e.preventDefault();
 });
+var lastNow = Date.now();
 
 function gelLoop() {
 	window.requestAnimationFrame(gelLoop);
+	let tMult = (Date.now() - lastNow) / 16.666;
+	lastNow = Date.now();
 	
 	if (gel) {
 		let opacity = parseFloat(gelCanvas.style.opacity);
 		if (opacity < 1) {
-			gelCanvas.style.opacity = Math.min(1, opacity + .033);
+			gelCanvas.style.opacity = Math.min(1, opacity + .033 * tMult);
 		}
 
 		if (cringeTimer > 0) {
 			if (cringeTimer > 180) {
 				cringeTimer = 0;
 			} else {
-				cringeTimer++;
+				cringeTimer += tMult;
 				cringe = Math.min(1, cringeTimer / 4);
 			}
 		} else if (cringe > 0) {
-			cringe = Math.max(0, cringe - .01);
+			cringe = Math.max(0, cringe - .01 * tMult);
 		}
 
 		if (cringe == 0) {
 			for (let interpolator of interpolators) {
-				interpolator.update();
+				interpolator.update(tMult);
 			}
 		}
 		let easedCringe = Math.easeInOutQuad(cringe, 0, .92, 1);
