@@ -390,6 +390,9 @@ i {
 	font-size: .625vw;
 	font-style: italic;
 }
+p + .blogcaption {
+	margin-top: -0.75vw;
+}
 .youtube {
 	display: block;
 	margin: 0 auto;
@@ -452,7 +455,10 @@ auto-card a {
 }
 .blogPoemPoems {
 	margin-top: 1vw;
+	margin-left: -3vw;
+	margin-right: -3vw;
 	columns: 2;
+	column-gap: 4vw;
 }
 #blogPoemTomsPoems{
 	margin-top: 2vw;
