@@ -414,6 +414,14 @@ auto-card a {
 	font-size: .85vw;
 	column-rule: .1vw solid #d0d0c0;
 }
+.blogimagerow {
+	display: flex;
+	width: 100%;
+	justify-content: center;
+}
+.blogimagerow > img {
+	object-fit: scale-down;
+}
 .bloggifgrid {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -455,7 +463,7 @@ auto-card a {
 }
 .blogPoemPoems {
 	margin-top: 1vw;
-	margin-left: -3vw;
+	margin-left: -4vw;
 	margin-right: -3vw;
 	columns: 2;
 	column-gap: 4vw;

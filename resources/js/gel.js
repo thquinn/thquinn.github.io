@@ -131,12 +131,18 @@ gelCanvas.addEventListener('click', function(e) {
 		cringeTimer = 1;
 	e.preventDefault();
 });
-var lastNow = Date.now();
 
-function gelLoop() {
+var lastNow = performance.now();
+
+document.addEventListener('visibilitychange', function() {
+	if (!document.hidden)
+		lastNow = performance.now();
+});
+
+function gelLoop(now) {
 	window.requestAnimationFrame(gelLoop);
-	let tMult = (Date.now() - lastNow) / 16.666;
-	lastNow = Date.now();
+	let tMult = Math.min((now - lastNow) / 16.666, 3);
+	lastNow = now;
 	
 	if (gel) {
 		let opacity = parseFloat(gelCanvas.style.opacity);
@@ -184,4 +190,4 @@ function gelLoop() {
 
 	renderer.render(scene, camera);
 }
-gelLoop();
+window.requestAnimationFrame(gelLoop);
