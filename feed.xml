@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss version="2.0">
+  <channel>
+    <title>Tom's Blog</title>
+    <link>https://thquinn.github.io/</link>
+    <description>Blog posts by Tom Quinn.</description>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 28 Sep 2026 17:06:36 GMT</lastBuildDate>
+    <item>
+      <title>Lupine-Ovine</title>
+      <link>https://thquinn.github.io/blog.html?post=16</link>
+      <description>You can check your answer here.</description>
+      <pubDate>Wed, 09 Sep 2026 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=16</guid>
+    </item>
+    <item>
+      <title>Why Monte Carlo?</title>
+      <link>https://thquinn.github.io/blog.html?post=15</link>
+      <description>In 1997, chess fell to the machines. It was bound to happen. Despite there being more possible games of chess than atoms in the universe, with efficient move generation and a few optimizations and heuristics, its state tree becomes tractable to search. The average chess game lasts ~40 moves, a depth that a strong chess engine can reach on my…</description>
+      <pubDate>Tue, 29 Jul 2025 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=15</guid>
+    </item>
+    <item>
+      <title>AlphaPush</title>
+      <link>https://thquinn.github.io/blog.html?post=14</link>
+      <description>A whole four damn years ago, I wrote an "AI" that used Monte Carlo Tree Search to optimize and play a Magic: the Gathering deck. I put "AI" in quotes here because, as we now know in 2025, AI is neural networks. Ever since AlphaGo eked out a 4-1 victory against 9-dan professional Lee Sedol using MCTS and deep learning, I've wanted to replicate it…</description>
+      <pubDate>Sat, 18 Jan 2025 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=14</guid>
+    </item>
+    <item>
+      <title>Scroetry</title>
+      <link>https://thquinn.github.io/blog.html?post=13</link>
+      <description>We all know about pangrams:</description>
+      <pubDate>Mon, 07 Aug 2023 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=13</guid>
+    </item>
+    <item>
+      <title>Making the Cut in Bouldering</title>
+      <link>https://thquinn.github.io/blog.html?post=12</link>
+      <description>I've been getting into bouldering, SWE cliché though it may be. I was initially suckered in by the IFSC's excellent live coverage of their tournaments. Action, commentary, on-screen graphics, 3D scans of the wall... they really should use a stable sort for that leaderboard, though. Anyway: these bouldering tournaments have a qualifying round, a…</description>
+      <pubDate>Fri, 30 Jun 2023 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=12</guid>
+    </item>
+    <item>
+      <title>Juggling, Dice</title>
+      <link>https://thquinn.github.io/blog.html?post=11</link>
+      <description>I've been exploring the patterns that can arise from simple systems. Check out how tiny variations in the angles of these platforms can lead to all sorts of different periodic motion:</description>
+      <pubDate>Sat, 04 Feb 2023 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=11</guid>
+    </item>
+    <item>
+      <title>Ford Tiles</title>
+      <link>https://thquinn.github.io/blog.html?post=10</link>
+      <description>Here's something weird: my game Tiles can now be found on the touchscreen in new Ford vehicles like the F-150 Lightning and Mustang Mach-E! I developed it for Ford last year, and now that the truck is out, I can finally show it off. It's a port/sequel to Quintacolor, which I made back in 2018!</description>
+      <pubDate>Wed, 08 Jun 2022 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=10</guid>
+    </item>
+    <item>
+      <title>Dicey Dungeons: Robo-JACKPOT!</title>
+      <link>https://thquinn.github.io/blog.html?post=9</link>
+      <description>Dicey Dungeons is a nice game! Since the advent of the roguelike deckbuilder, I'd been wondering if there's some design space away from the now-cliche deck of cards. Turns out: there is! It's dice. The game features 6 character classes, each with their own little twist, and one of them is the Robot, who comes with a neat little math problem. I'm…</description>
+      <pubDate>Thu, 19 Aug 2021 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=9</guid>
+    </item>
+    <item>
+      <title>Ludum Dare 48 Postmortem</title>
+      <link>https://thquinn.github.io/blog.html?post=8</link>
+      <description>Ludum Dare is a twice-annual event where participants try to make as good a game as possible in just 48 hours. After a 6th place finish last time, I was trying not to put too much pressure on myself this time, and... good, because Obelisk probably isn't top 10 material.</description>
+      <pubDate>Mon, 03 May 2021 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=8</guid>
+    </item>
+    <item>
+      <title>MCTS &amp; Magic: the Gathering</title>
+      <link>https://thquinn.github.io/blog.html?post=7</link>
+      <description>TL;DR: the first 80% of this post gets into the weeds about adapting Monte Carlo tree search for Magic. For those less interested in the technical side, the results are down here.</description>
+      <pubDate>Wed, 27 Jan 2021 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=7</guid>
+    </item>
+    <item>
+      <title>Monte Carlo &amp; Magic: the Gathering</title>
+      <link>https://thquinn.github.io/blog.html?post=6</link>
+      <description>While nothing beats Booster Draft, my first love in Magic was the terrible kitchen-table combo. I'm talking Isochron Scepter and Silence, Fatestitcher and Pemmin's Aura, that kind of thing. Magic Arena doesn't have a large enough card pool for brewing, and I'd always been hesitant to buy into an older format like Modern on the creaky Magic the…</description>
+      <pubDate>Mon, 07 Dec 2020 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=6</guid>
+    </item>
+    <item>
+      <title>Ludum Dare 47 Postmortem</title>
+      <link>https://thquinn.github.io/blog.html?post=5</link>
+      <description>I had such high hopes for my last Ludum Dare game, even predicting a top 50, so let's see how we did... 362nd place?! Not gonna lie, I was disappointed. I have theories as to the reason, but really I was just itching for a shot at redemption. October couldn't come soon enough.</description>
+      <pubDate>Mon, 02 Nov 2020 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=5</guid>
+    </item>
+    <item>
+      <title>Ludum Dare 46 Postmortem</title>
+      <link>https://thquinn.github.io/blog.html?post=4</link>
+      <description>Jeez, my last Ludum Dare was a year ago?! The time, it does fly. And I hadn't finished any games since, so I was extremely ready to participate in this one. And participate I did! After a 20 minute brainstorm — my fastest ever, by far — I had my idea: part Rain World, part Mirror's Edge, and part Tamagotchi.</description>
+      <pubDate>Tue, 28 Apr 2020 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=4</guid>
+    </item>
+    <item>
+      <title>MultiGo v0.01</title>
+      <link>https://thquinn.github.io/blog.html?post=3</link>
+      <description>With the pandemic keeping everyone I know away from each other, it seemed like as good a time as any to learn how to make online multiplayer games in Unity. I tried and failed to find a succinct video tutorial, and so went with Photon which is straightforward enough to figure out with just their documentation. And they offer 20 concurrent users of…</description>
+      <pubDate>Fri, 10 Apr 2020 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=3</guid>
+    </item>
+    <item>
+      <title>The Best Friends Game: LIVE!</title>
+      <link>https://thquinn.github.io/blog.html?post=2</link>
+      <description>One of my very favorite games is the Best Friends Game — BFG for short. It's not a video game, it's not a board game, and it's not a card game. It's a... car game. A roadtrip game, like I Spy and the License Plate Game, and I am not ashamed. I stole it from the venerable Comedy Bang! Bang! podcast, where it was played under the name "What Am I…</description>
+      <pubDate>Thu, 22 Aug 2019 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=2</guid>
+    </item>
+    <item>
+      <title>Ludum Dare 44 Postmortem</title>
+      <link>https://thquinn.github.io/blog.html?post=1</link>
+      <description>A week ago, I had just begun Ludum Dare, the some-number-of-times-annual event that tasks its participants with making a game in 48 hours. The theme was "your life is currency," and I made MeltUP, a platformer where you climb a radioactive nuclear cooling tower, gradually losing abilities as your genes fray. Only by collecting uranium (exposing…</description>
+      <pubDate>Sat, 04 May 2019 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=1</guid>
+    </item>
+    <item>
+      <title>It's a blog!</title>
+      <link>https://thquinn.github.io/blog.html?post=0</link>
+      <description>Hello! I'm Tom, and this is a blog. My blog. I'll admit that I don't have a ton of ideas for it, but I expect one will come to me every few months or so. It's just that I discovered this neat library and had to figure out something to use it for. And that thing was to reinvent the wheel, as I do, and make my own little blog framework. With no…</description>
+      <pubDate>Sat, 04 May 2019 00:00:00 GMT</pubDate>
+      <guid isPermaLink="true">https://thquinn.github.io/blog.html?post=0</guid>
+    </item>
+  </channel>
+</rss>

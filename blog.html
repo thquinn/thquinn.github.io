@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Tom's Blog</title>
+		<link rel="alternate" type="application/rss+xml" title="Tom's Blog" href="/feed.xml" />
 		<link rel="stylesheet" type="text/css" href="resources/css/main.css" />
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" />
 		<meta property="og:image" /> <!-- TODO -->
@@ -54,7 +55,10 @@
 				<div id="post">This bootleg blog requires JavaScript.</div>
 				<div id="blog_links">
 					<a id="previous_link" />
-					<a id="home_link" href="index.html">Home</a>
+					<div>
+						<a href="index.html">Home</a>
+						<a href="/feed.xml"><i class="fa fa-rss"></i></a>
+					</div>
 					<a id="next_link" />
 				</div>
 			</div>

@@ -176,6 +176,14 @@ textarea:focus {
 	margin-top: .5vw;
 	font-size: 1vw;
 }
+#blog_rss_link {
+	margin-left: 9vw;
+	font-size: .625vw;
+	font-weight: bold;
+	vertical-align: center;
+	text-decoration: none;
+	color: inherit;
+}
 
 #homecol_label {
 	color: #FFF;
@@ -367,6 +375,8 @@ p > img {
 	margin: auto;
 }
 #blog_links {
+	display: flex;
+	justify-content: space-between;
 	width: 125%;
 	transform: translate(-12.5%);
 	padding-top: 2vw;
@@ -374,13 +384,6 @@ p > img {
 }
 #blog_links i {
 	margin: 0 0.5vw 0 0.5vw;
-}
-#home_link {
-	left: 50%; 
-	position:fixed;
-}
-#next_link {
-	float: right;
 }
 i {
 	text-indent: 0.25vw;
